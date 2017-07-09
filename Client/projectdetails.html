@@ -2,9 +2,107 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Project details</title>
 </head>
 <body>
+<div id="project-options">
+<button>Export Data</button>
+<button>Edit Project</button>
+<button>Delete Project</button>
+
+</div>
+
+<div id="project-details"><!-- details about the project -->
+	<ul>
+		<li>
+		<div class="labels">
+				<label>Project name:</label>
+				<input type="text" name="projectname" value="EXAMPLE-projectAlpha" readonly>
+			</div>
+		</li>
+		<li>
+			<div class="labels">
+				<label>Creation date:</label>
+				<input type="text" name="projectname" value="2017/07/09" readonly>
+			</div>
+		</li>
+		<li>
+			<div class="labels">
+				<label>URL:</label>
+				<input type="text" name="projectname" value="https://github.com/amitsolanki8189/softwareFactory.git" readonly>
+			</div>
+		</li>
+		<li>
+			<div class="labels">
+				<label>Repository Type:</label>
+				<input type="text" name="projectname" value="GIT" readonly>
+			</div>
+		</li>
+		<li>
+			<div class="labels">
+				<label>Analysis type:</label><!-- first commit OR project creation -->
+				<input type="text" name="projectname" value="fromProjectCreationDate or fromFirstCommit" readonly>
+			</div>
+		</li>
+		<li>
+			<div class="labels">
+				<label>Frequency of analysis:</label>
+				<input type="text" name="projectname" value="1 day" readonly>
+			</div>
+		</li>
+		<li>
+			<div class="labels">
+				<label>Frequency of commits:</label>
+				<input type="text" name="projectname" value="every 10" readonly>
+			</div>
+		</li>
+	</ul>
+</div>
+
+
+
+<div id="analysis-details"><!-- details about the analysis -->
+	<ul>
+		<li><label>Total commits:</label></li>
+		<li><label>Analysed commits:</label></li>
+		<li><label>Successful analyses:</label></li>
+		<li><label>Failed analyses:</label></li>
+	</ul>
+</div>
+
+<div id="last-10-analyses"><!-- last 10 anlyses performed on the project -->
+<label>Last 10 analyses:</label>
+<table>
+	<tr id="table-header">
+		<th>Analysis nr.</th>
+		<th>Status</th>
+		<th>Date of analysis</th>
+		<th>Commit ID</th>		
+		<th>Date of commit</th>
+	</tr>
+	<tr id="fakedata">
+		<td>#1</td>
+		<td>Success</td>
+		<td>2017/07/09</td>
+		<td>bfg6a6dff817ec66f44342007202690a93763949</td>
+		<td>2016/01/01</td>
+	</tr>
+	<tr id="fakedata">
+		<td>#2</td>
+		<td>Success</td>
+		<td>2017/07/09</td>
+		<td>ca82a6dff817ec66f44342007202690a93763949</td>
+		<td>2016/01/02</td>
+	</tr>
+	<tr id="fakedata">
+		<td>#3</td>
+		<td>Success</td>
+		<td>2017/07/09</td>
+		<td>lmnoa6dff817ec66f44342007202690a93763949</td>
+		<td>2016/01/03</td>
+	</tr>
+</table> 	
+</div>
 
 </body>
 </html>
