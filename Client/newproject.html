@@ -2,21 +2,33 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<title>Insert New Project</title>
 </head>
 <body>
- <form action="">
-  Project name:<br>
-  <input type="text" name="projectName" value="Name"><br>
-   Repository's type:<br>
-  <select name="repType">
-   <option value="git">Git</option>
-   <option value="svn">Svn</option>
-  </select><br>
-  Repository's URL:<br>
-  <input type="text" name="url" value="URL"><br>
-  <input type="Radio" Name="analysisType" Value="First">First Commit 
-  <input type="Radio" Name="analysisType" Value="Last">Latest Commit
+<div>
+	<h1>++++HEADER HERE++++</h1>
+</div>
+
+ <form action="" class="text-center">
+ <div id="project-details-form">
+ 	<div>
+	  	<label>Project name:</label>
+	  	<input type="text" name="projectName" value="Name">
+	</div>
+	<div>
+	   	<label>Repository's type:</label>
+	   	<select name="repType">
+	   		<option value="git">Git</option>
+	   		<option value="svn">Svn</option>
+	   	</select>
+	</div>
+	  Repository's URL:<br>
+	  <input type="text" name="url" value="URL"><br>
+	  <input type="Radio" Name="analysisType" Value="First">First Commit 
+	  <input type="Radio" Name="analysisType" Value="Last">Latest Commit
+  </div>
+  
   <fieldset>
     <legend>First Commit</legend>
     <input type="Radio" Name="commitAnalysisType" Value="Automatic">All commits in the history until now
@@ -49,6 +61,10 @@
    </fieldset>
     <input type="submit" value="Save">
     <button type="button">Cancel</button> 
-</form> 
+</form>
+
+<div>
+	<h1>++++FOOTER HERE++++</h1>
+</div> 
 </body>
 </html>
