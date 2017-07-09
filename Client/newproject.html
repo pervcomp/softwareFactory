@@ -2,7 +2,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+ -->
+<link rel="stylesheet" href="./css/newproject.css">
 <title>Insert New Project</title>
 </head>
 <body>
@@ -10,23 +13,25 @@
 	<h1>++++HEADER HERE++++</h1>
 </div>
 
- <form action="" class="text-center">
- <div id="project-details-form">
+ <form class="form-control text-center" id="new-project-form">
+ <div>
  	<div>
 	  	<label>Project name:</label>
-	  	<input type="text" name="projectName" value="Name">
+	  	<input type="text" name="projectName" placeholder="Name">
 	</div>
 	<div>
 	   	<label>Repository's type:</label>
-	   	<select name="repType">
+	   	<select class="custom-select" name="repType">
 	   		<option value="git">Git</option>
 	   		<option value="svn">Svn</option>
 	   	</select>
 	</div>
-	  Repository's URL:<br>
-	  <input type="text" name="url" value="URL"><br>
-	  <input type="Radio" Name="analysisType" Value="First">First Commit 
-	  <input type="Radio" Name="analysisType" Value="Last">Latest Commit
+	<div>
+	  	<label>Repository's URL:</label>
+	  		<input type="text" name="url" placeholder="URL to your repository"><br>
+	  		<input type="Radio" name="analysisType" value="firstcommit">From first commit
+	  		<input type="Radio" name="analysisType" value="latestcommit">From now onwards
+	</div>
   </div>
   
   <fieldset>
