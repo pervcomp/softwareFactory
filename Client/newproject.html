@@ -5,6 +5,50 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+ <form action="">
+  Project name:<br>
+  <input type="text" name="projectName" value="Name"><br>
+   Repository's type:<br>
+  <select name="repType">
+   <option value="git">Git</option>
+   <option value="svn">Svn</option>
+  </select><br>
+  Repository's URL:<br>
+  <input type="text" name="url" value="URL"><br>
+  <input type="Radio" Name="analysisType" Value="First">First Commit 
+  <input type="Radio" Name="analysisType" Value="Last">Latest Commit
+  <fieldset>
+    <legend>First Commit</legend>
+    <input type="Radio" Name="commitAnalysisType" Value="Automatic">All commits in the history until now
+    <br>
+    <input type="Radio" Name="commitAnalysisType" Value="Manual">Manual
+     <br>
+     # Commits (2-100)<br>
+    <input type="text" name="url" value="URL"><br>
+   </fieldset>
+    <fieldset>
+    <legend>Latest Commit</legend>
+    <input type="Radio" Name="commitAnalysisTypeL" Value=interval>Commits Interval (1-10)
+    <br>
+    <input type="text" name="interval" value="1"><br>
+    <input type="Radio" Name="commitAnalysisTypeL" Value="time">Time
+    <br>
+    <input type="Radio" Name="commitAnalysisTypeL" Value="hours">Hours
+    <br>
+    Hours (1-24) <br>
+    <input type="text" name="hours" value="hours"><br>
+    Minutes (1-60) <br>
+    <input type="text" name="minutes" value="minutes"><br>
+    <input type="Radio" Name="commitDays" Value="days">
+     Days (1-30) <br>
+    <input type="text" name="days" value="days"><br>
+    <input type="Radio" Name="commitAnalysisTypeL" Value="schedule">Schedule
+	<br>
+	 <input type="Radio" Name="scheduleType" Value="schedule">Automatic
+	 <input type="Radio" Name="scheduleType" Value="schedule">Manual
+   </fieldset>
+    <input type="submit" value="Save">
+    <button type="button">Cancel</button> 
+</form> 
 </body>
 </html>
