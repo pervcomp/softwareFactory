@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: SoftwareFactory
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: Alex
+Built-By: LucaPellegrini
 Implementation-Vendor-Id: softwareFactory
-Build-Jdk: 1.8.0_131
+Build-Jdk: 1.8.0_60
 Implementation-URL: http://projects.spring.io/spring-boot/SoftwareFact
  ory/
 Created-By: Maven Integration for Eclipse
