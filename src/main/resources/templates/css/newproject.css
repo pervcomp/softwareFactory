@@ -1,0 +1,10 @@
+@CHARSET "UTF-8";
+
+body {
+	background-color: #ffd0bb;
+}
+
+form {
+	border: 1px solid #ccc;
+  	border-radius: 4px;
+}

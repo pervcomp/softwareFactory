@@ -1,0 +1,69 @@
+/*
+ * Start Bootstrap - Logo Nav (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+body {
+    padding-top: 200px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
+    vertical-align: middle;
+}
+
+img  {
+	margin-top: 20px;
+	margin-bottom: 20px;
+    width: 20%; /* you can use % */
+    height: auto;
+}
+
+.navbar .navbar-nav    {
+  color: #dd9619;
+  display: inline-block;
+  float: none;
+  vertical-align: middle;
+  margin-left: 50px;
+}
+
+.right {
+    position: absolute;
+    right: 0px;
+    width: 300px;
+    border: 3px solid #73AD21;
+    padding: 10px;
+}
+
+.nav li {
+	color: #dd9619;
+    font-size: 1.8em !important;
+    font-weight: bold;
+    display: inline;
+}
+
+.navbar .nav > li > a {
+    float: none;
+    line-height: 19px;
+    padding: 9px 60px 11px;
+    text-decoration: none;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    color:  #dd9619;
+ 
+}
+
+.navbar-right{
+   padding: 35px 10px 20px 0px; 
+  vertical-align: center !important;
+}
+
+.navbar-nav   > li > .dropdown-menu 
+{ 
+	background-color: #282828; 
+	color: #dd9619;	 
+}
+
+.dropdown-menu a{
+	font-weight: bold !important;
+    color: #dd9619 !important;
+    font-size: 0.75em !important;
+}
+
+

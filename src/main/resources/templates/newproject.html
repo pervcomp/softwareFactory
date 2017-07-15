@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!-- 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+ -->
+<link rel="stylesheet" href="./css/newproject.css">
+<title>Insert New Project</title>
+</head>
+<body>
+<div>
+	<h1>++++HEADER HERE++++</h1>
+</div>
+
+ <form class="form-control text-center" id="new-project-form">
+ <div>
+ 	<div>
+	  	<label>Project name:</label>
+	  	<input type="text" name="projectName" placeholder="Name">
+	</div>
+	<div>
+	   	<label>Repository's type:</label>
+	   	<select class="custom-select" name="repType">
+	   		<option value="git">Git</option>
+	   		<option value="svn">Svn</option>
+	   	</select>
+	</div>
+	<div>
+	  	<label>Repository's URL:</label>
+	  		<input type="text" name="url" placeholder="URL to your repository"><br>
+	  		<input type="Radio" name="analysisType" value="firstcommit">From first commit
+	  		<input type="Radio" name="analysisType" value="latestcommit">From now onwards
+	</div>
+  </div>
+  
+  <fieldset>
+    <legend>First Commit</legend>
+    <input type="Radio" Name="commitAnalysisType" Value="Automatic">All commits in the history until now
+    <br>
+    <input type="Radio" Name="commitAnalysisType" Value="Manual">Manual
+     <br>
+     # Commits (2-100)<br>
+    <input type="text" name="url" value="URL"><br>
+   </fieldset>
+    <fieldset>
+    <legend>Latest Commit</legend>
+    <input type="Radio" Name="commitAnalysisTypeL" Value=interval>Commits Interval (1-10)
+    <br>
+    <input type="text" name="interval" value="1"><br>
+    <input type="Radio" Name="commitAnalysisTypeL" Value="time">Time
+    <br>
+    <input type="Radio" Name="commitAnalysisTypeL" Value="hours">Hours
+    <br>
+    Hours (1-24) <br>
+    <input type="text" name="hours" value="hours"><br>
+    Minutes (1-60) <br>
+    <input type="text" name="minutes" value="minutes"><br>
+    <input type="Radio" Name="commitDays" Value="days">
+     Days (1-30) <br>
+    <input type="text" name="days" value="days"><br>
+    <input type="Radio" Name="commitAnalysisTypeL" Value="schedule">Schedule
+	<br>
+	 <input type="Radio" Name="scheduleType" Value="schedule">Automatic
+	 <input type="Radio" Name="scheduleType" Value="schedule">Manual
+   </fieldset>
+    <input type="submit" value="Save">
+    <button type="button">Cancel</button> 
+</form>
+
+<div>
+	<h1>++++FOOTER HERE++++</h1>
+</div> 
+</body>
+</html>
