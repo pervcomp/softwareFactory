@@ -1,48 +1,69 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta charset="UTF-8">
 <!-- 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
  -->
-<link rel="stylesheet" href="./css/newproject.css">
 <title>Insert New Project</title>
+<head lang="en" th:include="fragments/header" >
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Registration Form</title>
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+ 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/dcalendar.picker.css" rel="stylesheet">
+	<script src="js/jquery-1.12.4.js"></script>
+	<script src="js/dcalendar.picker.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="js/bootstrap.min.js"></script>
+
 </head>
 <body>
-<div>
-	<h1>++++HEADER HERE++++</h1>
-</div>
-
- <form class="form-control text-center" id="new-project-form">
- <div>
- 	<div>
+<link rel="stylesheet" th:href="@{/resources/css/newproject.css}"/>
+ <div class="panel panel-primary" style="margin:20px;">
+	<div class="panel-heading">
+        	<h3 class="panel-title">Insert new project</h3>
+	</div>
+<div class="panel-body">
+<form>
+<div class="col-md-12 col-sm-12">
+	<div class="form-group col-md-12 col-sm-12">
 	  	<label>Project name:</label>
 	  	<input type="text" name="projectName" placeholder="Name">
 	</div>
-	<div>
+	<div class="form-group col-md-12 col-sm-12">
 	   	<label>Repository's type:</label>
 	   	<select class="custom-select" name="repType">
 	   		<option value="git">Git</option>
 	   		<option value="svn">Svn</option>
 	   	</select>
 	</div>
-	<div>
+	<div class="form-group col-md-12 col-sm-12">
 	  	<label>Repository's URL:</label>
 	  		<input type="text" name="url" placeholder="URL to your repository"><br>
-	  		<input type="Radio" name="analysisType" value="firstcommit">From first commit
-	  		<input type="Radio" name="analysisType" value="latestcommit">From now onwards
-	</div>
-  </div>
-  
-  <fieldset>
+	  			<div class="form-group col-md-12 col-sm-12">
+	  		<input type="Radio" name="analysisType" checked="checked" value="2">From first commit
+	  				</div>
+	  			<div class="form-group col-md-12 col-sm-12">
+	  		<input type="Radio" name="analysisType" value="3">From now onwards
+			</div>
+
+  <div class="form-group 12 col-sm-12 desc" id="analysisType2">
     <legend>First Commit</legend>
     <input type="Radio" Name="commitAnalysisType" Value="Automatic">All commits in the history until now
-    <br>
+    </div>
+      <div class="form-group 12 col-sm-12 desc" id="analysisType2">
     <input type="Radio" Name="commitAnalysisType" Value="Manual">Manual
-     <br>
+    </div>
      # Commits (2-100)<br>
-    <input type="text" name="url" value="URL"><br>
-   </fieldset>
+    <input type="text" name="Number of commits" value="URL"><br>
+   </div>
+    <div hidden class="form-group col-md-6 col-sm-6 desc" id="analysisType3" >
     <fieldset>
     <legend>Latest Commit</legend>
     <input type="Radio" Name="commitAnalysisTypeL" Value=interval>Commits Interval (1-10)
@@ -64,12 +85,28 @@
 	 <input type="Radio" Name="scheduleType" Value="schedule">Automatic
 	 <input type="Radio" Name="scheduleType" Value="schedule">Manual
    </fieldset>
+   </div>
     <input type="submit" value="Save">
     <button type="button">Cancel</button> 
 </form>
 
-<div>
-	<h1>++++FOOTER HERE++++</h1>
-</div> 
 </body>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $("input[name$='analysisType']").click(function() {
+        var test = $(this).val();
+
+        $("div.desc").hide();
+        $("#analysisType" + test).show();
+    });
+});
+</script>
+
+
+
 </html>
+
+
+
+
