@@ -49,189 +49,66 @@
 @pagination-active-border:                @spring-green;
 @table-border-color:                      @spring-brown;
 
-.table > thead > tr > th {
-  background-color: lighten(@spring-brown, 3%);
-  color: @spring-light-grey;
+body {
+    padding-top: 200px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
+    vertical-align: middle;
 }
 
-.table-filter {
-  background-color: @spring-brown;
-  padding: 9px 12px;
+img  {
+	margin-top: 20px;
+	margin-bottom: 20px;
+    width: 20%; /* you can use % */
+    height: auto;
 }
 
-.nav > li > a {
-  color: @spring-grey;
-}
-
-.btn-default {
-  border-width: 2px;
-  transition: border 0.15s;
-  -webkit-transition: border 0.15s;
-  -moz-transition: border 0.15s;
-  -o-transition: border 0.15s;
-  -ms-transition: border 0.15s;
-
-  &:hover,
-  &:focus,
-  &:active,
-  &.active,
-  .open .dropdown-toggle& {
-    background-color: @spring-brown;
-    border-color: @spring-brown;
-  }
-}
-
-
-.container .text-muted {
-  margin: 20px 0;
-}
-
-code {
-  font-size: 80%;
-}
-
-.xd-container {
-  margin-top: 40px;
-  margin-bottom: 100px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-h1 {
-  margin-bottom: 15px
-}
-
-.index-page--subtitle {
-  font-size: 16px;
-  line-height: 24px;
-  margin: 0 0 30px;
-}
-
-.form-horizontal button.btn-inverse {
-  margin-left: 32px;
-}
-
-#job-params-modal .modal-dialog {
-  width: 90%;
-  margin-left:auto;
-  margin-right:auto;
-}
-
-[ng-cloak].splash {
-  display: block !important;
-}
-[ng-cloak] {
-  display: none;
-}
-
-.splash {
-  background: @spring-green;
-  color: @spring-brown;
-  display: none;
-}
-
-.error-page {
-  margin-top: 100px;
-  text-align: center;
-}
-
-.error-page .error-title {
-  font-size: 24px;
-  line-height: 24px;
-  margin: 30px 0 0;
-}
-
-table td {
+.navbar .navbar-nav    {
+  color: #dd9619;
+  display: inline-block;
+  float: none;
   vertical-align: middle;
+  margin-left: 50px;
 }
 
-table td .progress {
-  margin-bottom: 0;
+.right {
+    position: absolute;
+    right: 0px;
+    width: 300px;
+    border: 3px solid #73AD21;
+    padding: 10px;
 }
 
-table td.action-column {
-  width: 1px;
+.nav li {
+	color: #dd9619;
+    font-size: 1.8em !important;
+    font-weight: bold;
+    display: inline;
 }
 
-.help-block {
-  color: lighten(@text-color, 50%); // lighten the text some for contrast
+.navbar .nav > li > a {
+    float: none;
+    line-height: 19px;
+    padding: 9px 60px 11px;
+    text-decoration: none;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    color:  #dd9619;
+ 
 }
 
-.xd-containers {
-  font-size: 15px;
+.navbar-right{
+   padding: 35px 10px 20px 0px; 
+  vertical-align: center !important;
 }
 
-.cluster-view > table td {
-  vertical-align: top;
+.navbar-nav   > li > .dropdown-menu 
+{ 
+	background-color: #282828; 
+	color: #dd9619;	 
 }
 
-.cluster-view .label, .cluster-view .column-block {
-  display: block;
-}
-
-.cluster-view .input-group-addon {
-  width: 0%;
-}
-
-.cluster-view {
-  margin-bottom: 0;
-}
-
-.deployment-status-deployed {
-  .label-success;
-}
-
-.deployment-status-incomplete {
-  .label-warning;
-}
-
-.deployment-status-failed {
-  .label-danger;
-}
-
-.deployment-status-deploying {
-  .label-info
-}
-.deployment-status-na {
-}
-
-.container-details-table th {
-  background-color: lighten(@spring-brown, 3%);
-  color: @spring-light-grey;
-}
-
-.status-help-content-table td {
-  color: @spring-brown;
-}
-
-.alert-success {
-  .alert-variant(fade(@alert-success-bg, 70%); @alert-success-border; @alert-success-text);
-}
-.alert-info {
-  .alert-variant(fade(@alert-info-bg, 70%); @alert-info-border; @alert-info-text);
-}
-.alert-warning {
-  .alert-variant(fade(@alert-warning-bg, 70%); @alert-warning-border; @alert-warning-text);
-}
-.alert-danger {
-  .alert-variant(fade(@alert-danger-bg, 70%); @alert-danger-border; @alert-danger-text);
-}
-
-.myspinner {
-  animation-name: spinner;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-
-  -webkit-transform-origin: 49% 50%;
-  -webkit-animation-name: spinner;
-  -webkit-animation-duration: 2s;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-timing-function: linear;
-}
-
-hr {
-  border-top: 1px dotted @spring-brown;
+.dropdown-menu a{
+	font-weight: bold !important;
+    color: #dd9619 !important;
+    font-size: 0.75em !important;
 }
 
 @import "typography.less";

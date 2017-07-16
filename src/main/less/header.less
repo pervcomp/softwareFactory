@@ -1,73 +1,69 @@
-.navbar {
-  border-top: 4px solid #6db33f;
-  background-color: #34302d;
-  margin-bottom: 0px;
-  border-bottom: 0;
-  border-left: 0;
-  border-right: 0;
+/*
+ * Start Bootstrap - Logo Nav (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+body {
+    padding-top: 200px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
+    vertical-align: middle;
 }
 
-.navbar a.navbar-brand {
-  background: url("../images/spring-logo-dataflow.png") -1px -1px no-repeat;
-  margin: 12px 0 6px;
-  width: 229px;
-  height: 46px;
+img  {
+	margin-top: 20px;
+	margin-bottom: 20px;
+    width: 20%; /* you can use % */
+    height: auto;
+}
+
+.navbar .navbar-nav    {
+  color: #dd9619;
   display: inline-block;
-  text-decoration: none;
-  padding: 0;
+  float: none;
+  vertical-align: middle;
+  margin-left: 50px;
 }
 
-.navbar a.navbar-brand span {
-  display: block;
-  width: 229px;
-  height: 46px;
-  background: url("../images/spring-logo-dataflow.png") -1px -48px no-repeat;
-  opacity: 0;
-  -moz-transition: opacity 0.12s ease-in-out;
-  -webkit-transition: opacity 0.12s ease-in-out;
-  -o-transition: opacity 0.12s ease-in-out;
+.right {
+    position: absolute;
+    right: 0px;
+    width: 300px;
+    border: 3px solid #73AD21;
+    padding: 10px;
 }
 
-.navbar a:hover.navbar-brand span {
-  opacity: 1;
+.nav li {
+	color: #dd9619;
+    font-size: 1.8em !important;
+    font-weight: bold;
+    display: inline;
 }
 
-.navbar li > a, .navbar-text {
-  font-family: "montserratregular", sans-serif;
-  text-shadow: none;
-  font-size: 14px;
-
-/* line-height: 14px; */
-  padding: 28px 20px;
-  transition: all 0.15s;
-  -webkit-transition: all 0.15s;
-  -moz-transition: all 0.15s;
-  -o-transition: all 0.15s;
-  -ms-transition: all 0.15s;
+.navbar .nav > li > a {
+    float: none;
+    line-height: 19px;
+    padding: 9px 60px 11px;
+    text-decoration: none;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    color:  #dd9619;
+ 
 }
 
-.navbar li > a {
-  text-transform: uppercase;
+.navbar-right{
+   padding: 35px 10px 20px 0px; 
+  vertical-align: center !important;
 }
 
-.navbar .navbar-text {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-.navbar li:hover > a {
-  color: #eeeeee;
-  background-color: #6db33f;
+.navbar-nav   > li > .dropdown-menu 
+{ 
+	background-color: #282828; 
+	color: #dd9619;	 
 }
 
-.navbar-toggle {
-  border-width: 0;
-
-  .icon-bar + .icon-bar {
-    margin-top: 3px;
-  }
-  .icon-bar {
-    width: 19px;
-    height: 3px;
-  }
-
+.dropdown-menu a{
+	font-weight: bold !important;
+    color: #dd9619 !important;
+    font-size: 0.75em !important;
 }
+
+

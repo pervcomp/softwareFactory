@@ -33,11 +33,9 @@ class WelcomeController {
   
     @PostMapping("/login")    
     public String login(@ModelAttribute User user) {
-    	        String email = user.getEmail1();
-    	        String pwd   = user.getPwd();
-    	        System.out.print(email);
-    	        System.out.print(pwd);   
-    	        User usr = (repository.findByEmail1("luca9294@hotmail.it"));
+    	        String emailSt = user.getEmail1();
+    	        String pwd   = user.getPwd(); 
+    	        User usr = repository.findByEmail1(emailSt);
     	        if (pwd.hashCode() == Integer.parseInt(usr.getPwd()))
     	        		return "OK";
     	        else
