@@ -5,8 +5,9 @@
  */
 
 body {
-    padding-top: 150px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
+    padding-top: 130px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
     vertical-align: middle;
+    
 }
 
 img  {
@@ -16,11 +17,17 @@ img  {
     height: auto;
 }
 
+@font-face {
+    font-family: myFirstFont;
+    src: url("/resources/css/font.otf") format("opentype");;
+}
+
 .navbar .navbar-nav    {
   color: #dd9619;
   display: inline-block;
   float: none;
   vertical-align: middle;
+  font-family:"Bree Serif";
 
 }
 
@@ -35,7 +42,6 @@ img  {
 .nav li {
 	color: #dd9619;
     font-size: 1.8em !important;
-    font-weight: bold;
     display: inline;
 }
 

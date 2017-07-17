@@ -1,10 +1,18 @@
 @CHARSET "UTF-8";
 
-body {
-	background-color: #ffd0bb;
-}
-
 form {
 	border: 1px solid #ccc;
   	border-radius: 4px;
 }
+.panel-primary {
+     border-color: #dd9619 !important;
+}
+
+.panel > .panel-heading {
+    background-image: none;
+    background-color: #dd9619;
+    color: black;
+    border-color: #dd9619
+    
+}
+
