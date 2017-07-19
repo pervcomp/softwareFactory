@@ -28,6 +28,16 @@ class WelcomeController {
         return "newproject";
     }
     
+    @RequestMapping("/landingPage")
+    public String landingPaget(Model model) {
+        return "landingPage";
+    }
+    
+    @RequestMapping("/logout")
+    public String logout(Model model) {
+    	    model.addAttribute("user", new User()); 
+        return "welcome";
+    }
     @PostMapping("/login")    
     public String login(@ModelAttribute User user) {
     	        try{
