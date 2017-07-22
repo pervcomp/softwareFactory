@@ -9,7 +9,7 @@ import com.codesmell.app.model.User;
 
 public interface ProjectDao extends MongoRepository<Project, String> 
 {
-	public List<Project> findByIdUser(Long  idUser);
+	public List<Project> findByIdUser(String  idUser);
 	
 	public Project findBy_id(String  idProject);
 }

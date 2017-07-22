@@ -16,15 +16,15 @@ import com.codesmell.app.dao.ProjectDao;
 import com.codesmell.app.model.Project;
 
 @Controller
-@RequestMapping("/project/")
+@RequestMapping("/project")
 
 public class ProjectController {
 
 	private @Autowired ProjectDao projectDao;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public List<Project> getAllProject(@QueryParam("idUser") Long idUser) 
+	public List<Project> getAllProject(@QueryParam("idUser") String idUser) 
 	{
 		return this.projectDao.findByIdUser(idUser);
 	}
@@ -43,4 +43,17 @@ public class ProjectController {
         this.projectDao.save(project);
         return project;
     }
+    
+    
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Project deleteProject(@PathVariable("id") String id) 
+    {
+    	Project project = this.projectDao.findBy_id(id);
+    	if(project != null)
+    	{
+    		this.projectDao.delete(project);
+    	}
+    	return project;
+    }
+    
 }
