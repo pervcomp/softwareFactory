@@ -1,19 +1,19 @@
 package com.codesmell.app.controller;
 
 import java.util.List;
-
 import javax.ws.rs.QueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.codesmell.app.dao.ProjectDao;
 import com.codesmell.app.model.Project;
+
 
 @Controller
 @RequestMapping("/project")
@@ -24,36 +24,44 @@ public class ProjectController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public List<Project> getAllProject(@QueryParam("idUser") String idUser) 
+	public String getAllProject(@QueryParam("idUser") String idUser,Model model) 
 	{
-		return this.projectDao.findByIdUser(idUser);
+		List<Project> projectsList= this.projectDao.findByIdUser(idUser);
+		model.addAttribute("projects", projectsList);
+		
+		return "projectDetails";
+		
 	}
 	
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Project getProject(@PathVariable("id") String id) 
+    public String getProject(@PathVariable("id") String id,Model model) 
     {
-    	return this.projectDao.findBy_id(id);
+    	Project project= this.projectDao.findBy_id(id);
+        model.addAttribute("projects", project);
+        
+        return "projectDetails";
     }
     
     
     @RequestMapping( method = RequestMethod.PUT)
-    public Project saveProject(@RequestBody Project project) 
+    public String saveProject(@RequestBody Project project,Model model) 
     {
-        System.out.println("Creating Project " + project.getName());
-        this.projectDao.save(project);
-        return project;
+        Project savedProject= this.projectDao.save(project);
+        model.addAttribute("projects", savedProject);
+        
+        return "projectDetails";
     }
     
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Project deleteProject(@PathVariable("id") String id) 
+    public String deleteProject(@PathVariable("id") String id,Model model) 
     {
     	Project project = this.projectDao.findBy_id(id);
     	if(project != null)
-    	{
+    	{ model.addAttribute("projects", project);
     		this.projectDao.delete(project);
     	}
-    	return project;
+    	return "projectDetails";
     }
     
 }

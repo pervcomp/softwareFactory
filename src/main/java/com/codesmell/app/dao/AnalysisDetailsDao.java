@@ -11,4 +11,6 @@ import com.codesmell.app.model.User;
 public interface AnalysisDetailsDao extends MongoRepository<AnalysisDetails, String>
 {
 	public List<AnalysisDetails> findByIdProject(String  idProjet);
+	
+	public AnalysisDetails findBy_id(String  idProject);
 }
