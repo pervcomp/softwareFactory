@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: petclinic
 Implementation-Version: 1.5.1
-Built-By: amit
+Built-By: LucaPellegrini
 Implementation-Vendor-Id: org.springframework.samples
-Build-Jdk: 1.8.0_131
+Build-Jdk: 1.8.0_60
 Implementation-URL: http://projects.spring.io/spring-boot/spring-petcl
  inic/
 Created-By: Maven Integration for Eclipse

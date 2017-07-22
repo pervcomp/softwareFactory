@@ -47,22 +47,22 @@
 						<label>Repository's URL:</label><br> 
 						<input type="text" name="url" placeholder="URL to your repository"><br></br>
 						<label>Type on analysis:</label><p>
-							<input type="Radio" name="analysisType" checked="checked" value="2">From first commit
-							<br><br>
-							<input type="Radio" name="analysisType" value="3">From now onwards<br></br>
+							<input type="checkbox" id="pastAnalysis" checked="checked"> Analyze commits in the past  (Optional)
+							<br>
 						    <div class="form-group 12 col-sm-12 desc" id="analysisType2">
-								<legend>First Commit</legend>
-								<input type="Radio" Name="commitAnalysisType" Value="Automatic">All commits in the history until now 
+								<legend>Which Commits in the past?</legend>
+								<input type="Radio" Name="commitAnalysisType" Value="Automatic"> All commits in the history until now 
 								<br><br>
-								<input type="Radio" Name="commitAnalysisType" Value="Manual">Manual #Commits (2-100)
+								<input type="Radio" Name="commitAnalysisType" Value="Manual">  Commits Interval (Do an analysis each # commits)
 								<br></br>
 								<input type="text"
 								name="Number of commits" value="# Commits"><br>
 							</div>
-							<div hidden class="form-group col-md-12 col-sm-12 desc" id="analysisType3">
+							<br></br><br>
+							<div  class="form-group col-md-12 col-sm-12 desc" id="analysisType3">
 							<fieldset>
-								<legend>Latest Commit</legend>
-								<label><input type="Radio" Name="commitAnalysisTime" Value=5 checked="checked"> Commits Interval (1-10) </label>  
+								<legend>Schedule analysis in the future</legend>
+								<input type="Radio" Name="commitAnalysisTime" Value=5 checked="checked"> Commits Interval (Do an analysis each # new commits)
 							    <br><br>
 							    <label><input type="Radio" Name="commitAnalysisTime" Value=6> Scheduled <br> </label>
 								<br><br>
@@ -79,25 +79,33 @@
 									<input type="Radio" Name="time" Value=8> days
 									<br></br>
 								<div  class="form-group 12 col-sm-12 desc2" id="commitTime7">
-								    <p>Hours (1-24): <input type="text"></p>
-									<p>Minutes (0-59): <input type="text"></p>
+								    <p>Hours (1-24): <input type="text" value = "5"></p> 
+									<p>Minutes (0-59): <input type="text" value = "30"></p> 
 								</div>
 								
 								<div hidden  class="form-group 12 col-sm-12 desc2" id="commitTime8">
-								    <p>Days (1-30): <input type="text"></p>
+								    <p>Days (1-30): <input type="text" value = "7"></p>
 								</div>
 								
 								
 								</div>
 							</fieldset>
-						</div>
+
 						<input type="submit" value="Save">
 						<button type="button">Cancel</button>
-						</div></div>
+						</div>
 			</form>
 </body>
 
 <script type="text/javascript">
+var d = new Date();
+var datestring = ("0" + d.getDate()).slice(-2) + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
+d.getFullYear();
+document.getElementById("datepicker").value = datestring;
+
+
+
+
 $(document).ready(function() {
     $("input[name$='analysisType']").click(function() {
         var test = $(this).val();
@@ -124,13 +132,17 @@ $(document).ready(function() {
 });
 
 
+
 $( function() {
     $( "#datepicker" ).datepicker({
+    	setDate : new Date(),
     	minDate: 0,
     	dateFormat: "dd-mm-yy", 
+    	defaultDate: new Date()
     });
   } );
   
+
 $(function() {
     	$("#timepicker").timepicker({
     	    timeFormat: 'h:mm p',
@@ -141,6 +153,20 @@ $(function() {
     	    dropdown: true,
     	    scrollbar: true
     	});})
+    	
+    	
+ $(function () {
+        $("#pastAnalysis").click(function () {        	
+            if ($(this).is(":checked")) {
+                $("#analysisType2").show();
+            } else {
+                $("#analysisType2").hide();
+            }
+        });
+    });
+    	
+
+    	
 </script>
 
 
