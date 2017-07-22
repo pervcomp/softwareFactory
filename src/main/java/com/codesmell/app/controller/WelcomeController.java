@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.codesmell.app.directory.UserRepository;
+import com.codesmell.app.dao.UserDao;
 import com.codesmell.app.model.User;
 
 
@@ -15,7 +15,7 @@ import com.codesmell.app.model.User;
 class WelcomeController {
 	
 	@Autowired
-	private UserRepository repository;
+	private UserDao repository;
 
     @RequestMapping("/")
     public String welcome(Model model) {

@@ -1,11 +1,9 @@
 package com.codesmell.app.model;
 
 
-import org.springframework.data.annotation.Id;
 
-public class User {
-	@Id
-    private String _id;
+public class User  extends BaseEntity{
+	
 	private String email1;
     private String pwd;
     
