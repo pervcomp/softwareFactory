@@ -34,6 +34,11 @@ img  {
 
 </style>
 
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
+
 
 <div class="container">
     <div class="row vertical-offset-100">
@@ -43,13 +48,13 @@ img  {
 			    	<h3 class="panel-title">Please sign in</h3>
 			 	</div>
 			  	<div class="panel-body">
-			    	<form th:action="@{/login}" th:object="${user}" method="post">
+			    	<form th:action="@{/login}" th:object="${user}" method="post" name="form" id="form">
                     <fieldset>
 			    	  	<div class="form-group">
-			    		    <input class="form-control" th:field="*{email1}" type="text">
+			    		    <input class="form-control" th:field="*{email1}" type="text" id=email>
 			    		</div>
 			    		<div class="form-group">
-			    			<input class="form-control"  th:field="*{pwd}" name="password" type="password" value="">
+			    			<input class="form-control"  th:field="*{pwd}" id="password" type="password" value="">
 			    		</div>
 			    		<div class="checkbox">
 			    	    	<label>
@@ -86,5 +91,58 @@ $(document).ready(function(){
             }
         });
   });
-});</script>
+
+
+
+});
+
+	
+	
+	$( "#form" ).submit(function( event ) {
+		  var form = $( "#myform" );
+		  alert( "Handler for .submit() called." + form.valid() );
+		  alert( "Valid: " + form.valid() );
+		});
+
+
+		  // Initialize form validation on the registration form.
+		  // It has the name attribute "registration"
+		  $("form[name='form']").validate({
+		    // Specify validation rules
+		    rules: {
+		      // The key name on the left side is the name attribute
+		      // of an input field. Validation rules are defined
+		      // on the right side
+
+		      email: {
+		        required: true,
+		        // Specify that email should be validated
+		        // by the built-in "email" rule
+		        email: true
+		      },
+		      password: {
+		        required: true,
+		        minlength: 5
+		      }
+		    },
+		    // Specify validation error messages
+		    messages: {
+		      password: {
+		        required: "Please provide a password",
+		        minlength: "Your password must be at least 5 characters long"
+		      },
+		      email: "Please enter a valid email address"
+		    },
+		    // Make sure the form is submitted to the destination defined
+		    // in the "action" attribute of the form when valid
+		    submitHandler: function(form) {
+		      form.submit();
+		    }
+		  });
+		
+	
+
+
+
+</script>
 </html>
