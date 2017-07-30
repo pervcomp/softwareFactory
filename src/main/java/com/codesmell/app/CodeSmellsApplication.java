@@ -2,6 +2,7 @@ package com.codesmell.app;
 
 import static org.quartz.JobBuilder.*;
 import org.quartz.JobDetail;
+import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
@@ -24,7 +25,7 @@ import com.codesmell.app.schedule.Testing2;
 @SpringBootApplication
 public class CodeSmellsApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) { 
 		SpringApplication.run(CodeSmellsApplication.class, args);
 
 		try {
@@ -44,8 +45,10 @@ public class CodeSmellsApplication {
 			sched.scheduleJob(job2, newTrigger2);
 			sched.start();
 			
-			TriggerKey t1 = new TriggerKey("job1", "group1");
-			sched.unscheduleJob(t1);
+			JobKey j1 = new JobKey("job1", "group1");
+			
+			//TriggerKey t1 = new TriggerKey("job1", "group1");
+			sched.deleteJob(j1);
 			
 			
 
