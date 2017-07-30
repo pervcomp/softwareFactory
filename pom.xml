@@ -15,7 +15,8 @@
   <name>softwarefactory</name>
 
   <properties>
-
+    <docker.image.prefix>softwarefactory</docker.image.prefix>
+    
     <!-- Generic properties -->
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -171,6 +172,14 @@
 
   <build>
     <plugins>
+    <plugin>
+		<groupId>com.spotify</groupId>
+		<artifactId>dockerfile-maven-plugin</artifactId>
+		<version>1.3.4</version>
+		<configuration>
+			<repository>${docker.image.prefix}/${project.artifactId}</repository>
+		</configuration>
+	</plugin>    
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
