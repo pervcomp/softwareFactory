@@ -1,3 +1,6 @@
+package foo
+
+
 import org.apache.commons.cli.*
 import org.apache.commons.cli.Options
 

@@ -1,3 +1,4 @@
+package com.codesmell.app.sonar;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -8,23 +9,34 @@ import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Component;
+
 import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
-import com.codesmell.app.dao.UserDao;
 import com.codesmell.app.model.*;
 
+import foo.AppKt;
+import foo.ScanOptions;
+import foo.ScanOptionsKt;
+
+@Component
 public class SonarAnalysis {
-	private Project project;
-	private User user;
+	private Project project  ;
 	private CommitAnalysis analysis;
 	
 	@Autowired
 	private CommitAnalysisDao commitAnalysisDao;
+	@Autowired
 	private CommitDao commitDao;
 
-	public SonarAnalysis(User user,Project project, CommitAnalysis analysis) {
-		this.user = user;
+	public SonarAnalysis() {
+	}
+	
+	public void setProject(Project project){
 		this.project = project;
+	}
+	
+	public void setAnalysis(CommitAnalysis analysis){
 		this.analysis = analysis;
 	}
 	
@@ -36,8 +48,9 @@ public class SonarAnalysis {
 		
 		String url  = project.getUrl();
 		String conf = analysis.getConfigurationFile();
-		String args[] = {url,conf};
+		String args[] = {"--git",url,"--properties",conf};
 		ScanOptions so = ScanOptionsKt.parseOptions(args);
+		
 		File theDir = new File(project.getName() + "_" + analysis.getIdAnalysis());
 		try {
 			FileUtils.deleteDirectory(theDir);
@@ -54,17 +67,17 @@ public class SonarAnalysis {
 			String[] commitArray = commitStr.split(" ");
 			Commit commit = new Commit();
 			commit.setAnalysisDate(new Date());
-			commit.setSsa(commitArray[2]);
+			commit.setSsa(commitArray[3]);
 			commit.setIdCommitAnalysis(analysis.getIdAnalysis());
-			commit.setStatus(commitArray[11]);
-			DateFormat df = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss", Locale.ENGLISH);
+			commit.setStatus(commitArray[13]);
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
 			try {
-				commit.setCreationDate(df.parse(commitArray[1]));
+				commit.setCreationDate(df.parse(commitArray[2].replace("T", " ")));
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			commitDao.save(commit);
+			commitDao.insert(commit);
 		}
 		
 		analysis.setStatus("Finished");

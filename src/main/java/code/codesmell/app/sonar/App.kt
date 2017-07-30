@@ -1,3 +1,5 @@
+package foo
+
 import org.apache.commons.lang3.SystemUtils
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder

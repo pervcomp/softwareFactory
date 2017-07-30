@@ -27,7 +27,7 @@ public class CodeSmellsApplication {
 
 	public static void main(String[] args) { 
 		SpringApplication.run(CodeSmellsApplication.class, args);
-
+/*
 		try {
 			SchedulerFactory sf = new StdSchedulerFactory();
 			Scheduler sched = sf.getScheduler();
@@ -56,6 +56,6 @@ public class CodeSmellsApplication {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+*/
 	}
 }

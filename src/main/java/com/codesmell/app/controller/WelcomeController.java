@@ -13,14 +13,24 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.UserDao;
+import com.codesmell.app.model.CommitAnalysis;
+import com.codesmell.app.model.Project;
 import com.codesmell.app.model.User;
+import com.codesmell.app.sonar.SonarAnalysis;
+
+
 
 @Controller
 class WelcomeController {
 
 	@Autowired
 	private UserDao repository;
+	@Autowired
+	private CommitAnalysisDao commitAnalysisDao;
+	@Autowired
+	SonarAnalysis so;
 
 	@RequestMapping("/")
 	public String welcome(@CookieValue(value = "email", defaultValue = "") String email, Model model,
@@ -42,6 +52,27 @@ class WelcomeController {
 		model.addAttribute("email", req.getSession().getAttribute("email"));
 		return "newproject";
 	}
+	
+	@RequestMapping("/Test")
+	public String test(Model model,HttpServletRequest req, HttpServletResponse resp) {
+		Project p = new Project();
+		p.setUrl("https://github.com/cuuzis/java-project-for-sonar-scanner-testing.git");
+		p.setName("Test");
+		CommitAnalysis ca = new CommitAnalysis();
+		ca.setConfigurationFile("my.properties");
+		commitAnalysisDao.insert(ca);
+		User usr = new User();
+		usr.setEmail1("");
+		usr.setPwd("");
+		so.setAnalysis(ca);
+		so.setProject(p);
+		so.runAnalysis();
+		model.addAttribute("user", new User());
+		return "/";
+	}
+	
+	
+	
 
 	@RequestMapping("/landingPage")
 	public String landingPaget(Model model, HttpServletRequest req, HttpServletResponse resp) {
