@@ -1,6 +1,6 @@
 package com.codesmell.app.model;
 
-public class AnalysisDetails extends BaseEntity
+public class ProjetcAnalysisDetails extends BaseEntity
 {
 	private int noOfCommits;
 	private int noOfAnalyzedCommits;
@@ -8,7 +8,7 @@ public class AnalysisDetails extends BaseEntity
 	private int noOfFailedAnalyzedCommits;
 	private String idProject;
 	
-	public AnalysisDetails() 
+	public ProjetcAnalysisDetails() 
 	{
 		this.noOfCommits=0;
 		this.noOfAnalyzedCommits=0;
