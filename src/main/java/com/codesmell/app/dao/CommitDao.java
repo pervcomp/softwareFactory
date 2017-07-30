@@ -8,6 +8,6 @@ import com.codesmell.app.model.Commit;
 
 public interface CommitDao extends MongoRepository<Commit, String>
 {
-	public List<Commit> findBIdCommitAnalysis(String  idCommitAnalysis);
+	
 	
 }
