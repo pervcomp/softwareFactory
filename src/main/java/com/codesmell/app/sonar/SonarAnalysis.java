@@ -15,9 +15,7 @@ import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
 import com.codesmell.app.model.*;
 
-import foo.AppKt;
-import foo.ScanOptions;
-import foo.ScanOptionsKt;
+import com.kotlin.*;
 
 @Component
 public class SonarAnalysis {

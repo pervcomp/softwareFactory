@@ -1,4 +1,4 @@
-package foo
+package com.kotlin
 
 import org.apache.commons.lang3.SystemUtils
 import org.eclipse.jgit.api.Git
