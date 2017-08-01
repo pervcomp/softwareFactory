@@ -1,4 +1,4 @@
-package com.codesmell.app.sonar;
+package com.codesmell.app;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;

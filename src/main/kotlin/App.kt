@@ -14,9 +14,12 @@ import java.util.*
 import java.time.temporal.ChronoUnit
 import java.lang.ProcessBuilder.Redirect
 
+import com.codesmell.app.SonarAnalysis;
+
 
 
 fun main(args: Array<String>) {
+	SonarAnalysis.hello();
     val scanOptions = parseOptions(args)
     if (scanOptions != null) {
         var tempScanDirectory: File? = null
