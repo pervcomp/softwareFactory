@@ -30,22 +30,26 @@
 			<h3 class="panel-title">Insert new project</h3>
 		</div>
 		<div class="panel-body">
-			<form>
+			<form th:action="@{/createNewProject}" th:object="${project}" method="post">
 				<div class="col-md-12 col-sm-12">
 					<div class="form-group col-md-12 col-sm-12">
-						<label>Project name:</label><br> <input type="text" name="projectName"
-							placeholder="Name">
+						<label>Project name:</label><br> 
+						<input type="text" name="projectName"required="required" placeholder="Name">
 					</div>
 					<div class="form-group col-md-12 col-sm-12">
 						<label>Repository's type:</label><br><select class="custom-select"
-							name="repType">
+							name="repType" required="required">
 							<option value="git">Git</option>
 							<option value="svn">Svn</option>
 						</select>
 					</div>
 					<div class="form-group col-md-12 col-sm-12">
 						<label>Repository's URL:</label><br> 
-						<input type="text" name="url" placeholder="URL to your repository"><br></br>
+						<input required="required" type="url" name="url" placeholder="URL to your repository"><br></br>
+						<label>Sonar ProjectKey:</label><br> 
+						<input required="required" type="text" name="projectKey" placeholder="ProjectKey for SonarScanner"><br></br>
+						<label>Sonar ProjectVersion:</label><br> 
+						<input  required="required" type="number" name="projectKey" placeholder="ProjectVersion for SonarScanner"><br></br>
 						<label>Type on analysis:</label><p>
 							<input type="checkbox" id="pastAnalysis" checked="checked"> Analyze commits in the past  (Optional)
 							<br>
@@ -55,8 +59,8 @@
 								<br><br>
 								<input type="Radio" Name="commitAnalysisType" Value="Manual">  Commits Interval (Do an analysis each # commits)
 								<br></br>
-								<input type="text"
-								name="Number of commits" value="# Commits"><br>
+								<input type="number"
+								name="Number of commits" max="50" value="# Commits"><br>
 							</div>
 							<br></br><br>
 							<div  class="form-group col-md-12 col-sm-12 desc" id="analysisType3">
@@ -68,7 +72,7 @@
 								<br><br>
 								<div class="form-group 12 col-sm-12 desc1" id="commitAnalysisTime5">
 									<label>Analysis every (2-100) commits:</label><br>
-									<input type="text" name="Analysis every (2-100) commits:" value="# Commits"><br>
+									<input type="number" min="2" max="100" name="Analysis every (2-100) commits:" value="# Commits"><br>
 								</div>
 								<div hidden class="form-group 12 col-sm-12 desc1" id="commitAnalysisTime6">
 									<p>Starting date: <input type="text" id="datepicker"></p>
