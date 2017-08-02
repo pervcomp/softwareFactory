@@ -5,8 +5,13 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
@@ -22,14 +27,24 @@ public class SonarAnalysis {
 	private Project project  ;
 	private CommitAnalysis analysis;
 	
-	@Autowired
-	private CommitAnalysisDao commitAnalysisDao;
-	@Autowired
-	private CommitDao commitDao;
 
+
+
+	@Autowired
+	private  CommitAnalysisDao commitAnalysisDao;
+	@Autowired
+	private  CommitDao commitDao;
+
+	
+
+	
+	
+	
+	
 	public SonarAnalysis() {
 	}
-	
+
+
 	public void setProject(Project project){
 		this.project = project;
 	}
@@ -58,15 +73,48 @@ public class SonarAnalysis {
 		}
         List<String> str = new LinkedList<String>();
 		Git git = AppKt.cloneRemoteRepository(args[1], theDir);
-		str = AppKt.analyseAllRevisions(git, so);
 		
+		try {
+			Iterable<RevCommit> commits = git.log().call();
+			 for (RevCommit revCommit : commits) {
+				
+				String commitStr = AppKt.analyseRevision(git, so, revCommit.getName());
+						String[] commitArray = commitStr.split(" ");
+						Commit commit = new Commit();
+						commit.setAnalysisDate(new Date());
+						commit.setSsa(commitArray[3]);
+						commit.setIdCommitAnalysis(analysis.getIdAnalysis());
+						commit.setStatus(commitArray[13]);
+						DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+						try {
+							commit.setCreationDate(df.parse(commitArray[2].replace("T", " ")));
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						commitDao.insert(commit);
+			 }
+			
+			
+		} catch (GitAPIException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*
+		analysis.setStatus("Finished");
+		analysis.setEndDate(new Date());
+		commitAnalysisDao.save(analysis);*/
+	}
+	
+	public  void addCommit(String str, String analysis){
+		String[]  strArray = str.split(" ");
 		//Each commits must be inserted in the db
-		for (String commitStr : str){
+		for (String commitStr : strArray){
 			String[] commitArray = commitStr.split(" ");
 			Commit commit = new Commit();
 			commit.setAnalysisDate(new Date());
 			commit.setSsa(commitArray[3]);
-			commit.setIdCommitAnalysis(analysis.getIdAnalysis());
+			commit.setIdCommitAnalysis(analysis);
 			commit.setStatus(commitArray[13]);
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
 			try {
@@ -77,16 +125,15 @@ public class SonarAnalysis {
 			}
 			commitDao.insert(commit);
 		}
+		}
 		
-		analysis.setStatus("Finished");
-		analysis.setEndDate(new Date());
-		commitAnalysisDao.save(analysis);
-	}
-	
-	public static void hello(){
 		
-		System.out.println("CIAO");
-		
+		public  void closeAnalysis (String analysis){
+			CommitAnalysis ca = commitAnalysisDao.findBy_id(analysis);
+			ca.setStatus("Finished");
+			ca.setEndDate(new Date());
+			commitAnalysisDao.save(ca);
+			
 	}
 	
 	

@@ -14,13 +14,9 @@ import java.util.*
 import java.time.temporal.ChronoUnit
 import java.lang.ProcessBuilder.Redirect
 
-import com.codesmell.app.SonarAnalysis;
-
-
-
 fun main(args: Array<String>) {
-	SonarAnalysis.hello();
-    val scanOptions = parseOptions(args)
+	
+ /*   val scanOptions = parseOptions(args)
     if (scanOptions != null) {
         var tempScanDirectory: File? = null
         val git =
@@ -42,19 +38,18 @@ fun main(args: Array<String>) {
             else
                 println("Could not delete $tempScanDirectory")
         }
-    }
+    }*/
 }
 
 /*
 Analyses all past revisions for the specified project.
 Runs from the first revision or options.startFromRevision up to current revision of the git file.
  */
-fun analyseAllRevisions(git: Git, scanOptions: ScanOptions) : List<String> {
+fun analyseRevision(git: Git, scanOptions: ScanOptions, sha : String) : String  {
     //println("Log is written to ${git.repository.directory.parent}/../full-log.out")
     var sonarProperties = scanOptions.propertiesFile
     val result = mutableListOf<String>()
     copyPropertyFiles(git, scanOptions)
-
     val revisionsToScan =
             if (scanOptions.revisionFile == "")
                 mutableListOf<String>()
@@ -78,9 +73,11 @@ fun analyseAllRevisions(git: Git, scanOptions: ScanOptions) : List<String> {
                 sonarProperties = scanOptions.changeProperties[changeIdx]
                 changeIdx++
             }
-        if (hasReached(logHash, scanOptions.startFromRevision, index)) {
+        if (hasReached(logHash, scanOptions.startFromRevision, index) ) {
             if ((index-reachedAt) % scanOptions.analyzeEvery == 0
-                    && (revisionsToScan.isEmpty() || revisionsToScan.contains(logHash)) )  {
+                    && (revisionsToScan.isEmpty() || revisionsToScan.contains(logHash))
+					&& value.name == sha
+					 )  {
                 val logDateRaw = Instant.ofEpochSecond(value.commitTime.toLong())
                 val logDate = logDates[index]
                 if (logDate != logDateRaw)
@@ -110,21 +107,23 @@ fun analyseAllRevisions(git: Git, scanOptions: ScanOptions) : List<String> {
                 print(allText)
                 if (returnCode == 0){
 					result.add("Analysing revision: $sonarDate $logHash .. $allText ${Calendar.getInstance().time}: EXECUTION SUCCESS");
-                    println("${Calendar.getInstance().time}: EXECUTION SUCCESS")
-					}
+                    return ("Analysing revision: $sonarDate $logHash .. $allText ${Calendar.getInstance().time}: EXECUTION SUCCESS")
+                   
+				}
                 else{
                     println("${Calendar.getInstance().time}: EXECUTION FAILURE, return code $returnCode")
-					result.add("Analysing revision: $sonarDate $logHash .. $allText ${Calendar.getInstance().time}: EXECUTION FAILURE, return code $returnCode");
-            }
+					return ("Analysing revision: $sonarDate $logHash .. $allText ${Calendar.getInstance().time}: EXECUTION FAILURE, return code $returnCode")
+				}
         }
     }}
-	return result;
+	return "";
 }
 
 fun  copyPropertyFiles(git: Git, scanOptions: ScanOptions) {
     for (propertiesFile in scanOptions.changeProperties + scanOptions.propertiesFile) {
-        File(propertiesFile).copyTo(File(git.repository.directory.parent + File.separator + propertiesFile))
-    }
+         if (!File(git.repository.directory.parent + File.separator + propertiesFile).exists()){
+		 File(propertiesFile).copyTo(File(git.repository.directory.parent + File.separator + propertiesFile))
+    }}
 }
 
 fun readLinesFromFile(file: String): List<String> {

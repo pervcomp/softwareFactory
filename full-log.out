@@ -2502,3 +2502,2544 @@ INFO: ------------------------------------------------------------------------
 INFO: Total time: 11.364s
 INFO: Final Memory: 66M/566M
 INFO: ------------------------------------------------------------------------
+Note: checking out '87bcaa4959e6bfc51a182f5728eba86c4f3f4e8f'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 87bcaa4... Initial commit, 0 code-smells
+INFO: Scanner configuration file: /usr/local/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/my.properties
+INFO: SonarQube Scanner 3.0.3.778
+INFO: Java 1.8.0_121 Oracle Corporation (64-bit)
+INFO: Mac OS X 10.12.5 x86_64
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load global settings
+INFO: Load global settings (done) | time=102ms
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=11ms
+INFO: Plugin [l10nit] defines 'l10nen' as base plugin. This metadata can be removed from manifest of l10n plugins since version 5.2.
+INFO: SonarQube server 6.3.1
+INFO: Default locale: "de_DE", source code encoding: "UTF-8"
+INFO: Process project properties
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=85ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=16ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=347ms
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=75ms
+INFO: Publish mode
+INFO: Project key: scantest
+INFO: -------------  Scan E la madonna
+INFO: Load server rules
+INFO: Load server rules (done) | time=185ms
+INFO: Language is forced to java
+INFO: Initializer GenericCoverageSensor
+INFO: Initializer GenericCoverageSensor (done) | time=0ms
+INFO: Base dir: /Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41
+INFO: Working dir: /Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/.scannerwork
+INFO: Source paths: .
+INFO: Source encoding: UTF-8, default locale: de_DE
+INFO: Index files
+WARN: File '/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/java-project-for-sonar-scanner-testing.iml' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/my.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/sonar.properties' is ignored because it doens't belong to the forced langauge 'java'
+INFO: 1 file indexed
+INFO: Quality profile for java: Sonar way
+WARN: ----------------------------------------------------------------
+WARN: Sonargraph Integration: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile [Sonar way].
+WARN: ----------------------------------------------------------------
+INFO: Sensor JavaSquidSensor [java]
+INFO: Configured Java source version (sonar.java.source): none
+INFO: JavaClasspath initialization
+WARN: Bytecode of dependencies was not provided for analysis of source files, you might end up with less precise results. Bytecode can be provided using sonar.java.libraries property
+INFO: JavaClasspath initialization (done) | time=2ms
+INFO: JavaTestClasspath initialization
+INFO: JavaTestClasspath initialization (done) | time=0ms
+INFO: Java Main Files AST scan
+INFO: 1 source files to be analyzed
+INFO: 1/1 source files have been analyzed
+INFO: Java Main Files AST scan (done) | time=300ms
+INFO: Java Test Files AST scan
+INFO: 0 source files to be analyzed
+INFO: 0/0 source files have been analyzed
+INFO: Java Test Files AST scan (done) | time=0ms
+INFO: Sensor JavaSquidSensor [java] (done) | time=854ms
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph]
+INFO: ----------------------------------------------------------------
+INFO: Sonargraph: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile.
+INFO: ----------------------------------------------------------------
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph] (done) | time=3ms
+INFO: Sensor Embedded CSS Analyzer Sensor [css]
+INFO: 0 source files to be analyzed
+INFO: Sensor Embedded CSS Analyzer Sensor [css] (done) | time=255ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor SurefireSensor [java]
+INFO: parsing /Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/target/surefire-reports
+INFO: Sensor SurefireSensor [java] (done) | time=0ms
+INFO: Sensor JaCoCoSensor [java]
+INFO: Sensor JaCoCoSensor [java] (done) | time=1ms
+INFO: Sensor SonarJavaXmlFileSensor [java]
+INFO: Sensor SonarJavaXmlFileSensor [java] (done) | time=0ms
+INFO: Sensor jDepend sensor [jdepend]
+INFO: No classes to analyse, skipping analysis
+INFO: Sensor jDepend sensor [jdepend] (done) | time=7ms
+INFO: Sensor Packages sensor [jdepend]
+INFO: Sensor Packages sensor [jdepend] (done) | time=0ms
+INFO: Sensor Analyzer for "php.ini" files [php]
+INFO: Sensor Analyzer for "php.ini" files [php] (done) | time=3ms
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns]
+util.lang.ConcreteReceiverGuard reports a runtime deprecation: calling method "padl.kernel.impl.CodeLevelModel.create()" from class "it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor"
+Please use the methods in "padl.generator.helper.ModelGenerator" to obtain code-level models.
+INFO: Code level model built in 1229 ms
+INFO: Code level model contains 5 top-level entities
+util.repository.impl.FileRepositoryFactory has for running path: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.repository.impl.FileRepositoryFactory is creating a JarFileRepository for: util.repository.impl.JarFileRepository
+util.repository.impl.JarFileRepository is the current repository on: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns] (done) | time=2560ms
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=15ms
+INFO: Sensor Code Colorizer Sensor
+INFO: Sensor Code Colorizer Sensor (done) | time=1ms
+INFO: Sensor CPD Block Indexer
+INFO: org.sonar.scanner.cpd.deprecated.JavaCpdBlockIndexer@1455a374 is used for java
+INFO: Sensor CPD Block Indexer (done) | time=21ms
+INFO: SCM provider for this project is: git
+INFO: 1 files to be analyzed
+INFO: 1/1 files analyzed
+INFO: Calculating CPD for 0 files
+INFO: CPD calculation finished
+INFO: Analysis report generated in 65ms, dir size=23 KB
+INFO: Analysis reports compressed in 10ms, zip size=9 KB
+INFO: Analysis report uploaded in 114ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://sonar.inf.unibz.it/dashboard/index/scantest
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://sonar.inf.unibz.it/api/ce/task?id=AV2e7FhWLhPVrfLDw8jK
+INFO: Executing post-job com.headway.plugins.sonar.ArchViolationBuildBreaker
+INFO: Task total time: 7.536 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 9.119s
+INFO: Final Memory: 67M/561M
+INFO: ------------------------------------------------------------------------
+Previous HEAD position was 87bcaa4... Initial commit, 0 code-smells
+HEAD is now at 8523f8c... code smell long method: 1
+INFO: Scanner configuration file: /usr/local/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/my.properties
+INFO: SonarQube Scanner 3.0.3.778
+INFO: Java 1.8.0_121 Oracle Corporation (64-bit)
+INFO: Mac OS X 10.12.5 x86_64
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load global settings
+INFO: Load global settings (done) | time=58ms
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=7ms
+INFO: Plugin [l10nit] defines 'l10nen' as base plugin. This metadata can be removed from manifest of l10n plugins since version 5.2.
+INFO: SonarQube server 6.3.1
+INFO: Default locale: "de_DE", source code encoding: "UTF-8"
+INFO: Process project properties
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=126ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=17ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=352ms
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=72ms
+INFO: Publish mode
+INFO: Project key: scantest
+INFO: -------------  Scan E la madonna
+INFO: Load server rules
+INFO: Load server rules (done) | time=749ms
+INFO: Language is forced to java
+INFO: Initializer GenericCoverageSensor
+INFO: Initializer GenericCoverageSensor (done) | time=1ms
+INFO: Base dir: /Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41
+INFO: Working dir: /Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/.scannerwork
+INFO: Source paths: .
+INFO: Source encoding: UTF-8, default locale: de_DE
+INFO: Index files
+WARN: File '/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/java-project-for-sonar-scanner-testing.iml' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/sonar.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/my.properties' is ignored because it doens't belong to the forced langauge 'java'
+INFO: 2 files indexed
+INFO: Quality profile for java: Sonar way
+WARN: ----------------------------------------------------------------
+WARN: Sonargraph Integration: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile [Sonar way].
+WARN: ----------------------------------------------------------------
+INFO: Sensor JavaSquidSensor [java]
+INFO: Configured Java source version (sonar.java.source): none
+INFO: JavaClasspath initialization
+WARN: Bytecode of dependencies was not provided for analysis of source files, you might end up with less precise results. Bytecode can be provided using sonar.java.libraries property
+INFO: JavaClasspath initialization (done) | time=1ms
+INFO: JavaTestClasspath initialization
+INFO: JavaTestClasspath initialization (done) | time=1ms
+INFO: Java Main Files AST scan
+INFO: 2 source files to be analyzed
+INFO: 2/2 source files have been analyzed
+INFO: Java Main Files AST scan (done) | time=573ms
+INFO: Java Test Files AST scan
+INFO: 0 source files to be analyzed
+INFO: 0/0 source files have been analyzed
+INFO: Java Test Files AST scan (done) | time=0ms
+INFO: Sensor JavaSquidSensor [java] (done) | time=1132ms
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph]
+INFO: ----------------------------------------------------------------
+INFO: Sonargraph: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile.
+INFO: ----------------------------------------------------------------
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph] (done) | time=2ms
+INFO: Sensor Embedded CSS Analyzer Sensor [css]
+INFO: 0 source files to be analyzed
+INFO: 0/0 source files have been analyzed
+INFO: Sensor Embedded CSS Analyzer Sensor [css] (done) | time=285ms
+INFO: Sensor SurefireSensor [java]
+INFO: parsing /Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/target/surefire-reports
+INFO: Sensor SurefireSensor [java] (done) | time=1ms
+INFO: Sensor JaCoCoSensor [java]
+INFO: Sensor JaCoCoSensor [java] (done) | time=1ms
+INFO: Sensor SonarJavaXmlFileSensor [java]
+INFO: Sensor SonarJavaXmlFileSensor [java] (done) | time=0ms
+INFO: Sensor jDepend sensor [jdepend]
+INFO: No classes to analyse, skipping analysis
+INFO: Sensor jDepend sensor [jdepend] (done) | time=9ms
+INFO: Sensor Packages sensor [jdepend]
+INFO: Sensor Packages sensor [jdepend] (done) | time=1ms
+INFO: Sensor Analyzer for "php.ini" files [php]
+INFO: Sensor Analyzer for "php.ini" files [php] (done) | time=3ms
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns]
+util.lang.ConcreteReceiverGuard reports a runtime deprecation: calling method "padl.kernel.impl.CodeLevelModel.create()" from class "it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor"
+Please use the methods in "padl.generator.helper.ModelGenerator" to obtain code-level models.
+INFO: Code level model built in 1478 ms
+INFO: Code level model contains 7 top-level entities
+util.io.ProxyDisk reports that "../Temp/.Test/AntiSingleton.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/AntiSingleton.ini")
+util.repository.impl.FileRepositoryFactory has for running path: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.repository.impl.FileRepositoryFactory is creating a JarFileRepository for: util.repository.impl.JarFileRepository
+util.repository.impl.JarFileRepository is the current repository on: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassKnowsDerivedClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/BaseClassKnowsDerivedClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassShouldBeAbstract.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/BaseClassShouldBeAbstract.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/Blob.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/Blob.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ClassDataShouldBePrivate.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/ClassDataShouldBePrivate.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ComplexClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/ComplexClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/FunctionalDecomposition.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/FunctionalDecomposition.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LargeClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/LargeClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LazyClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/LazyClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongMethod.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/LongMethod.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongParameterList.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/LongParameterList.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ManyFieldAttributesButNotComplex.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/ManyFieldAttributesButNotComplex.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/MessageChains.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/MessageChains.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/RefusedParentBequest.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/RefusedParentBequest.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpaghettiCode.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/SpaghettiCode.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpeculativeGenerality.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/SpeculativeGenerality.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SwissArmyKnife.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/SwissArmyKnife.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/TraditionBreaker.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/TraditionBreaker.ini")
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns] (done) | time=3074ms
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=13ms
+INFO: Sensor Code Colorizer Sensor
+INFO: Sensor Code Colorizer Sensor (done) | time=0ms
+INFO: Sensor CPD Block Indexer
+INFO: org.sonar.scanner.cpd.deprecated.JavaCpdBlockIndexer@3bd552f7 is used for java
+INFO: Sensor CPD Block Indexer (done) | time=27ms
+INFO: SCM provider for this project is: git
+INFO: 2 files to be analyzed
+INFO: 2/2 files analyzed
+INFO: Calculating CPD for 1 files
+INFO: CPD calculation finished
+INFO: Analysis report generated in 82ms, dir size=34 KB
+INFO: Analysis reports compressed in 12ms, zip size=12 KB
+INFO: Analysis report uploaded in 109ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://sonar.inf.unibz.it/dashboard/index/scantest
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://sonar.inf.unibz.it/api/ce/task?id=AV2e7IFbLhPVrfLDw8jL
+INFO: Executing post-job com.headway.plugins.sonar.ArchViolationBuildBreaker
+INFO: Task total time: 9.030 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 10.067s
+INFO: Final Memory: 62M/562M
+INFO: ------------------------------------------------------------------------
+Previous HEAD position was 8523f8c... code smell long method: 1
+HEAD is now at e589d2a... class data should be private: +2
+INFO: Scanner configuration file: /usr/local/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/my.properties
+INFO: SonarQube Scanner 3.0.3.778
+INFO: Java 1.8.0_121 Oracle Corporation (64-bit)
+INFO: Mac OS X 10.12.5 x86_64
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load global settings
+INFO: Load global settings (done) | time=60ms
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=10ms
+INFO: Plugin [l10nit] defines 'l10nen' as base plugin. This metadata can be removed from manifest of l10n plugins since version 5.2.
+INFO: SonarQube server 6.3.1
+INFO: Default locale: "de_DE", source code encoding: "UTF-8"
+INFO: Process project properties
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=107ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=16ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=355ms
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=75ms
+INFO: Publish mode
+INFO: Project key: scantest
+INFO: -------------  Scan E la madonna
+INFO: Load server rules
+INFO: Load server rules (done) | time=97ms
+INFO: Language is forced to java
+INFO: Initializer GenericCoverageSensor
+INFO: Initializer GenericCoverageSensor (done) | time=0ms
+INFO: Base dir: /Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41
+INFO: Working dir: /Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/.scannerwork
+INFO: Source paths: .
+INFO: Source encoding: UTF-8, default locale: de_DE
+INFO: Index files
+WARN: File '/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/my.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/sonar.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/java-project-for-sonar-scanner-testing.iml' is ignored because it doens't belong to the forced langauge 'java'
+INFO: 4 files indexed
+INFO: Quality profile for java: Sonar way
+WARN: ----------------------------------------------------------------
+WARN: Sonargraph Integration: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile [Sonar way].
+WARN: ----------------------------------------------------------------
+INFO: Sensor JavaSquidSensor [java]
+INFO: Configured Java source version (sonar.java.source): none
+INFO: JavaClasspath initialization
+WARN: Bytecode of dependencies was not provided for analysis of source files, you might end up with less precise results. Bytecode can be provided using sonar.java.libraries property
+INFO: JavaClasspath initialization (done) | time=0ms
+INFO: JavaTestClasspath initialization
+INFO: JavaTestClasspath initialization (done) | time=1ms
+INFO: Java Main Files AST scan
+INFO: 4 source files to be analyzed
+INFO: Java Main Files AST scan (done) | time=608ms
+INFO: 4/4 source files have been analyzed
+INFO: Java Test Files AST scan
+INFO: 0 source files to be analyzed
+INFO: Java Test Files AST scan (done) | time=0ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor JavaSquidSensor [java] (done) | time=1171ms
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph]
+INFO: ----------------------------------------------------------------
+INFO: Sonargraph: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile.
+INFO: ----------------------------------------------------------------
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph] (done) | time=2ms
+INFO: Sensor Embedded CSS Analyzer Sensor [css]
+INFO: 0 source files to be analyzed
+INFO: Sensor Embedded CSS Analyzer Sensor [css] (done) | time=259ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor SurefireSensor [java]
+INFO: parsing /Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/target/surefire-reports
+INFO: Sensor SurefireSensor [java] (done) | time=1ms
+INFO: Sensor JaCoCoSensor [java]
+INFO: Sensor JaCoCoSensor [java] (done) | time=0ms
+INFO: Sensor SonarJavaXmlFileSensor [java]
+INFO: Sensor SonarJavaXmlFileSensor [java] (done) | time=0ms
+INFO: Sensor jDepend sensor [jdepend]
+INFO: No classes to analyse, skipping analysis
+INFO: Sensor jDepend sensor [jdepend] (done) | time=10ms
+INFO: Sensor Packages sensor [jdepend]
+INFO: Sensor Packages sensor [jdepend] (done) | time=1ms
+INFO: Sensor Analyzer for "php.ini" files [php]
+INFO: Sensor Analyzer for "php.ini" files [php] (done) | time=3ms
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns]
+util.lang.ConcreteReceiverGuard reports a runtime deprecation: calling method "padl.kernel.impl.CodeLevelModel.create()" from class "it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor"
+Please use the methods in "padl.generator.helper.ModelGenerator" to obtain code-level models.
+INFO: Code level model built in 1765 ms
+INFO: Code level model contains 11 top-level entities
+util.io.ProxyDisk reports that "../Temp/.Test/AntiSingleton.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/AntiSingleton.ini")
+util.repository.impl.FileRepositoryFactory has for running path: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.repository.impl.FileRepositoryFactory is creating a JarFileRepository for: util.repository.impl.JarFileRepository
+util.repository.impl.JarFileRepository is the current repository on: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassKnowsDerivedClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/BaseClassKnowsDerivedClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassShouldBeAbstract.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/BaseClassShouldBeAbstract.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/Blob.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/Blob.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ClassDataShouldBePrivate.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/ClassDataShouldBePrivate.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ComplexClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/ComplexClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/FunctionalDecomposition.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/FunctionalDecomposition.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LargeClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/LargeClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LazyClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/LazyClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongMethod.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/LongMethod.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongParameterList.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/LongParameterList.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ManyFieldAttributesButNotComplex.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/ManyFieldAttributesButNotComplex.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/MessageChains.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/MessageChains.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/RefusedParentBequest.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/RefusedParentBequest.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpaghettiCode.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/SpaghettiCode.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpeculativeGenerality.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/SpeculativeGenerality.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SwissArmyKnife.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/SwissArmyKnife.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/TraditionBreaker.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/TraditionBreaker.ini")
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns] (done) | time=3564ms
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=21ms
+INFO: Sensor Code Colorizer Sensor
+INFO: Sensor Code Colorizer Sensor (done) | time=0ms
+INFO: Sensor CPD Block Indexer
+INFO: org.sonar.scanner.cpd.deprecated.JavaCpdBlockIndexer@47511582 is used for java
+INFO: Sensor CPD Block Indexer (done) | time=34ms
+INFO: SCM provider for this project is: git
+INFO: 2 files to be analyzed
+INFO: 2/2 files analyzed
+INFO: Calculating CPD for 1 files
+INFO: CPD calculation finished
+INFO: Analysis report generated in 79ms, dir size=37 KB
+INFO: Analysis reports compressed in 16ms, zip size=16 KB
+INFO: Analysis report uploaded in 144ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://sonar.inf.unibz.it/dashboard/index/scantest
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://sonar.inf.unibz.it/api/ce/task?id=AV2e7KtZLhPVrfLDw8jM
+INFO: Executing post-job com.headway.plugins.sonar.ArchViolationBuildBreaker
+INFO: Task total time: 9.182 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 10.312s
+INFO: Final Memory: 69M/659M
+INFO: ------------------------------------------------------------------------
+Previous HEAD position was e589d2a... class data should be private: +2
+HEAD is now at 1e5fd9f... Long method: -1
+INFO: Scanner configuration file: /usr/local/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/my.properties
+INFO: SonarQube Scanner 3.0.3.778
+INFO: Java 1.8.0_121 Oracle Corporation (64-bit)
+INFO: Mac OS X 10.12.5 x86_64
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load global settings
+INFO: Load global settings (done) | time=68ms
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=17ms
+INFO: Plugin [l10nit] defines 'l10nen' as base plugin. This metadata can be removed from manifest of l10n plugins since version 5.2.
+INFO: SonarQube server 6.3.1
+INFO: Default locale: "de_DE", source code encoding: "UTF-8"
+INFO: Process project properties
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=65ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=17ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=246ms
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=68ms
+INFO: Publish mode
+INFO: Project key: scantest
+INFO: -------------  Scan E la madonna
+INFO: Load server rules
+INFO: Load server rules (done) | time=106ms
+INFO: Language is forced to java
+INFO: Initializer GenericCoverageSensor
+INFO: Initializer GenericCoverageSensor (done) | time=1ms
+INFO: Base dir: /Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41
+INFO: Working dir: /Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/.scannerwork
+INFO: Source paths: .
+INFO: Source encoding: UTF-8, default locale: de_DE
+INFO: Index files
+WARN: File '/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/java-project-for-sonar-scanner-testing.iml' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/my.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/sonar.properties' is ignored because it doens't belong to the forced langauge 'java'
+INFO: 3 files indexed
+INFO: Quality profile for java: Sonar way
+WARN: ----------------------------------------------------------------
+WARN: Sonargraph Integration: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile [Sonar way].
+WARN: ----------------------------------------------------------------
+INFO: Sensor JavaSquidSensor [java]
+INFO: Configured Java source version (sonar.java.source): none
+INFO: JavaClasspath initialization
+WARN: Bytecode of dependencies was not provided for analysis of source files, you might end up with less precise results. Bytecode can be provided using sonar.java.libraries property
+INFO: JavaClasspath initialization (done) | time=1ms
+INFO: JavaTestClasspath initialization
+INFO: JavaTestClasspath initialization (done) | time=0ms
+INFO: Java Main Files AST scan
+INFO: 3 source files to be analyzed
+INFO: Java Main Files AST scan (done) | time=411ms
+INFO: 3/3 source files have been analyzed
+INFO: Java Test Files AST scan
+INFO: 0 source files to be analyzed
+INFO: 0/0 source files have been analyzed
+INFO: Java Test Files AST scan (done) | time=1ms
+INFO: Sensor JavaSquidSensor [java] (done) | time=966ms
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph]
+INFO: ----------------------------------------------------------------
+INFO: Sonargraph: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile.
+INFO: ----------------------------------------------------------------
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph] (done) | time=2ms
+INFO: Sensor Embedded CSS Analyzer Sensor [css]
+INFO: 0 source files to be analyzed
+INFO: 0/0 source files have been analyzed
+INFO: Sensor Embedded CSS Analyzer Sensor [css] (done) | time=211ms
+INFO: Sensor SurefireSensor [java]
+INFO: parsing /Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/target/surefire-reports
+INFO: Sensor SurefireSensor [java] (done) | time=1ms
+INFO: Sensor JaCoCoSensor [java]
+INFO: Sensor JaCoCoSensor [java] (done) | time=0ms
+INFO: Sensor SonarJavaXmlFileSensor [java]
+INFO: Sensor SonarJavaXmlFileSensor [java] (done) | time=0ms
+INFO: Sensor jDepend sensor [jdepend]
+INFO: No classes to analyse, skipping analysis
+INFO: Sensor jDepend sensor [jdepend] (done) | time=6ms
+INFO: Sensor Packages sensor [jdepend]
+INFO: Sensor Packages sensor [jdepend] (done) | time=0ms
+INFO: Sensor Analyzer for "php.ini" files [php]
+INFO: Sensor Analyzer for "php.ini" files [php] (done) | time=1ms
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns]
+util.lang.ConcreteReceiverGuard reports a runtime deprecation: calling method "padl.kernel.impl.CodeLevelModel.create()" from class "it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor"
+Please use the methods in "padl.generator.helper.ModelGenerator" to obtain code-level models.
+INFO: Code level model built in 1536 ms
+INFO: Code level model contains 9 top-level entities
+util.io.ProxyDisk reports that "../Temp/.Test/AntiSingleton.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/AntiSingleton.ini")
+util.repository.impl.FileRepositoryFactory has for running path: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.repository.impl.FileRepositoryFactory is creating a JarFileRepository for: util.repository.impl.JarFileRepository
+util.repository.impl.JarFileRepository is the current repository on: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassKnowsDerivedClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/BaseClassKnowsDerivedClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassShouldBeAbstract.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/BaseClassShouldBeAbstract.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/Blob.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/Blob.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ClassDataShouldBePrivate.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/ClassDataShouldBePrivate.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ComplexClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/ComplexClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/FunctionalDecomposition.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/FunctionalDecomposition.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LargeClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/LargeClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LazyClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/LazyClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongMethod.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/LongMethod.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongParameterList.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/LongParameterList.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ManyFieldAttributesButNotComplex.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/ManyFieldAttributesButNotComplex.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/MessageChains.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/MessageChains.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/RefusedParentBequest.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/RefusedParentBequest.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpaghettiCode.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/SpaghettiCode.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpeculativeGenerality.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/SpeculativeGenerality.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SwissArmyKnife.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/SwissArmyKnife.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/TraditionBreaker.ini already exists ("/Users/prova/git/softwareFactory/Test_5980bf861b24530fd35d8d41/../Temp/.Test/TraditionBreaker.ini")
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns] (done) | time=3101ms
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=14ms
+INFO: Sensor Code Colorizer Sensor
+INFO: Sensor Code Colorizer Sensor (done) | time=0ms
+INFO: Sensor CPD Block Indexer
+INFO: org.sonar.scanner.cpd.deprecated.JavaCpdBlockIndexer@6237927a is used for java
+INFO: Sensor CPD Block Indexer (done) | time=16ms
+INFO: Calculating CPD for 0 files
+INFO: CPD calculation finished
+INFO: Analysis report generated in 83ms, dir size=26 KB
+INFO: Analysis reports compressed in 14ms, zip size=12 KB
+INFO: Analysis report uploaded in 138ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://sonar.inf.unibz.it/dashboard/index/scantest
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://sonar.inf.unibz.it/api/ce/task?id=AV2e7NF_LhPVrfLDw8jN
+INFO: Executing post-job com.headway.plugins.sonar.ArchViolationBuildBreaker
+INFO: Task total time: 7.930 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 9.216s
+INFO: Final Memory: 64M/562M
+INFO: ------------------------------------------------------------------------
+Note: checking out '87bcaa4959e6bfc51a182f5728eba86c4f3f4e8f'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 87bcaa4... Initial commit, 0 code-smells
+INFO: Scanner configuration file: /usr/local/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/my.properties
+INFO: SonarQube Scanner 3.0.3.778
+INFO: Java 1.8.0_121 Oracle Corporation (64-bit)
+INFO: Mac OS X 10.12.5 x86_64
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load global settings
+INFO: Load global settings (done) | time=73ms
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=10ms
+INFO: Plugin [l10nit] defines 'l10nen' as base plugin. This metadata can be removed from manifest of l10n plugins since version 5.2.
+INFO: SonarQube server 6.3.1
+INFO: Default locale: "de_DE", source code encoding: "UTF-8"
+INFO: Process project properties
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=292ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=19ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=500ms
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=70ms
+INFO: Publish mode
+INFO: Project key: scantest
+INFO: -------------  Scan E la madonna
+INFO: Load server rules
+INFO: Load server rules (done) | time=188ms
+INFO: Language is forced to java
+INFO: Initializer GenericCoverageSensor
+INFO: Initializer GenericCoverageSensor (done) | time=0ms
+INFO: Base dir: /Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da
+INFO: Working dir: /Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/.scannerwork
+INFO: Source paths: .
+INFO: Source encoding: UTF-8, default locale: de_DE
+INFO: Index files
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/my.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/java-project-for-sonar-scanner-testing.iml' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/sonar.properties' is ignored because it doens't belong to the forced langauge 'java'
+INFO: 1 file indexed
+INFO: Quality profile for java: Sonar way
+WARN: ----------------------------------------------------------------
+WARN: Sonargraph Integration: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile [Sonar way].
+WARN: ----------------------------------------------------------------
+INFO: Sensor JavaSquidSensor [java]
+INFO: Configured Java source version (sonar.java.source): none
+INFO: JavaClasspath initialization
+WARN: Bytecode of dependencies was not provided for analysis of source files, you might end up with less precise results. Bytecode can be provided using sonar.java.libraries property
+INFO: JavaClasspath initialization (done) | time=2ms
+INFO: JavaTestClasspath initialization
+INFO: JavaTestClasspath initialization (done) | time=0ms
+INFO: Java Main Files AST scan
+INFO: 1 source files to be analyzed
+INFO: Java Main Files AST scan (done) | time=302ms
+INFO: 1/1 source files have been analyzed
+INFO: Java Test Files AST scan
+INFO: 0 source files to be analyzed
+INFO: Java Test Files AST scan (done) | time=1ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor JavaSquidSensor [java] (done) | time=855ms
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph]
+INFO: ----------------------------------------------------------------
+INFO: Sonargraph: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile.
+INFO: ----------------------------------------------------------------
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph] (done) | time=2ms
+INFO: Sensor Embedded CSS Analyzer Sensor [css]
+INFO: 0 source files to be analyzed
+INFO: Sensor Embedded CSS Analyzer Sensor [css] (done) | time=232ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor SurefireSensor [java]
+INFO: parsing /Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/target/surefire-reports
+INFO: Sensor SurefireSensor [java] (done) | time=0ms
+INFO: Sensor JaCoCoSensor [java]
+INFO: Sensor JaCoCoSensor [java] (done) | time=1ms
+INFO: Sensor SonarJavaXmlFileSensor [java]
+INFO: Sensor SonarJavaXmlFileSensor [java] (done) | time=0ms
+INFO: Sensor jDepend sensor [jdepend]
+INFO: No classes to analyse, skipping analysis
+INFO: Sensor jDepend sensor [jdepend] (done) | time=6ms
+INFO: Sensor Packages sensor [jdepend]
+INFO: Sensor Packages sensor [jdepend] (done) | time=1ms
+INFO: Sensor Analyzer for "php.ini" files [php]
+INFO: Sensor Analyzer for "php.ini" files [php] (done) | time=2ms
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns]
+util.lang.ConcreteReceiverGuard reports a runtime deprecation: calling method "padl.kernel.impl.CodeLevelModel.create()" from class "it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor"
+Please use the methods in "padl.generator.helper.ModelGenerator" to obtain code-level models.
+INFO: Code level model built in 1256 ms
+INFO: Code level model contains 5 top-level entities
+util.io.ProxyDisk reports that "../Temp/.Test/AntiSingleton.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/AntiSingleton.ini")
+util.repository.impl.FileRepositoryFactory has for running path: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.repository.impl.FileRepositoryFactory is creating a JarFileRepository for: util.repository.impl.JarFileRepository
+util.repository.impl.JarFileRepository is the current repository on: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassKnowsDerivedClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/BaseClassKnowsDerivedClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassShouldBeAbstract.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/BaseClassShouldBeAbstract.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/Blob.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/Blob.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ClassDataShouldBePrivate.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/ClassDataShouldBePrivate.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ComplexClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/ComplexClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/FunctionalDecomposition.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/FunctionalDecomposition.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LargeClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/LargeClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LazyClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/LazyClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongMethod.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/LongMethod.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongParameterList.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/LongParameterList.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ManyFieldAttributesButNotComplex.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/ManyFieldAttributesButNotComplex.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/MessageChains.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/MessageChains.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/RefusedParentBequest.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/RefusedParentBequest.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpaghettiCode.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/SpaghettiCode.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpeculativeGenerality.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/SpeculativeGenerality.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SwissArmyKnife.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/SwissArmyKnife.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/TraditionBreaker.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/TraditionBreaker.ini")
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns] (done) | time=2545ms
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=10ms
+INFO: Sensor Code Colorizer Sensor
+INFO: Sensor Code Colorizer Sensor (done) | time=0ms
+INFO: Sensor CPD Block Indexer
+INFO: org.sonar.scanner.cpd.deprecated.JavaCpdBlockIndexer@14b4f462 is used for java
+INFO: Sensor CPD Block Indexer (done) | time=13ms
+INFO: SCM provider for this project is: git
+INFO: 1 files to be analyzed
+INFO: 1/1 files analyzed
+INFO: Calculating CPD for 0 files
+INFO: CPD calculation finished
+INFO: Analysis report generated in 69ms, dir size=23 KB
+INFO: Analysis reports compressed in 10ms, zip size=9 KB
+INFO: Analysis report uploaded in 119ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://sonar.inf.unibz.it/dashboard/index/scantest
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://sonar.inf.unibz.it/api/ce/task?id=AV2e9gCTLhPVrfLDw8jS
+INFO: Executing post-job com.headway.plugins.sonar.ArchViolationBuildBreaker
+INFO: Task total time: 7.597 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 8.851s
+INFO: Final Memory: 67M/567M
+INFO: ------------------------------------------------------------------------
+Previous HEAD position was 87bcaa4... Initial commit, 0 code-smells
+HEAD is now at 8523f8c... code smell long method: 1
+INFO: Scanner configuration file: /usr/local/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/my.properties
+INFO: SonarQube Scanner 3.0.3.778
+INFO: Java 1.8.0_121 Oracle Corporation (64-bit)
+INFO: Mac OS X 10.12.5 x86_64
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load global settings
+INFO: Load global settings (done) | time=71ms
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=9ms
+INFO: Plugin [l10nit] defines 'l10nen' as base plugin. This metadata can be removed from manifest of l10n plugins since version 5.2.
+INFO: SonarQube server 6.3.1
+INFO: Default locale: "de_DE", source code encoding: "UTF-8"
+INFO: Process project properties
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=75ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=15ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=323ms
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=71ms
+INFO: Publish mode
+INFO: Project key: scantest
+INFO: -------------  Scan E la madonna
+INFO: Load server rules
+INFO: Load server rules (done) | time=163ms
+INFO: Language is forced to java
+INFO: Initializer GenericCoverageSensor
+INFO: Initializer GenericCoverageSensor (done) | time=0ms
+INFO: Base dir: /Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da
+INFO: Working dir: /Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/.scannerwork
+INFO: Source paths: .
+INFO: Source encoding: UTF-8, default locale: de_DE
+INFO: Index files
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/java-project-for-sonar-scanner-testing.iml' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/my.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/sonar.properties' is ignored because it doens't belong to the forced langauge 'java'
+INFO: 2 files indexed
+INFO: Quality profile for java: Sonar way
+WARN: ----------------------------------------------------------------
+WARN: Sonargraph Integration: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile [Sonar way].
+WARN: ----------------------------------------------------------------
+INFO: Sensor JavaSquidSensor [java]
+INFO: Configured Java source version (sonar.java.source): none
+INFO: JavaClasspath initialization
+WARN: Bytecode of dependencies was not provided for analysis of source files, you might end up with less precise results. Bytecode can be provided using sonar.java.libraries property
+INFO: JavaClasspath initialization (done) | time=1ms
+INFO: JavaTestClasspath initialization
+INFO: JavaTestClasspath initialization (done) | time=0ms
+INFO: Java Main Files AST scan
+INFO: 2 source files to be analyzed
+INFO: Java Main Files AST scan (done) | time=540ms
+INFO: 2/2 source files have been analyzed
+INFO: Java Test Files AST scan
+INFO: 0 source files to be analyzed
+INFO: Java Test Files AST scan (done) | time=0ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor JavaSquidSensor [java] (done) | time=1118ms
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph]
+INFO: ----------------------------------------------------------------
+INFO: Sonargraph: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile.
+INFO: ----------------------------------------------------------------
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph] (done) | time=2ms
+INFO: Sensor Embedded CSS Analyzer Sensor [css]
+INFO: 0 source files to be analyzed
+INFO: 0/0 source files have been analyzed
+INFO: Sensor Embedded CSS Analyzer Sensor [css] (done) | time=244ms
+INFO: Sensor SurefireSensor [java]
+INFO: parsing /Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/target/surefire-reports
+INFO: Sensor SurefireSensor [java] (done) | time=1ms
+INFO: Sensor JaCoCoSensor [java]
+INFO: Sensor JaCoCoSensor [java] (done) | time=1ms
+INFO: Sensor SonarJavaXmlFileSensor [java]
+INFO: Sensor SonarJavaXmlFileSensor [java] (done) | time=0ms
+INFO: Sensor jDepend sensor [jdepend]
+INFO: No classes to analyse, skipping analysis
+INFO: Sensor jDepend sensor [jdepend] (done) | time=6ms
+INFO: Sensor Packages sensor [jdepend]
+INFO: Sensor Packages sensor [jdepend] (done) | time=1ms
+INFO: Sensor Analyzer for "php.ini" files [php]
+INFO: Sensor Analyzer for "php.ini" files [php] (done) | time=3ms
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns]
+util.lang.ConcreteReceiverGuard reports a runtime deprecation: calling method "padl.kernel.impl.CodeLevelModel.create()" from class "it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor"
+Please use the methods in "padl.generator.helper.ModelGenerator" to obtain code-level models.
+INFO: Code level model built in 1394 ms
+INFO: Code level model contains 7 top-level entities
+util.io.ProxyDisk reports that "../Temp/.Test/AntiSingleton.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/AntiSingleton.ini")
+util.repository.impl.FileRepositoryFactory has for running path: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.repository.impl.FileRepositoryFactory is creating a JarFileRepository for: util.repository.impl.JarFileRepository
+util.repository.impl.JarFileRepository is the current repository on: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassKnowsDerivedClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/BaseClassKnowsDerivedClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassShouldBeAbstract.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/BaseClassShouldBeAbstract.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/Blob.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/Blob.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ClassDataShouldBePrivate.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/ClassDataShouldBePrivate.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ComplexClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/ComplexClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/FunctionalDecomposition.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/FunctionalDecomposition.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LargeClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/LargeClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LazyClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/LazyClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongMethod.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/LongMethod.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongParameterList.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/LongParameterList.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ManyFieldAttributesButNotComplex.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/ManyFieldAttributesButNotComplex.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/MessageChains.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/MessageChains.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/RefusedParentBequest.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/RefusedParentBequest.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpaghettiCode.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/SpaghettiCode.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpeculativeGenerality.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/SpeculativeGenerality.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SwissArmyKnife.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/SwissArmyKnife.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/TraditionBreaker.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/TraditionBreaker.ini")
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns] (done) | time=3160ms
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=14ms
+INFO: Sensor Code Colorizer Sensor
+INFO: Sensor Code Colorizer Sensor (done) | time=1ms
+INFO: Sensor CPD Block Indexer
+INFO: org.sonar.scanner.cpd.deprecated.JavaCpdBlockIndexer@3bd552f7 is used for java
+INFO: Sensor CPD Block Indexer (done) | time=24ms
+INFO: SCM provider for this project is: git
+INFO: 2 files to be analyzed
+INFO: 2/2 files analyzed
+INFO: Calculating CPD for 1 files
+INFO: CPD calculation finished
+INFO: Analysis report generated in 79ms, dir size=34 KB
+INFO: Analysis reports compressed in 12ms, zip size=12 KB
+INFO: Analysis report uploaded in 106ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://sonar.inf.unibz.it/dashboard/index/scantest
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://sonar.inf.unibz.it/api/ce/task?id=AV2e9iejLhPVrfLDw8jT
+INFO: Executing post-job com.headway.plugins.sonar.ArchViolationBuildBreaker
+INFO: Task total time: 8.234 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 9.416s
+INFO: Final Memory: 68M/561M
+INFO: ------------------------------------------------------------------------
+Previous HEAD position was 8523f8c... code smell long method: 1
+HEAD is now at e589d2a... class data should be private: +2
+INFO: Scanner configuration file: /usr/local/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/my.properties
+INFO: SonarQube Scanner 3.0.3.778
+INFO: Java 1.8.0_121 Oracle Corporation (64-bit)
+INFO: Mac OS X 10.12.5 x86_64
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load global settings
+INFO: Load global settings (done) | time=67ms
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=8ms
+INFO: Plugin [l10nit] defines 'l10nen' as base plugin. This metadata can be removed from manifest of l10n plugins since version 5.2.
+INFO: SonarQube server 6.3.1
+INFO: Default locale: "de_DE", source code encoding: "UTF-8"
+INFO: Process project properties
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=86ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=17ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=319ms
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=85ms
+INFO: Publish mode
+INFO: Project key: scantest
+INFO: -------------  Scan E la madonna
+INFO: Load server rules
+INFO: Load server rules (done) | time=174ms
+INFO: Language is forced to java
+INFO: Initializer GenericCoverageSensor
+INFO: Initializer GenericCoverageSensor (done) | time=1ms
+INFO: Base dir: /Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da
+INFO: Working dir: /Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/.scannerwork
+INFO: Source paths: .
+INFO: Source encoding: UTF-8, default locale: de_DE
+INFO: Index files
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/java-project-for-sonar-scanner-testing.iml' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/my.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/sonar.properties' is ignored because it doens't belong to the forced langauge 'java'
+INFO: 4 files indexed
+INFO: Quality profile for java: Sonar way
+WARN: ----------------------------------------------------------------
+WARN: Sonargraph Integration: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile [Sonar way].
+WARN: ----------------------------------------------------------------
+INFO: Sensor JavaSquidSensor [java]
+INFO: Configured Java source version (sonar.java.source): none
+INFO: JavaClasspath initialization
+WARN: Bytecode of dependencies was not provided for analysis of source files, you might end up with less precise results. Bytecode can be provided using sonar.java.libraries property
+INFO: JavaClasspath initialization (done) | time=1ms
+INFO: JavaTestClasspath initialization
+INFO: JavaTestClasspath initialization (done) | time=0ms
+INFO: Java Main Files AST scan
+INFO: 4 source files to be analyzed
+INFO: 4/4 source files have been analyzed
+INFO: Java Main Files AST scan (done) | time=666ms
+INFO: Java Test Files AST scan
+INFO: 0 source files to be analyzed
+INFO: Java Test Files AST scan (done) | time=1ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor JavaSquidSensor [java] (done) | time=1296ms
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph]
+INFO: ----------------------------------------------------------------
+INFO: Sonargraph: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile.
+INFO: ----------------------------------------------------------------
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph] (done) | time=2ms
+INFO: Sensor Embedded CSS Analyzer Sensor [css]
+INFO: 0 source files to be analyzed
+INFO: 0/0 source files have been analyzed
+INFO: Sensor Embedded CSS Analyzer Sensor [css] (done) | time=268ms
+INFO: Sensor SurefireSensor [java]
+INFO: parsing /Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/target/surefire-reports
+INFO: Sensor SurefireSensor [java] (done) | time=0ms
+INFO: Sensor JaCoCoSensor [java]
+INFO: Sensor JaCoCoSensor [java] (done) | time=0ms
+INFO: Sensor SonarJavaXmlFileSensor [java]
+INFO: Sensor SonarJavaXmlFileSensor [java] (done) | time=0ms
+INFO: Sensor jDepend sensor [jdepend]
+INFO: No classes to analyse, skipping analysis
+INFO: Sensor jDepend sensor [jdepend] (done) | time=9ms
+INFO: Sensor Packages sensor [jdepend]
+INFO: Sensor Packages sensor [jdepend] (done) | time=2ms
+INFO: Sensor Analyzer for "php.ini" files [php]
+INFO: Sensor Analyzer for "php.ini" files [php] (done) | time=3ms
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns]
+util.lang.ConcreteReceiverGuard reports a runtime deprecation: calling method "padl.kernel.impl.CodeLevelModel.create()" from class "it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor"
+Please use the methods in "padl.generator.helper.ModelGenerator" to obtain code-level models.
+INFO: Code level model built in 1719 ms
+INFO: Code level model contains 11 top-level entities
+util.io.ProxyDisk reports that "../Temp/.Test/AntiSingleton.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/AntiSingleton.ini")
+util.repository.impl.FileRepositoryFactory has for running path: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.repository.impl.FileRepositoryFactory is creating a JarFileRepository for: util.repository.impl.JarFileRepository
+util.repository.impl.JarFileRepository is the current repository on: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassKnowsDerivedClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/BaseClassKnowsDerivedClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassShouldBeAbstract.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/BaseClassShouldBeAbstract.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/Blob.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/Blob.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ClassDataShouldBePrivate.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/ClassDataShouldBePrivate.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ComplexClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/ComplexClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/FunctionalDecomposition.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/FunctionalDecomposition.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LargeClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/LargeClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LazyClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/LazyClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongMethod.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/LongMethod.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongParameterList.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/LongParameterList.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ManyFieldAttributesButNotComplex.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/ManyFieldAttributesButNotComplex.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/MessageChains.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/MessageChains.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/RefusedParentBequest.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/RefusedParentBequest.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpaghettiCode.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/SpaghettiCode.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpeculativeGenerality.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/SpeculativeGenerality.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SwissArmyKnife.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/SwissArmyKnife.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/TraditionBreaker.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/TraditionBreaker.ini")
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns] (done) | time=3507ms
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=20ms
+INFO: Sensor Code Colorizer Sensor
+INFO: Sensor Code Colorizer Sensor (done) | time=1ms
+INFO: Sensor CPD Block Indexer
+INFO: org.sonar.scanner.cpd.deprecated.JavaCpdBlockIndexer@47511582 is used for java
+INFO: Sensor CPD Block Indexer (done) | time=33ms
+INFO: SCM provider for this project is: git
+INFO: 2 files to be analyzed
+INFO: 2/2 files analyzed
+INFO: Calculating CPD for 1 files
+INFO: CPD calculation finished
+INFO: Analysis report generated in 82ms, dir size=37 KB
+INFO: Analysis reports compressed in 20ms, zip size=16 KB
+INFO: Analysis report uploaded in 102ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://sonar.inf.unibz.it/dashboard/index/scantest
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://sonar.inf.unibz.it/api/ce/task?id=AV2e9lK7LhPVrfLDw8jV
+INFO: Executing post-job com.headway.plugins.sonar.ArchViolationBuildBreaker
+INFO: Task total time: 9.202 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 10.477s
+INFO: Final Memory: 67M/564M
+INFO: ------------------------------------------------------------------------
+Previous HEAD position was e589d2a... class data should be private: +2
+HEAD is now at 1e5fd9f... Long method: -1
+INFO: Scanner configuration file: /usr/local/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/my.properties
+INFO: SonarQube Scanner 3.0.3.778
+INFO: Java 1.8.0_121 Oracle Corporation (64-bit)
+INFO: Mac OS X 10.12.5 x86_64
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load global settings
+INFO: Load global settings (done) | time=69ms
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=8ms
+INFO: Plugin [l10nit] defines 'l10nen' as base plugin. This metadata can be removed from manifest of l10n plugins since version 5.2.
+INFO: SonarQube server 6.3.1
+INFO: Default locale: "de_DE", source code encoding: "UTF-8"
+INFO: Process project properties
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=73ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=11ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=232ms
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=59ms
+INFO: Publish mode
+INFO: Project key: scantest
+INFO: -------------  Scan E la madonna
+INFO: Load server rules
+INFO: Load server rules (done) | time=81ms
+INFO: Language is forced to java
+INFO: Initializer GenericCoverageSensor
+INFO: Initializer GenericCoverageSensor (done) | time=1ms
+INFO: Base dir: /Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da
+INFO: Working dir: /Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/.scannerwork
+INFO: Source paths: .
+INFO: Source encoding: UTF-8, default locale: de_DE
+INFO: Index files
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/java-project-for-sonar-scanner-testing.iml' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/sonar.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/my.properties' is ignored because it doens't belong to the forced langauge 'java'
+INFO: 3 files indexed
+INFO: Quality profile for java: Sonar way
+WARN: ----------------------------------------------------------------
+WARN: Sonargraph Integration: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile [Sonar way].
+WARN: ----------------------------------------------------------------
+INFO: Sensor JavaSquidSensor [java]
+INFO: Configured Java source version (sonar.java.source): none
+INFO: JavaClasspath initialization
+WARN: Bytecode of dependencies was not provided for analysis of source files, you might end up with less precise results. Bytecode can be provided using sonar.java.libraries property
+INFO: JavaClasspath initialization (done) | time=2ms
+INFO: JavaTestClasspath initialization
+INFO: JavaTestClasspath initialization (done) | time=1ms
+INFO: Java Main Files AST scan
+INFO: 3 source files to be analyzed
+INFO: 3/3 source files have been analyzed
+INFO: Java Main Files AST scan (done) | time=522ms
+INFO: Java Test Files AST scan
+INFO: 0 source files to be analyzed
+INFO: Java Test Files AST scan (done) | time=0ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor JavaSquidSensor [java] (done) | time=1114ms
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph]
+INFO: ----------------------------------------------------------------
+INFO: Sonargraph: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile.
+INFO: ----------------------------------------------------------------
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph] (done) | time=1ms
+INFO: Sensor Embedded CSS Analyzer Sensor [css]
+INFO: 0 source files to be analyzed
+INFO: 0/0 source files have been analyzed
+INFO: Sensor Embedded CSS Analyzer Sensor [css] (done) | time=201ms
+INFO: Sensor SurefireSensor [java]
+INFO: parsing /Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/target/surefire-reports
+INFO: Sensor SurefireSensor [java] (done) | time=0ms
+INFO: Sensor JaCoCoSensor [java]
+INFO: Sensor JaCoCoSensor [java] (done) | time=0ms
+INFO: Sensor SonarJavaXmlFileSensor [java]
+INFO: Sensor SonarJavaXmlFileSensor [java] (done) | time=0ms
+INFO: Sensor jDepend sensor [jdepend]
+INFO: No classes to analyse, skipping analysis
+INFO: Sensor jDepend sensor [jdepend] (done) | time=5ms
+INFO: Sensor Packages sensor [jdepend]
+INFO: Sensor Packages sensor [jdepend] (done) | time=1ms
+INFO: Sensor Analyzer for "php.ini" files [php]
+INFO: Sensor Analyzer for "php.ini" files [php] (done) | time=4ms
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns]
+util.lang.ConcreteReceiverGuard reports a runtime deprecation: calling method "padl.kernel.impl.CodeLevelModel.create()" from class "it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor"
+Please use the methods in "padl.generator.helper.ModelGenerator" to obtain code-level models.
+INFO: Code level model built in 1555 ms
+INFO: Code level model contains 9 top-level entities
+util.io.ProxyDisk reports that "../Temp/.Test/AntiSingleton.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/AntiSingleton.ini")
+util.repository.impl.FileRepositoryFactory has for running path: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.repository.impl.FileRepositoryFactory is creating a JarFileRepository for: util.repository.impl.JarFileRepository
+util.repository.impl.JarFileRepository is the current repository on: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassKnowsDerivedClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/BaseClassKnowsDerivedClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassShouldBeAbstract.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/BaseClassShouldBeAbstract.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/Blob.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/Blob.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ClassDataShouldBePrivate.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/ClassDataShouldBePrivate.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ComplexClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/ComplexClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/FunctionalDecomposition.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/FunctionalDecomposition.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LargeClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/LargeClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LazyClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/LazyClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongMethod.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/LongMethod.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongParameterList.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/LongParameterList.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ManyFieldAttributesButNotComplex.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/ManyFieldAttributesButNotComplex.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/MessageChains.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/MessageChains.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/RefusedParentBequest.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/RefusedParentBequest.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpaghettiCode.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/SpaghettiCode.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpeculativeGenerality.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/SpeculativeGenerality.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SwissArmyKnife.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/SwissArmyKnife.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/TraditionBreaker.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c1ff1b24530ff949e6da/../Temp/.Test/TraditionBreaker.ini")
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns] (done) | time=3158ms
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=14ms
+INFO: Sensor Code Colorizer Sensor
+INFO: Sensor Code Colorizer Sensor (done) | time=0ms
+INFO: Sensor CPD Block Indexer
+INFO: org.sonar.scanner.cpd.deprecated.JavaCpdBlockIndexer@6237927a is used for java
+INFO: Sensor CPD Block Indexer (done) | time=18ms
+INFO: Calculating CPD for 0 files
+INFO: CPD calculation finished
+INFO: Analysis report generated in 87ms, dir size=26 KB
+INFO: Analysis reports compressed in 16ms, zip size=12 KB
+INFO: Analysis report uploaded in 99ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://sonar.inf.unibz.it/dashboard/index/scantest
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://sonar.inf.unibz.it/api/ce/task?id=AV2e9nleLhPVrfLDw8jW
+INFO: Executing post-job com.headway.plugins.sonar.ArchViolationBuildBreaker
+INFO: Task total time: 8.033 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 9.402s
+INFO: Final Memory: 64M/562M
+INFO: ------------------------------------------------------------------------
+Note: checking out '87bcaa4959e6bfc51a182f5728eba86c4f3f4e8f'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 87bcaa4... Initial commit, 0 code-smells
+INFO: Scanner configuration file: /usr/local/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/my.properties
+INFO: SonarQube Scanner 3.0.3.778
+INFO: Java 1.8.0_121 Oracle Corporation (64-bit)
+INFO: Mac OS X 10.12.5 x86_64
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load global settings
+INFO: Load global settings (done) | time=66ms
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=8ms
+INFO: Plugin [l10nit] defines 'l10nen' as base plugin. This metadata can be removed from manifest of l10n plugins since version 5.2.
+INFO: SonarQube server 6.3.1
+INFO: Default locale: "de_DE", source code encoding: "UTF-8"
+INFO: Process project properties
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=73ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=15ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=261ms
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=76ms
+INFO: Publish mode
+INFO: Project key: scantest
+INFO: -------------  Scan E la madonna
+INFO: Load server rules
+INFO: Load server rules (done) | time=81ms
+INFO: Language is forced to java
+INFO: Initializer GenericCoverageSensor
+INFO: Initializer GenericCoverageSensor (done) | time=1ms
+INFO: Base dir: /Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5
+INFO: Working dir: /Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/.scannerwork
+INFO: Source paths: .
+INFO: Source encoding: UTF-8, default locale: de_DE
+INFO: Index files
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/my.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/java-project-for-sonar-scanner-testing.iml' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/sonar.properties' is ignored because it doens't belong to the forced langauge 'java'
+INFO: 1 file indexed
+INFO: Quality profile for java: Sonar way
+WARN: ----------------------------------------------------------------
+WARN: Sonargraph Integration: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile [Sonar way].
+WARN: ----------------------------------------------------------------
+INFO: Sensor JavaSquidSensor [java]
+INFO: Configured Java source version (sonar.java.source): none
+INFO: JavaClasspath initialization
+WARN: Bytecode of dependencies was not provided for analysis of source files, you might end up with less precise results. Bytecode can be provided using sonar.java.libraries property
+INFO: JavaClasspath initialization (done) | time=2ms
+INFO: JavaTestClasspath initialization
+INFO: JavaTestClasspath initialization (done) | time=0ms
+INFO: Java Main Files AST scan
+INFO: 1 source files to be analyzed
+INFO: 1/1 source files have been analyzed
+INFO: Java Main Files AST scan (done) | time=344ms
+INFO: Java Test Files AST scan
+INFO: 0 source files to be analyzed
+INFO: 0/0 source files have been analyzed
+INFO: Java Test Files AST scan (done) | time=0ms
+INFO: Sensor JavaSquidSensor [java] (done) | time=1022ms
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph]
+INFO: ----------------------------------------------------------------
+INFO: Sonargraph: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile.
+INFO: ----------------------------------------------------------------
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph] (done) | time=2ms
+INFO: Sensor Embedded CSS Analyzer Sensor [css]
+INFO: 0 source files to be analyzed
+INFO: Sensor Embedded CSS Analyzer Sensor [css] (done) | time=274ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor SurefireSensor [java]
+INFO: parsing /Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/target/surefire-reports
+INFO: Sensor SurefireSensor [java] (done) | time=1ms
+INFO: Sensor JaCoCoSensor [java]
+INFO: Sensor JaCoCoSensor [java] (done) | time=1ms
+INFO: Sensor SonarJavaXmlFileSensor [java]
+INFO: Sensor SonarJavaXmlFileSensor [java] (done) | time=0ms
+INFO: Sensor jDepend sensor [jdepend]
+INFO: No classes to analyse, skipping analysis
+INFO: Sensor jDepend sensor [jdepend] (done) | time=8ms
+INFO: Sensor Packages sensor [jdepend]
+INFO: Sensor Packages sensor [jdepend] (done) | time=1ms
+INFO: Sensor Analyzer for "php.ini" files [php]
+INFO: Sensor Analyzer for "php.ini" files [php] (done) | time=3ms
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns]
+util.lang.ConcreteReceiverGuard reports a runtime deprecation: calling method "padl.kernel.impl.CodeLevelModel.create()" from class "it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor"
+Please use the methods in "padl.generator.helper.ModelGenerator" to obtain code-level models.
+INFO: Code level model built in 1401 ms
+INFO: Code level model contains 5 top-level entities
+util.io.ProxyDisk reports that "../Temp/.Test/AntiSingleton.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/../Temp/.Test/AntiSingleton.ini")
+util.repository.impl.FileRepositoryFactory has for running path: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.repository.impl.FileRepositoryFactory is creating a JarFileRepository for: util.repository.impl.JarFileRepository
+util.repository.impl.JarFileRepository is the current repository on: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassKnowsDerivedClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/../Temp/.Test/BaseClassKnowsDerivedClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassShouldBeAbstract.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/../Temp/.Test/BaseClassShouldBeAbstract.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/Blob.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/../Temp/.Test/Blob.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ClassDataShouldBePrivate.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/../Temp/.Test/ClassDataShouldBePrivate.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ComplexClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/../Temp/.Test/ComplexClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/FunctionalDecomposition.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/../Temp/.Test/FunctionalDecomposition.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LargeClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/../Temp/.Test/LargeClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LazyClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/../Temp/.Test/LazyClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongMethod.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/../Temp/.Test/LongMethod.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongParameterList.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/../Temp/.Test/LongParameterList.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ManyFieldAttributesButNotComplex.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/../Temp/.Test/ManyFieldAttributesButNotComplex.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/MessageChains.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/../Temp/.Test/MessageChains.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/RefusedParentBequest.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/../Temp/.Test/RefusedParentBequest.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpaghettiCode.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/../Temp/.Test/SpaghettiCode.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpeculativeGenerality.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/../Temp/.Test/SpeculativeGenerality.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SwissArmyKnife.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/../Temp/.Test/SwissArmyKnife.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/TraditionBreaker.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2461b24531018f63cb5/../Temp/.Test/TraditionBreaker.ini")
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns] (done) | time=2701ms
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=11ms
+INFO: Sensor Code Colorizer Sensor
+INFO: Sensor Code Colorizer Sensor (done) | time=1ms
+INFO: Sensor CPD Block Indexer
+INFO: org.sonar.scanner.cpd.deprecated.JavaCpdBlockIndexer@14b4f462 is used for java
+INFO: Sensor CPD Block Indexer (done) | time=14ms
+INFO: SCM provider for this project is: git
+INFO: 1 files to be analyzed
+INFO: 1/1 files analyzed
+INFO: Calculating CPD for 0 files
+INFO: CPD calculation finished
+INFO: Analysis report generated in 71ms, dir size=23 KB
+INFO: Analysis reports compressed in 8ms, zip size=9 KB
+INFO: Analysis report uploaded in 116ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://sonar.inf.unibz.it/dashboard/index/scantest
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://sonar.inf.unibz.it/api/ce/task?id=AV2e9xXdLhPVrfLDw8jX
+INFO: Executing post-job com.headway.plugins.sonar.ArchViolationBuildBreaker
+INFO: Task total time: 7.928 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 9.114s
+INFO: Final Memory: 67M/559M
+INFO: ------------------------------------------------------------------------
+Note: checking out '87bcaa4959e6bfc51a182f5728eba86c4f3f4e8f'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 87bcaa4... Initial commit, 0 code-smells
+INFO: Scanner configuration file: /usr/local/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/my.properties
+INFO: SonarQube Scanner 3.0.3.778
+INFO: Java 1.8.0_121 Oracle Corporation (64-bit)
+INFO: Mac OS X 10.12.5 x86_64
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load global settings
+INFO: Load global settings (done) | time=74ms
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=10ms
+INFO: Plugin [l10nit] defines 'l10nen' as base plugin. This metadata can be removed from manifest of l10n plugins since version 5.2.
+INFO: SonarQube server 6.3.1
+INFO: Default locale: "de_DE", source code encoding: "UTF-8"
+INFO: Process project properties
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=1242ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=75ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=1663ms
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=80ms
+INFO: Publish mode
+INFO: Project key: scantest
+INFO: -------------  Scan E la madonna
+INFO: Load server rules
+INFO: Load server rules (done) | time=684ms
+INFO: Language is forced to java
+INFO: Initializer GenericCoverageSensor
+INFO: Initializer GenericCoverageSensor (done) | time=1ms
+INFO: Base dir: /Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57
+INFO: Working dir: /Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/.scannerwork
+INFO: Source paths: .
+INFO: Source encoding: UTF-8, default locale: de_DE
+INFO: Index files
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/my.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/java-project-for-sonar-scanner-testing.iml' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/sonar.properties' is ignored because it doens't belong to the forced langauge 'java'
+INFO: 1 file indexed
+INFO: Quality profile for java: Sonar way
+WARN: ----------------------------------------------------------------
+WARN: Sonargraph Integration: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile [Sonar way].
+WARN: ----------------------------------------------------------------
+INFO: Sensor JavaSquidSensor [java]
+INFO: Configured Java source version (sonar.java.source): none
+INFO: JavaClasspath initialization
+WARN: Bytecode of dependencies was not provided for analysis of source files, you might end up with less precise results. Bytecode can be provided using sonar.java.libraries property
+INFO: JavaClasspath initialization (done) | time=1ms
+INFO: JavaTestClasspath initialization
+INFO: JavaTestClasspath initialization (done) | time=0ms
+INFO: Java Main Files AST scan
+INFO: 1 source files to be analyzed
+INFO: 1/1 source files have been analyzed
+INFO: Java Main Files AST scan (done) | time=335ms
+INFO: Java Test Files AST scan
+INFO: 0 source files to be analyzed
+INFO: Java Test Files AST scan (done) | time=0ms
+INFO: Sensor JavaSquidSensor [java] (done) | time=925ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph]
+INFO: ----------------------------------------------------------------
+INFO: Sonargraph: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile.
+INFO: ----------------------------------------------------------------
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph] (done) | time=3ms
+INFO: Sensor Embedded CSS Analyzer Sensor [css]
+INFO: 0 source files to be analyzed
+INFO: Sensor Embedded CSS Analyzer Sensor [css] (done) | time=261ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor SurefireSensor [java]
+INFO: parsing /Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/target/surefire-reports
+INFO: Sensor SurefireSensor [java] (done) | time=0ms
+INFO: Sensor JaCoCoSensor [java]
+INFO: Sensor JaCoCoSensor [java] (done) | time=1ms
+INFO: Sensor SonarJavaXmlFileSensor [java]
+INFO: Sensor SonarJavaXmlFileSensor [java] (done) | time=0ms
+INFO: Sensor jDepend sensor [jdepend]
+INFO: No classes to analyse, skipping analysis
+INFO: Sensor jDepend sensor [jdepend] (done) | time=6ms
+INFO: Sensor Packages sensor [jdepend]
+INFO: Sensor Packages sensor [jdepend] (done) | time=1ms
+INFO: Sensor Analyzer for "php.ini" files [php]
+INFO: Sensor Analyzer for "php.ini" files [php] (done) | time=2ms
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns]
+util.lang.ConcreteReceiverGuard reports a runtime deprecation: calling method "padl.kernel.impl.CodeLevelModel.create()" from class "it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor"
+Please use the methods in "padl.generator.helper.ModelGenerator" to obtain code-level models.
+INFO: Code level model built in 1338 ms
+INFO: Code level model contains 5 top-level entities
+util.io.ProxyDisk reports that "../Temp/.Test/AntiSingleton.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/../Temp/.Test/AntiSingleton.ini")
+util.repository.impl.FileRepositoryFactory has for running path: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.repository.impl.FileRepositoryFactory is creating a JarFileRepository for: util.repository.impl.JarFileRepository
+util.repository.impl.JarFileRepository is the current repository on: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassKnowsDerivedClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/../Temp/.Test/BaseClassKnowsDerivedClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassShouldBeAbstract.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/../Temp/.Test/BaseClassShouldBeAbstract.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/Blob.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/../Temp/.Test/Blob.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ClassDataShouldBePrivate.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/../Temp/.Test/ClassDataShouldBePrivate.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ComplexClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/../Temp/.Test/ComplexClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/FunctionalDecomposition.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/../Temp/.Test/FunctionalDecomposition.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LargeClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/../Temp/.Test/LargeClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LazyClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/../Temp/.Test/LazyClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongMethod.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/../Temp/.Test/LongMethod.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongParameterList.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/../Temp/.Test/LongParameterList.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ManyFieldAttributesButNotComplex.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/../Temp/.Test/ManyFieldAttributesButNotComplex.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/MessageChains.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/../Temp/.Test/MessageChains.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/RefusedParentBequest.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/../Temp/.Test/RefusedParentBequest.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpaghettiCode.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/../Temp/.Test/SpaghettiCode.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpeculativeGenerality.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/../Temp/.Test/SpeculativeGenerality.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SwissArmyKnife.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/../Temp/.Test/SwissArmyKnife.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/TraditionBreaker.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c2c41b24531026972f57/../Temp/.Test/TraditionBreaker.ini")
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns] (done) | time=2673ms
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=9ms
+INFO: Sensor Code Colorizer Sensor
+INFO: Sensor Code Colorizer Sensor (done) | time=1ms
+INFO: Sensor CPD Block Indexer
+INFO: org.sonar.scanner.cpd.deprecated.JavaCpdBlockIndexer@14b4f462 is used for java
+INFO: Sensor CPD Block Indexer (done) | time=14ms
+INFO: SCM provider for this project is: git
+INFO: 1 files to be analyzed
+INFO: 1/1 files analyzed
+INFO: Calculating CPD for 0 files
+INFO: CPD calculation finished
+INFO: Analysis report generated in 69ms, dir size=23 KB
+INFO: Analysis reports compressed in 9ms, zip size=9 KB
+INFO: Analysis report uploaded in 102ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://sonar.inf.unibz.it/dashboard/index/scantest
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://sonar.inf.unibz.it/api/ce/task?id=AV2e-Q8RLhPVrfLDw8jZ
+INFO: Executing post-job com.headway.plugins.sonar.ArchViolationBuildBreaker
+INFO: Task total time: 10.858 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 12.211s
+INFO: Final Memory: 67M/551M
+INFO: ------------------------------------------------------------------------
+Note: checking out '87bcaa4959e6bfc51a182f5728eba86c4f3f4e8f'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 87bcaa4... Initial commit, 0 code-smells
+INFO: Scanner configuration file: /usr/local/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/my.properties
+INFO: SonarQube Scanner 3.0.3.778
+INFO: Java 1.8.0_121 Oracle Corporation (64-bit)
+INFO: Mac OS X 10.12.5 x86_64
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load global settings
+INFO: Load global settings (done) | time=91ms
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=12ms
+INFO: Plugin [l10nit] defines 'l10nen' as base plugin. This metadata can be removed from manifest of l10n plugins since version 5.2.
+INFO: SonarQube server 6.3.1
+INFO: Default locale: "de_DE", source code encoding: "UTF-8"
+INFO: Process project properties
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=286ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=18ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=500ms
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=80ms
+INFO: Publish mode
+INFO: Project key: scantest
+INFO: -------------  Scan E la madonna
+INFO: Load server rules
+INFO: Load server rules (done) | time=181ms
+INFO: Language is forced to java
+INFO: Initializer GenericCoverageSensor
+INFO: Initializer GenericCoverageSensor (done) | time=0ms
+INFO: Base dir: /Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c
+INFO: Working dir: /Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/.scannerwork
+INFO: Source paths: .
+INFO: Source encoding: UTF-8, default locale: de_DE
+INFO: Index files
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/java-project-for-sonar-scanner-testing.iml' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/my.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/sonar.properties' is ignored because it doens't belong to the forced langauge 'java'
+INFO: 1 file indexed
+INFO: Quality profile for java: Sonar way
+WARN: ----------------------------------------------------------------
+WARN: Sonargraph Integration: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile [Sonar way].
+WARN: ----------------------------------------------------------------
+INFO: Sensor JavaSquidSensor [java]
+INFO: Configured Java source version (sonar.java.source): none
+INFO: JavaClasspath initialization
+WARN: Bytecode of dependencies was not provided for analysis of source files, you might end up with less precise results. Bytecode can be provided using sonar.java.libraries property
+INFO: JavaClasspath initialization (done) | time=1ms
+INFO: JavaTestClasspath initialization
+INFO: JavaTestClasspath initialization (done) | time=0ms
+INFO: Java Main Files AST scan
+INFO: 1 source files to be analyzed
+INFO: Java Main Files AST scan (done) | time=314ms
+INFO: 1/1 source files have been analyzed
+INFO: Java Test Files AST scan
+INFO: 0 source files to be analyzed
+INFO: Java Test Files AST scan (done) | time=0ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor JavaSquidSensor [java] (done) | time=902ms
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph]
+INFO: ----------------------------------------------------------------
+INFO: Sonargraph: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile.
+INFO: ----------------------------------------------------------------
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph] (done) | time=2ms
+INFO: Sensor Embedded CSS Analyzer Sensor [css]
+INFO: 0 source files to be analyzed
+INFO: Sensor Embedded CSS Analyzer Sensor [css] (done) | time=260ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor SurefireSensor [java]
+INFO: parsing /Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/target/surefire-reports
+INFO: Sensor SurefireSensor [java] (done) | time=0ms
+INFO: Sensor JaCoCoSensor [java]
+INFO: Sensor JaCoCoSensor [java] (done) | time=0ms
+INFO: Sensor SonarJavaXmlFileSensor [java]
+INFO: Sensor SonarJavaXmlFileSensor [java] (done) | time=0ms
+INFO: Sensor jDepend sensor [jdepend]
+INFO: No classes to analyse, skipping analysis
+INFO: Sensor jDepend sensor [jdepend] (done) | time=9ms
+INFO: Sensor Packages sensor [jdepend]
+INFO: Sensor Packages sensor [jdepend] (done) | time=1ms
+INFO: Sensor Analyzer for "php.ini" files [php]
+INFO: Sensor Analyzer for "php.ini" files [php] (done) | time=2ms
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns]
+util.lang.ConcreteReceiverGuard reports a runtime deprecation: calling method "padl.kernel.impl.CodeLevelModel.create()" from class "it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor"
+Please use the methods in "padl.generator.helper.ModelGenerator" to obtain code-level models.
+INFO: Code level model built in 1329 ms
+INFO: Code level model contains 5 top-level entities
+util.io.ProxyDisk reports that "../Temp/.Test/AntiSingleton.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/../Temp/.Test/AntiSingleton.ini")
+util.repository.impl.FileRepositoryFactory has for running path: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.repository.impl.FileRepositoryFactory is creating a JarFileRepository for: util.repository.impl.JarFileRepository
+util.repository.impl.JarFileRepository is the current repository on: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassKnowsDerivedClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/../Temp/.Test/BaseClassKnowsDerivedClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassShouldBeAbstract.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/../Temp/.Test/BaseClassShouldBeAbstract.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/Blob.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/../Temp/.Test/Blob.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ClassDataShouldBePrivate.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/../Temp/.Test/ClassDataShouldBePrivate.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ComplexClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/../Temp/.Test/ComplexClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/FunctionalDecomposition.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/../Temp/.Test/FunctionalDecomposition.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LargeClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/../Temp/.Test/LargeClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LazyClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/../Temp/.Test/LazyClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongMethod.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/../Temp/.Test/LongMethod.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongParameterList.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/../Temp/.Test/LongParameterList.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ManyFieldAttributesButNotComplex.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/../Temp/.Test/ManyFieldAttributesButNotComplex.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/MessageChains.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/../Temp/.Test/MessageChains.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/RefusedParentBequest.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/../Temp/.Test/RefusedParentBequest.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpaghettiCode.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/../Temp/.Test/SpaghettiCode.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpeculativeGenerality.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/../Temp/.Test/SpeculativeGenerality.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SwissArmyKnife.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/../Temp/.Test/SwissArmyKnife.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/TraditionBreaker.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c3641b2453103543e23c/../Temp/.Test/TraditionBreaker.ini")
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns] (done) | time=2690ms
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=10ms
+INFO: Sensor Code Colorizer Sensor
+INFO: Sensor Code Colorizer Sensor (done) | time=0ms
+INFO: Sensor CPD Block Indexer
+INFO: org.sonar.scanner.cpd.deprecated.JavaCpdBlockIndexer@14b4f462 is used for java
+INFO: Sensor CPD Block Indexer (done) | time=16ms
+INFO: SCM provider for this project is: git
+INFO: 1 files to be analyzed
+INFO: 1/1 files analyzed
+INFO: Calculating CPD for 0 files
+INFO: CPD calculation finished
+INFO: Analysis report generated in 71ms, dir size=23 KB
+INFO: Analysis reports compressed in 11ms, zip size=9 KB
+INFO: Analysis report uploaded in 111ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://sonar.inf.unibz.it/dashboard/index/scantest
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://sonar.inf.unibz.it/api/ce/task?id=AV2e-3HsLhPVrfLDw8jb
+INFO: Executing post-job com.headway.plugins.sonar.ArchViolationBuildBreaker
+INFO: Task total time: 7.976 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 9.348s
+INFO: Final Memory: 67M/566M
+INFO: ------------------------------------------------------------------------
+Note: checking out '87bcaa4959e6bfc51a182f5728eba86c4f3f4e8f'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 87bcaa4... Initial commit, 0 code-smells
+INFO: Scanner configuration file: /usr/local/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/my.properties
+INFO: SonarQube Scanner 3.0.3.778
+INFO: Java 1.8.0_121 Oracle Corporation (64-bit)
+INFO: Mac OS X 10.12.5 x86_64
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load global settings
+INFO: Load global settings (done) | time=57ms
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=10ms
+INFO: Plugin [l10nit] defines 'l10nen' as base plugin. This metadata can be removed from manifest of l10n plugins since version 5.2.
+INFO: SonarQube server 6.3.1
+INFO: Default locale: "de_DE", source code encoding: "UTF-8"
+INFO: Process project properties
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=74ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=20ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=249ms
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=63ms
+INFO: Publish mode
+INFO: Project key: scantest
+INFO: -------------  Scan E la madonna
+INFO: Load server rules
+INFO: Load server rules (done) | time=87ms
+INFO: Language is forced to java
+INFO: Initializer GenericCoverageSensor
+INFO: Initializer GenericCoverageSensor (done) | time=0ms
+INFO: Base dir: /Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852
+INFO: Working dir: /Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/.scannerwork
+INFO: Source paths: .
+INFO: Source encoding: UTF-8, default locale: de_DE
+INFO: Index files
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/sonar.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/my.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/java-project-for-sonar-scanner-testing.iml' is ignored because it doens't belong to the forced langauge 'java'
+INFO: 1 file indexed
+INFO: Quality profile for java: Sonar way
+WARN: ----------------------------------------------------------------
+WARN: Sonargraph Integration: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile [Sonar way].
+WARN: ----------------------------------------------------------------
+INFO: Sensor JavaSquidSensor [java]
+INFO: Configured Java source version (sonar.java.source): none
+INFO: JavaClasspath initialization
+WARN: Bytecode of dependencies was not provided for analysis of source files, you might end up with less precise results. Bytecode can be provided using sonar.java.libraries property
+INFO: JavaClasspath initialization (done) | time=1ms
+INFO: JavaTestClasspath initialization
+INFO: JavaTestClasspath initialization (done) | time=0ms
+INFO: Java Main Files AST scan
+INFO: 1 source files to be analyzed
+INFO: Java Main Files AST scan (done) | time=271ms
+INFO: 1/1 source files have been analyzed
+INFO: Java Test Files AST scan
+INFO: 0 source files to be analyzed
+INFO: Java Test Files AST scan (done) | time=1ms
+INFO: Sensor JavaSquidSensor [java] (done) | time=865ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph]
+INFO: ----------------------------------------------------------------
+INFO: Sonargraph: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile.
+INFO: ----------------------------------------------------------------
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph] (done) | time=2ms
+INFO: Sensor Embedded CSS Analyzer Sensor [css]
+INFO: 0 source files to be analyzed
+INFO: Sensor Embedded CSS Analyzer Sensor [css] (done) | time=198ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor SurefireSensor [java]
+INFO: parsing /Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/target/surefire-reports
+INFO: Sensor SurefireSensor [java] (done) | time=1ms
+INFO: Sensor JaCoCoSensor [java]
+INFO: Sensor JaCoCoSensor [java] (done) | time=0ms
+INFO: Sensor SonarJavaXmlFileSensor [java]
+INFO: Sensor SonarJavaXmlFileSensor [java] (done) | time=0ms
+INFO: Sensor jDepend sensor [jdepend]
+INFO: No classes to analyse, skipping analysis
+INFO: Sensor jDepend sensor [jdepend] (done) | time=6ms
+INFO: Sensor Packages sensor [jdepend]
+INFO: Sensor Packages sensor [jdepend] (done) | time=1ms
+INFO: Sensor Analyzer for "php.ini" files [php]
+INFO: Sensor Analyzer for "php.ini" files [php] (done) | time=2ms
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns]
+util.lang.ConcreteReceiverGuard reports a runtime deprecation: calling method "padl.kernel.impl.CodeLevelModel.create()" from class "it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor"
+Please use the methods in "padl.generator.helper.ModelGenerator" to obtain code-level models.
+INFO: Code level model built in 1129 ms
+INFO: Code level model contains 5 top-level entities
+util.io.ProxyDisk reports that "../Temp/.Test/AntiSingleton.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/../Temp/.Test/AntiSingleton.ini")
+util.repository.impl.FileRepositoryFactory has for running path: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.repository.impl.FileRepositoryFactory is creating a JarFileRepository for: util.repository.impl.JarFileRepository
+util.repository.impl.JarFileRepository is the current repository on: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassKnowsDerivedClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/../Temp/.Test/BaseClassKnowsDerivedClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassShouldBeAbstract.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/../Temp/.Test/BaseClassShouldBeAbstract.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/Blob.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/../Temp/.Test/Blob.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ClassDataShouldBePrivate.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/../Temp/.Test/ClassDataShouldBePrivate.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ComplexClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/../Temp/.Test/ComplexClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/FunctionalDecomposition.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/../Temp/.Test/FunctionalDecomposition.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LargeClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/../Temp/.Test/LargeClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LazyClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/../Temp/.Test/LazyClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongMethod.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/../Temp/.Test/LongMethod.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongParameterList.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/../Temp/.Test/LongParameterList.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ManyFieldAttributesButNotComplex.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/../Temp/.Test/ManyFieldAttributesButNotComplex.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/MessageChains.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/../Temp/.Test/MessageChains.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/RefusedParentBequest.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/../Temp/.Test/RefusedParentBequest.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpaghettiCode.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/../Temp/.Test/SpaghettiCode.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpeculativeGenerality.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/../Temp/.Test/SpeculativeGenerality.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SwissArmyKnife.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/../Temp/.Test/SwissArmyKnife.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/TraditionBreaker.ini already exists ("/Users/prova/git/softwareFactory/Test_5980c4ad1b24531043a1c852/../Temp/.Test/TraditionBreaker.ini")
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns] (done) | time=2522ms
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=10ms
+INFO: Sensor Code Colorizer Sensor
+INFO: Sensor Code Colorizer Sensor (done) | time=0ms
+INFO: Sensor CPD Block Indexer
+INFO: org.sonar.scanner.cpd.deprecated.JavaCpdBlockIndexer@14b4f462 is used for java
+INFO: Sensor CPD Block Indexer (done) | time=15ms
+INFO: SCM provider for this project is: git
+INFO: 1 files to be analyzed
+INFO: 1/1 files analyzed
+INFO: Calculating CPD for 0 files
+INFO: CPD calculation finished
+INFO: Analysis report generated in 72ms, dir size=23 KB
+INFO: Analysis reports compressed in 11ms, zip size=9 KB
+INFO: Analysis report uploaded in 101ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://sonar.inf.unibz.it/dashboard/index/scantest
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://sonar.inf.unibz.it/api/ce/task?id=AV2fAHQwLhPVrfLDw8jf
+INFO: Executing post-job com.headway.plugins.sonar.ArchViolationBuildBreaker
+INFO: Task total time: 6.710 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 7.761s
+INFO: Final Memory: 67M/563M
+INFO: ------------------------------------------------------------------------
+Note: checking out '1e5fd9f8b1c7be6221b55772a39b16970509a0c4'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 1e5fd9f... Long method: -1
+INFO: Scanner configuration file: /usr/local/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/my.properties
+INFO: SonarQube Scanner 3.0.3.778
+INFO: Java 1.8.0_121 Oracle Corporation (64-bit)
+INFO: Mac OS X 10.12.5 x86_64
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load global settings
+INFO: Load global settings (done) | time=169ms
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=49ms
+INFO: Plugin [l10nit] defines 'l10nen' as base plugin. This metadata can be removed from manifest of l10n plugins since version 5.2.
+INFO: SonarQube server 6.3.1
+INFO: Default locale: "de_DE", source code encoding: "UTF-8"
+INFO: Process project properties
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=379ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=54ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=774ms
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=143ms
+INFO: Publish mode
+INFO: Project key: scantest
+INFO: -------------  Scan E la madonna
+INFO: Load server rules
+INFO: Load server rules (done) | time=907ms
+INFO: Language is forced to java
+INFO: Initializer GenericCoverageSensor
+INFO: Initializer GenericCoverageSensor (done) | time=0ms
+INFO: Base dir: /Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a
+INFO: Working dir: /Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/.scannerwork
+INFO: Source paths: .
+INFO: Source encoding: UTF-8, default locale: de_DE
+INFO: Index files
+WARN: File '/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/my.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/java-project-for-sonar-scanner-testing.iml' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/sonar.properties' is ignored because it doens't belong to the forced langauge 'java'
+INFO: 3 files indexed
+INFO: Quality profile for java: Sonar way
+WARN: ----------------------------------------------------------------
+WARN: Sonargraph Integration: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile [Sonar way].
+WARN: ----------------------------------------------------------------
+INFO: Sensor JavaSquidSensor [java]
+INFO: Configured Java source version (sonar.java.source): none
+INFO: JavaClasspath initialization
+WARN: Bytecode of dependencies was not provided for analysis of source files, you might end up with less precise results. Bytecode can be provided using sonar.java.libraries property
+INFO: JavaClasspath initialization (done) | time=1ms
+INFO: JavaTestClasspath initialization
+INFO: JavaTestClasspath initialization (done) | time=1ms
+INFO: Java Main Files AST scan
+INFO: 3 source files to be analyzed
+INFO: 3/3 source files have been analyzed
+INFO: Java Main Files AST scan (done) | time=400ms
+INFO: Java Test Files AST scan
+INFO: 0 source files to be analyzed
+INFO: Java Test Files AST scan (done) | time=1ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor JavaSquidSensor [java] (done) | time=939ms
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph]
+INFO: ----------------------------------------------------------------
+INFO: Sonargraph: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile.
+INFO: ----------------------------------------------------------------
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph] (done) | time=3ms
+INFO: Sensor Embedded CSS Analyzer Sensor [css]
+INFO: 0 source files to be analyzed
+INFO: Sensor Embedded CSS Analyzer Sensor [css] (done) | time=276ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor SurefireSensor [java]
+INFO: parsing /Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/target/surefire-reports
+INFO: Sensor SurefireSensor [java] (done) | time=1ms
+INFO: Sensor JaCoCoSensor [java]
+INFO: Sensor JaCoCoSensor [java] (done) | time=0ms
+INFO: Sensor SonarJavaXmlFileSensor [java]
+INFO: Sensor SonarJavaXmlFileSensor [java] (done) | time=0ms
+INFO: Sensor jDepend sensor [jdepend]
+INFO: No classes to analyse, skipping analysis
+INFO: Sensor jDepend sensor [jdepend] (done) | time=7ms
+INFO: Sensor Packages sensor [jdepend]
+INFO: Sensor Packages sensor [jdepend] (done) | time=0ms
+INFO: Sensor Analyzer for "php.ini" files [php]
+INFO: Sensor Analyzer for "php.ini" files [php] (done) | time=2ms
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns]
+util.lang.ConcreteReceiverGuard reports a runtime deprecation: calling method "padl.kernel.impl.CodeLevelModel.create()" from class "it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor"
+Please use the methods in "padl.generator.helper.ModelGenerator" to obtain code-level models.
+INFO: Code level model built in 1596 ms
+INFO: Code level model contains 9 top-level entities
+util.io.ProxyDisk reports that "../Temp/.Test/AntiSingleton.ini already exists ("/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/../Temp/.Test/AntiSingleton.ini")
+util.repository.impl.FileRepositoryFactory has for running path: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.repository.impl.FileRepositoryFactory is creating a JarFileRepository for: util.repository.impl.JarFileRepository
+util.repository.impl.JarFileRepository is the current repository on: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassKnowsDerivedClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/../Temp/.Test/BaseClassKnowsDerivedClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassShouldBeAbstract.ini already exists ("/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/../Temp/.Test/BaseClassShouldBeAbstract.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/Blob.ini already exists ("/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/../Temp/.Test/Blob.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ClassDataShouldBePrivate.ini already exists ("/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/../Temp/.Test/ClassDataShouldBePrivate.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ComplexClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/../Temp/.Test/ComplexClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/FunctionalDecomposition.ini already exists ("/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/../Temp/.Test/FunctionalDecomposition.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LargeClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/../Temp/.Test/LargeClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LazyClass.ini already exists ("/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/../Temp/.Test/LazyClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongMethod.ini already exists ("/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/../Temp/.Test/LongMethod.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongParameterList.ini already exists ("/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/../Temp/.Test/LongParameterList.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ManyFieldAttributesButNotComplex.ini already exists ("/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/../Temp/.Test/ManyFieldAttributesButNotComplex.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/MessageChains.ini already exists ("/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/../Temp/.Test/MessageChains.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/RefusedParentBequest.ini already exists ("/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/../Temp/.Test/RefusedParentBequest.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpaghettiCode.ini already exists ("/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/../Temp/.Test/SpaghettiCode.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpeculativeGenerality.ini already exists ("/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/../Temp/.Test/SpeculativeGenerality.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SwissArmyKnife.ini already exists ("/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/../Temp/.Test/SwissArmyKnife.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/TraditionBreaker.ini already exists ("/Users/prova/git/softwareFactory/Test_5981509e1b245310fd8f5b8a/../Temp/.Test/TraditionBreaker.ini")
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns] (done) | time=3135ms
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=17ms
+INFO: Sensor Code Colorizer Sensor
+INFO: Sensor Code Colorizer Sensor (done) | time=0ms
+INFO: Sensor CPD Block Indexer
+INFO: org.sonar.scanner.cpd.deprecated.JavaCpdBlockIndexer@6237927a is used for java
+INFO: Sensor CPD Block Indexer (done) | time=24ms
+INFO: Calculating CPD for 0 files
+INFO: CPD calculation finished
+INFO: Analysis report generated in 75ms, dir size=26 KB
+INFO: Analysis reports compressed in 16ms, zip size=12 KB
+INFO: Analysis report uploaded in 218ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://sonar.inf.unibz.it/dashboard/index/scantest
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://sonar.inf.unibz.it/api/ce/task?id=AV2hIy8HLhPVrfLDw8mH
+INFO: Executing post-job com.headway.plugins.sonar.ArchViolationBuildBreaker
+INFO: Task total time: 9.866 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 12.709s
+INFO: Final Memory: 64M/471M
+INFO: ------------------------------------------------------------------------
+Note: checking out '1e5fd9f8b1c7be6221b55772a39b16970509a0c4'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 1e5fd9f... Long method: -1
+INFO: Scanner configuration file: /usr/local/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/my.properties
+INFO: SonarQube Scanner 3.0.3.778
+INFO: Java 1.8.0_121 Oracle Corporation (64-bit)
+INFO: Mac OS X 10.12.5 x86_64
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load global settings
+INFO: Load global settings (done) | time=159ms
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=48ms
+INFO: Plugin [l10nit] defines 'l10nen' as base plugin. This metadata can be removed from manifest of l10n plugins since version 5.2.
+INFO: SonarQube server 6.3.1
+INFO: Default locale: "de_DE", source code encoding: "UTF-8"
+INFO: Process project properties
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=299ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=56ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=676ms
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=115ms
+INFO: Publish mode
+INFO: Project key: scantest
+INFO: -------------  Scan E la madonna
+INFO: Load server rules
+INFO: Load server rules (done) | time=290ms
+INFO: Language is forced to java
+INFO: Initializer GenericCoverageSensor
+INFO: Initializer GenericCoverageSensor (done) | time=0ms
+INFO: Base dir: /Users/prova/git/softwareFactory/Test_598150ff1b24531106553657
+INFO: Working dir: /Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/.scannerwork
+INFO: Source paths: .
+INFO: Source encoding: UTF-8, default locale: de_DE
+INFO: Index files
+WARN: File '/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/java-project-for-sonar-scanner-testing.iml' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/my.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/sonar.properties' is ignored because it doens't belong to the forced langauge 'java'
+INFO: 3 files indexed
+INFO: Quality profile for java: Sonar way
+WARN: ----------------------------------------------------------------
+WARN: Sonargraph Integration: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile [Sonar way].
+WARN: ----------------------------------------------------------------
+INFO: Sensor JavaSquidSensor [java]
+INFO: Configured Java source version (sonar.java.source): none
+INFO: JavaClasspath initialization
+WARN: Bytecode of dependencies was not provided for analysis of source files, you might end up with less precise results. Bytecode can be provided using sonar.java.libraries property
+INFO: JavaClasspath initialization (done) | time=3ms
+INFO: JavaTestClasspath initialization
+INFO: JavaTestClasspath initialization (done) | time=0ms
+INFO: Java Main Files AST scan
+INFO: 3 source files to be analyzed
+INFO: 3/3 source files have been analyzed
+INFO: Java Main Files AST scan (done) | time=446ms
+INFO: Java Test Files AST scan
+INFO: 0 source files to be analyzed
+INFO: Java Test Files AST scan (done) | time=0ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor JavaSquidSensor [java] (done) | time=1008ms
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph]
+INFO: ----------------------------------------------------------------
+INFO: Sonargraph: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile.
+INFO: ----------------------------------------------------------------
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph] (done) | time=3ms
+INFO: Sensor Embedded CSS Analyzer Sensor [css]
+INFO: 0 source files to be analyzed
+INFO: Sensor Embedded CSS Analyzer Sensor [css] (done) | time=304ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor SurefireSensor [java]
+INFO: parsing /Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/target/surefire-reports
+INFO: Sensor SurefireSensor [java] (done) | time=1ms
+INFO: Sensor JaCoCoSensor [java]
+INFO: Sensor JaCoCoSensor [java] (done) | time=0ms
+INFO: Sensor SonarJavaXmlFileSensor [java]
+INFO: Sensor SonarJavaXmlFileSensor [java] (done) | time=0ms
+INFO: Sensor jDepend sensor [jdepend]
+INFO: No classes to analyse, skipping analysis
+INFO: Sensor jDepend sensor [jdepend] (done) | time=9ms
+INFO: Sensor Packages sensor [jdepend]
+INFO: Sensor Packages sensor [jdepend] (done) | time=1ms
+INFO: Sensor Analyzer for "php.ini" files [php]
+INFO: Sensor Analyzer for "php.ini" files [php] (done) | time=7ms
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns]
+util.lang.ConcreteReceiverGuard reports a runtime deprecation: calling method "padl.kernel.impl.CodeLevelModel.create()" from class "it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor"
+Please use the methods in "padl.generator.helper.ModelGenerator" to obtain code-level models.
+INFO: Code level model built in 2092 ms
+INFO: Code level model contains 9 top-level entities
+util.io.ProxyDisk reports that "../Temp/.Test/AntiSingleton.ini already exists ("/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/../Temp/.Test/AntiSingleton.ini")
+util.repository.impl.FileRepositoryFactory has for running path: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.repository.impl.FileRepositoryFactory is creating a JarFileRepository for: util.repository.impl.JarFileRepository
+util.repository.impl.JarFileRepository is the current repository on: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassKnowsDerivedClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/../Temp/.Test/BaseClassKnowsDerivedClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassShouldBeAbstract.ini already exists ("/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/../Temp/.Test/BaseClassShouldBeAbstract.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/Blob.ini already exists ("/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/../Temp/.Test/Blob.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ClassDataShouldBePrivate.ini already exists ("/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/../Temp/.Test/ClassDataShouldBePrivate.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ComplexClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/../Temp/.Test/ComplexClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/FunctionalDecomposition.ini already exists ("/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/../Temp/.Test/FunctionalDecomposition.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LargeClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/../Temp/.Test/LargeClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LazyClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/../Temp/.Test/LazyClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongMethod.ini already exists ("/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/../Temp/.Test/LongMethod.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongParameterList.ini already exists ("/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/../Temp/.Test/LongParameterList.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ManyFieldAttributesButNotComplex.ini already exists ("/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/../Temp/.Test/ManyFieldAttributesButNotComplex.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/MessageChains.ini already exists ("/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/../Temp/.Test/MessageChains.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/RefusedParentBequest.ini already exists ("/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/../Temp/.Test/RefusedParentBequest.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpaghettiCode.ini already exists ("/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/../Temp/.Test/SpaghettiCode.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpeculativeGenerality.ini already exists ("/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/../Temp/.Test/SpeculativeGenerality.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SwissArmyKnife.ini already exists ("/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/../Temp/.Test/SwissArmyKnife.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/TraditionBreaker.ini already exists ("/Users/prova/git/softwareFactory/Test_598150ff1b24531106553657/../Temp/.Test/TraditionBreaker.ini")
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns] (done) | time=3889ms
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=16ms
+INFO: Sensor Code Colorizer Sensor
+INFO: Sensor Code Colorizer Sensor (done) | time=0ms
+INFO: Sensor CPD Block Indexer
+INFO: org.sonar.scanner.cpd.deprecated.JavaCpdBlockIndexer@6237927a is used for java
+INFO: Sensor CPD Block Indexer (done) | time=19ms
+INFO: Calculating CPD for 0 files
+INFO: CPD calculation finished
+INFO: Analysis report generated in 86ms, dir size=26 KB
+INFO: Analysis reports compressed in 14ms, zip size=12 KB
+INFO: Analysis report uploaded in 3790ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://sonar.inf.unibz.it/dashboard/index/scantest
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://sonar.inf.unibz.it/api/ce/task?id=AV2hJLbDLhPVrfLDw8mI
+INFO: Executing post-job com.headway.plugins.sonar.ArchViolationBuildBreaker
+INFO: Task total time: 13.416 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 16.133s
+INFO: Final Memory: 64M/471M
+INFO: ------------------------------------------------------------------------
+Note: checking out '1e5fd9f8b1c7be6221b55772a39b16970509a0c4'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 1e5fd9f... Long method: -1
+INFO: Scanner configuration file: /usr/local/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/my.properties
+INFO: SonarQube Scanner 3.0.3.778
+INFO: Java 1.8.0_121 Oracle Corporation (64-bit)
+INFO: Mac OS X 10.12.5 x86_64
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load global settings
+INFO: Load global settings (done) | time=152ms
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=44ms
+INFO: Plugin [l10nit] defines 'l10nen' as base plugin. This metadata can be removed from manifest of l10n plugins since version 5.2.
+INFO: SonarQube server 6.3.1
+INFO: Default locale: "de_DE", source code encoding: "UTF-8"
+INFO: Process project properties
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=280ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=54ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=738ms
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=105ms
+INFO: Publish mode
+INFO: Project key: scantest
+INFO: -------------  Scan E la madonna
+INFO: Load server rules
+INFO: Load server rules (done) | time=272ms
+INFO: Language is forced to java
+INFO: Initializer GenericCoverageSensor
+INFO: Initializer GenericCoverageSensor (done) | time=0ms
+INFO: Base dir: /Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403
+INFO: Working dir: /Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/.scannerwork
+INFO: Source paths: .
+INFO: Source encoding: UTF-8, default locale: de_DE
+INFO: Index files
+WARN: File '/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/java-project-for-sonar-scanner-testing.iml' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/sonar.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/my.properties' is ignored because it doens't belong to the forced langauge 'java'
+INFO: 3 files indexed
+INFO: Quality profile for java: Sonar way
+WARN: ----------------------------------------------------------------
+WARN: Sonargraph Integration: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile [Sonar way].
+WARN: ----------------------------------------------------------------
+INFO: Sensor JavaSquidSensor [java]
+INFO: Configured Java source version (sonar.java.source): none
+INFO: JavaClasspath initialization
+WARN: Bytecode of dependencies was not provided for analysis of source files, you might end up with less precise results. Bytecode can be provided using sonar.java.libraries property
+INFO: JavaClasspath initialization (done) | time=1ms
+INFO: JavaTestClasspath initialization
+INFO: JavaTestClasspath initialization (done) | time=0ms
+INFO: Java Main Files AST scan
+INFO: 3 source files to be analyzed
+INFO: Java Main Files AST scan (done) | time=438ms
+INFO: Java Test Files AST scan
+INFO: 3/3 source files have been analyzed
+INFO: 0 source files to be analyzed
+INFO: Java Test Files AST scan (done) | time=1ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor JavaSquidSensor [java] (done) | time=993ms
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph]
+INFO: ----------------------------------------------------------------
+INFO: Sonargraph: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile.
+INFO: ----------------------------------------------------------------
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph] (done) | time=4ms
+INFO: Sensor Embedded CSS Analyzer Sensor [css]
+INFO: 0 source files to be analyzed
+INFO: Sensor Embedded CSS Analyzer Sensor [css] (done) | time=296ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor SurefireSensor [java]
+INFO: parsing /Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/target/surefire-reports
+INFO: Sensor SurefireSensor [java] (done) | time=2ms
+INFO: Sensor JaCoCoSensor [java]
+INFO: Sensor JaCoCoSensor [java] (done) | time=0ms
+INFO: Sensor SonarJavaXmlFileSensor [java]
+INFO: Sensor SonarJavaXmlFileSensor [java] (done) | time=0ms
+INFO: Sensor jDepend sensor [jdepend]
+INFO: No classes to analyse, skipping analysis
+INFO: Sensor jDepend sensor [jdepend] (done) | time=7ms
+INFO: Sensor Packages sensor [jdepend]
+INFO: Sensor Packages sensor [jdepend] (done) | time=1ms
+INFO: Sensor Analyzer for "php.ini" files [php]
+INFO: Sensor Analyzer for "php.ini" files [php] (done) | time=3ms
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns]
+util.lang.ConcreteReceiverGuard reports a runtime deprecation: calling method "padl.kernel.impl.CodeLevelModel.create()" from class "it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor"
+Please use the methods in "padl.generator.helper.ModelGenerator" to obtain code-level models.
+INFO: Code level model built in 1789 ms
+INFO: Code level model contains 9 top-level entities
+util.io.ProxyDisk reports that "../Temp/.Test/AntiSingleton.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/AntiSingleton.ini")
+util.repository.impl.FileRepositoryFactory has for running path: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.repository.impl.FileRepositoryFactory is creating a JarFileRepository for: util.repository.impl.JarFileRepository
+util.repository.impl.JarFileRepository is the current repository on: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassKnowsDerivedClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/BaseClassKnowsDerivedClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassShouldBeAbstract.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/BaseClassShouldBeAbstract.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/Blob.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/Blob.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ClassDataShouldBePrivate.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/ClassDataShouldBePrivate.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ComplexClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/ComplexClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/FunctionalDecomposition.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/FunctionalDecomposition.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LargeClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/LargeClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LazyClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/LazyClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongMethod.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/LongMethod.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongParameterList.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/LongParameterList.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ManyFieldAttributesButNotComplex.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/ManyFieldAttributesButNotComplex.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/MessageChains.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/MessageChains.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/RefusedParentBequest.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/RefusedParentBequest.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpaghettiCode.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/SpaghettiCode.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpeculativeGenerality.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/SpeculativeGenerality.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SwissArmyKnife.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/SwissArmyKnife.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/TraditionBreaker.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/TraditionBreaker.ini")
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns] (done) | time=3425ms
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=15ms
+INFO: Sensor Code Colorizer Sensor
+INFO: Sensor Code Colorizer Sensor (done) | time=0ms
+INFO: Sensor CPD Block Indexer
+INFO: org.sonar.scanner.cpd.deprecated.JavaCpdBlockIndexer@6237927a is used for java
+INFO: Sensor CPD Block Indexer (done) | time=16ms
+INFO: Calculating CPD for 0 files
+INFO: CPD calculation finished
+INFO: Analysis report generated in 94ms, dir size=26 KB
+INFO: Analysis reports compressed in 13ms, zip size=12 KB
+INFO: Analysis report uploaded in 177ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://sonar.inf.unibz.it/dashboard/index/scantest
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://sonar.inf.unibz.it/api/ce/task?id=AV2hJ7-0LhPVrfLDw8mM
+INFO: Executing post-job com.headway.plugins.sonar.ArchViolationBuildBreaker
+INFO: Task total time: 9.195 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 11.685s
+INFO: Final Memory: 64M/471M
+INFO: ------------------------------------------------------------------------
+Previous HEAD position was 1e5fd9f... Long method: -1
+HEAD is now at e589d2a... class data should be private: +2
+INFO: Scanner configuration file: /usr/local/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/my.properties
+INFO: SonarQube Scanner 3.0.3.778
+INFO: Java 1.8.0_121 Oracle Corporation (64-bit)
+INFO: Mac OS X 10.12.5 x86_64
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load global settings
+INFO: Load global settings (done) | time=153ms
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=49ms
+INFO: Plugin [l10nit] defines 'l10nen' as base plugin. This metadata can be removed from manifest of l10n plugins since version 5.2.
+INFO: SonarQube server 6.3.1
+INFO: Default locale: "de_DE", source code encoding: "UTF-8"
+INFO: Process project properties
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=111ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=51ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=639ms
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=115ms
+INFO: Publish mode
+INFO: Project key: scantest
+INFO: -------------  Scan E la madonna
+INFO: Load server rules
+INFO: Load server rules (done) | time=204ms
+INFO: Language is forced to java
+INFO: Initializer GenericCoverageSensor
+INFO: Initializer GenericCoverageSensor (done) | time=0ms
+INFO: Base dir: /Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403
+INFO: Working dir: /Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/.scannerwork
+INFO: Source paths: .
+INFO: Source encoding: UTF-8, default locale: de_DE
+INFO: Index files
+WARN: File '/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/my.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/java-project-for-sonar-scanner-testing.iml' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/sonar.properties' is ignored because it doens't belong to the forced langauge 'java'
+INFO: 4 files indexed
+INFO: Quality profile for java: Sonar way
+WARN: ----------------------------------------------------------------
+WARN: Sonargraph Integration: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile [Sonar way].
+WARN: ----------------------------------------------------------------
+INFO: Sensor JavaSquidSensor [java]
+INFO: Configured Java source version (sonar.java.source): none
+INFO: JavaClasspath initialization
+WARN: Bytecode of dependencies was not provided for analysis of source files, you might end up with less precise results. Bytecode can be provided using sonar.java.libraries property
+INFO: JavaClasspath initialization (done) | time=1ms
+INFO: JavaTestClasspath initialization
+INFO: JavaTestClasspath initialization (done) | time=0ms
+INFO: Java Main Files AST scan
+INFO: 4 source files to be analyzed
+INFO: 4/4 source files have been analyzed
+INFO: Java Main Files AST scan (done) | time=588ms
+INFO: Java Test Files AST scan
+INFO: 0 source files to be analyzed
+INFO: Java Test Files AST scan (done) | time=0ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor JavaSquidSensor [java] (done) | time=1184ms
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph]
+INFO: ----------------------------------------------------------------
+INFO: Sonargraph: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile.
+INFO: ----------------------------------------------------------------
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph] (done) | time=3ms
+INFO: Sensor Embedded CSS Analyzer Sensor [css]
+INFO: 0 source files to be analyzed
+INFO: 0/0 source files have been analyzed
+INFO: Sensor Embedded CSS Analyzer Sensor [css] (done) | time=248ms
+INFO: Sensor SurefireSensor [java]
+INFO: parsing /Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/target/surefire-reports
+INFO: Sensor SurefireSensor [java] (done) | time=0ms
+INFO: Sensor JaCoCoSensor [java]
+INFO: Sensor JaCoCoSensor [java] (done) | time=1ms
+INFO: Sensor SonarJavaXmlFileSensor [java]
+INFO: Sensor SonarJavaXmlFileSensor [java] (done) | time=0ms
+INFO: Sensor jDepend sensor [jdepend]
+INFO: No classes to analyse, skipping analysis
+INFO: Sensor jDepend sensor [jdepend] (done) | time=7ms
+INFO: Sensor Packages sensor [jdepend]
+INFO: Sensor Packages sensor [jdepend] (done) | time=1ms
+INFO: Sensor Analyzer for "php.ini" files [php]
+INFO: Sensor Analyzer for "php.ini" files [php] (done) | time=2ms
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns]
+util.lang.ConcreteReceiverGuard reports a runtime deprecation: calling method "padl.kernel.impl.CodeLevelModel.create()" from class "it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor"
+Please use the methods in "padl.generator.helper.ModelGenerator" to obtain code-level models.
+INFO: Code level model built in 2167 ms
+INFO: Code level model contains 11 top-level entities
+util.io.ProxyDisk reports that "../Temp/.Test/AntiSingleton.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/AntiSingleton.ini")
+util.repository.impl.FileRepositoryFactory has for running path: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.repository.impl.FileRepositoryFactory is creating a JarFileRepository for: util.repository.impl.JarFileRepository
+util.repository.impl.JarFileRepository is the current repository on: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassKnowsDerivedClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/BaseClassKnowsDerivedClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassShouldBeAbstract.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/BaseClassShouldBeAbstract.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/Blob.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/Blob.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ClassDataShouldBePrivate.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/ClassDataShouldBePrivate.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ComplexClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/ComplexClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/FunctionalDecomposition.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/FunctionalDecomposition.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LargeClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/LargeClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LazyClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/LazyClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongMethod.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/LongMethod.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongParameterList.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/LongParameterList.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ManyFieldAttributesButNotComplex.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/ManyFieldAttributesButNotComplex.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/MessageChains.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/MessageChains.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/RefusedParentBequest.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/RefusedParentBequest.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpaghettiCode.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/SpaghettiCode.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpeculativeGenerality.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/SpeculativeGenerality.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SwissArmyKnife.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/SwissArmyKnife.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/TraditionBreaker.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/TraditionBreaker.ini")
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns] (done) | time=3998ms
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=19ms
+INFO: Sensor Code Colorizer Sensor
+INFO: Sensor Code Colorizer Sensor (done) | time=0ms
+INFO: Sensor CPD Block Indexer
+INFO: org.sonar.scanner.cpd.deprecated.JavaCpdBlockIndexer@47511582 is used for java
+INFO: Sensor CPD Block Indexer (done) | time=34ms
+INFO: SCM provider for this project is: git
+INFO: 2 files to be analyzed
+INFO: 2/2 files analyzed
+INFO: Calculating CPD for 1 files
+INFO: CPD calculation finished
+INFO: Analysis report generated in 86ms, dir size=37 KB
+INFO: Analysis reports compressed in 16ms, zip size=16 KB
+INFO: Analysis report uploaded in 187ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://sonar.inf.unibz.it/dashboard/index/scantest
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://sonar.inf.unibz.it/api/ce/task?id=AV2hJ-7DLhPVrfLDw8mN
+INFO: Executing post-job com.headway.plugins.sonar.ArchViolationBuildBreaker
+INFO: Task total time: 9.909 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 11.371s
+INFO: Final Memory: 67M/568M
+INFO: ------------------------------------------------------------------------
+Previous HEAD position was e589d2a... class data should be private: +2
+HEAD is now at 8523f8c... code smell long method: 1
+INFO: Scanner configuration file: /usr/local/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/my.properties
+INFO: SonarQube Scanner 3.0.3.778
+INFO: Java 1.8.0_121 Oracle Corporation (64-bit)
+INFO: Mac OS X 10.12.5 x86_64
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load global settings
+INFO: Load global settings (done) | time=151ms
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=48ms
+INFO: Plugin [l10nit] defines 'l10nen' as base plugin. This metadata can be removed from manifest of l10n plugins since version 5.2.
+INFO: SonarQube server 6.3.1
+INFO: Default locale: "de_DE", source code encoding: "UTF-8"
+INFO: Process project properties
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=102ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=51ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=633ms
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=127ms
+INFO: Publish mode
+INFO: Project key: scantest
+INFO: -------------  Scan E la madonna
+INFO: Load server rules
+INFO: Load server rules (done) | time=193ms
+INFO: Language is forced to java
+INFO: Initializer GenericCoverageSensor
+INFO: Initializer GenericCoverageSensor (done) | time=0ms
+INFO: Base dir: /Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403
+INFO: Working dir: /Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/.scannerwork
+INFO: Source paths: .
+INFO: Source encoding: UTF-8, default locale: de_DE
+INFO: Index files
+WARN: File '/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/java-project-for-sonar-scanner-testing.iml' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/sonar.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/my.properties' is ignored because it doens't belong to the forced langauge 'java'
+INFO: 2 files indexed
+INFO: Quality profile for java: Sonar way
+WARN: ----------------------------------------------------------------
+WARN: Sonargraph Integration: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile [Sonar way].
+WARN: ----------------------------------------------------------------
+INFO: Sensor JavaSquidSensor [java]
+INFO: Configured Java source version (sonar.java.source): none
+INFO: JavaClasspath initialization
+WARN: Bytecode of dependencies was not provided for analysis of source files, you might end up with less precise results. Bytecode can be provided using sonar.java.libraries property
+INFO: JavaClasspath initialization (done) | time=1ms
+INFO: JavaTestClasspath initialization
+INFO: JavaTestClasspath initialization (done) | time=0ms
+INFO: Java Main Files AST scan
+INFO: 2 source files to be analyzed
+INFO: 2/2 source files have been analyzed
+INFO: Java Main Files AST scan (done) | time=657ms
+INFO: Java Test Files AST scan
+INFO: 0 source files to be analyzed
+INFO: Java Test Files AST scan (done) | time=0ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor JavaSquidSensor [java] (done) | time=1357ms
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph]
+INFO: ----------------------------------------------------------------
+INFO: Sonargraph: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile.
+INFO: ----------------------------------------------------------------
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph] (done) | time=3ms
+INFO: Sensor Embedded CSS Analyzer Sensor [css]
+INFO: 0 source files to be analyzed
+INFO: 0/0 source files have been analyzed
+INFO: Sensor Embedded CSS Analyzer Sensor [css] (done) | time=378ms
+INFO: Sensor SurefireSensor [java]
+INFO: parsing /Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/target/surefire-reports
+INFO: Sensor SurefireSensor [java] (done) | time=1ms
+INFO: Sensor JaCoCoSensor [java]
+INFO: Sensor JaCoCoSensor [java] (done) | time=1ms
+INFO: Sensor SonarJavaXmlFileSensor [java]
+INFO: Sensor SonarJavaXmlFileSensor [java] (done) | time=0ms
+INFO: Sensor jDepend sensor [jdepend]
+INFO: No classes to analyse, skipping analysis
+INFO: Sensor jDepend sensor [jdepend] (done) | time=11ms
+INFO: Sensor Packages sensor [jdepend]
+INFO: Sensor Packages sensor [jdepend] (done) | time=1ms
+INFO: Sensor Analyzer for "php.ini" files [php]
+INFO: Sensor Analyzer for "php.ini" files [php] (done) | time=3ms
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns]
+util.lang.ConcreteReceiverGuard reports a runtime deprecation: calling method "padl.kernel.impl.CodeLevelModel.create()" from class "it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor"
+Please use the methods in "padl.generator.helper.ModelGenerator" to obtain code-level models.
+INFO: Code level model built in 1677 ms
+INFO: Code level model contains 7 top-level entities
+util.io.ProxyDisk reports that "../Temp/.Test/AntiSingleton.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/AntiSingleton.ini")
+util.repository.impl.FileRepositoryFactory has for running path: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.repository.impl.FileRepositoryFactory is creating a JarFileRepository for: util.repository.impl.JarFileRepository
+util.repository.impl.JarFileRepository is the current repository on: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassKnowsDerivedClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/BaseClassKnowsDerivedClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassShouldBeAbstract.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/BaseClassShouldBeAbstract.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/Blob.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/Blob.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ClassDataShouldBePrivate.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/ClassDataShouldBePrivate.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ComplexClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/ComplexClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/FunctionalDecomposition.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/FunctionalDecomposition.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LargeClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/LargeClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LazyClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/LazyClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongMethod.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/LongMethod.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongParameterList.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/LongParameterList.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ManyFieldAttributesButNotComplex.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/ManyFieldAttributesButNotComplex.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/MessageChains.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/MessageChains.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/RefusedParentBequest.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/RefusedParentBequest.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpaghettiCode.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/SpaghettiCode.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpeculativeGenerality.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/SpeculativeGenerality.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SwissArmyKnife.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/SwissArmyKnife.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/TraditionBreaker.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/TraditionBreaker.ini")
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns] (done) | time=3522ms
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=16ms
+INFO: Sensor Code Colorizer Sensor
+INFO: Sensor Code Colorizer Sensor (done) | time=1ms
+INFO: Sensor CPD Block Indexer
+INFO: org.sonar.scanner.cpd.deprecated.JavaCpdBlockIndexer@3bd552f7 is used for java
+INFO: Sensor CPD Block Indexer (done) | time=39ms
+INFO: SCM provider for this project is: git
+INFO: 2 files to be analyzed
+INFO: 2/2 files analyzed
+INFO: Calculating CPD for 1 files
+INFO: CPD calculation finished
+INFO: Analysis report generated in 75ms, dir size=34 KB
+INFO: Analysis reports compressed in 13ms, zip size=12 KB
+INFO: Analysis report uploaded in 209ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://sonar.inf.unibz.it/dashboard/index/scantest
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://sonar.inf.unibz.it/api/ce/task?id=AV2hKB77LhPVrfLDw8mO
+INFO: Executing post-job com.headway.plugins.sonar.ArchViolationBuildBreaker
+INFO: Task total time: 10.096 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 11.620s
+INFO: Final Memory: 63M/562M
+INFO: ------------------------------------------------------------------------
+Previous HEAD position was 8523f8c... code smell long method: 1
+HEAD is now at 87bcaa4... Initial commit, 0 code-smells
+INFO: Scanner configuration file: /usr/local/sonar-scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/my.properties
+INFO: SonarQube Scanner 3.0.3.778
+INFO: Java 1.8.0_121 Oracle Corporation (64-bit)
+INFO: Mac OS X 10.12.5 x86_64
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load global settings
+INFO: Load global settings (done) | time=147ms
+INFO: User cache: /Users/prova/.sonar/cache
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=45ms
+INFO: Plugin [l10nit] defines 'l10nen' as base plugin. This metadata can be removed from manifest of l10n plugins since version 5.2.
+INFO: SonarQube server 6.3.1
+INFO: Default locale: "de_DE", source code encoding: "UTF-8"
+INFO: Process project properties
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=106ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=46ms
+INFO: Load active rules
+INFO: Load active rules (done) | time=604ms
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=112ms
+INFO: Publish mode
+INFO: Project key: scantest
+INFO: -------------  Scan E la madonna
+INFO: Load server rules
+INFO: Load server rules (done) | time=192ms
+INFO: Language is forced to java
+INFO: Initializer GenericCoverageSensor
+INFO: Initializer GenericCoverageSensor (done) | time=0ms
+INFO: Base dir: /Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403
+INFO: Working dir: /Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/.scannerwork
+INFO: Source paths: .
+INFO: Source encoding: UTF-8, default locale: de_DE
+INFO: Index files
+WARN: File '/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/java-project-for-sonar-scanner-testing.iml' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/sonar.properties' is ignored because it doens't belong to the forced langauge 'java'
+WARN: File '/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/my.properties' is ignored because it doens't belong to the forced langauge 'java'
+INFO: 1 file indexed
+INFO: Quality profile for java: Sonar way
+WARN: ----------------------------------------------------------------
+WARN: Sonargraph Integration: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile [Sonar way].
+WARN: ----------------------------------------------------------------
+INFO: Sensor JavaSquidSensor [java]
+INFO: Configured Java source version (sonar.java.source): none
+INFO: JavaClasspath initialization
+WARN: Bytecode of dependencies was not provided for analysis of source files, you might end up with less precise results. Bytecode can be provided using sonar.java.libraries property
+INFO: JavaClasspath initialization (done) | time=1ms
+INFO: JavaTestClasspath initialization
+INFO: JavaTestClasspath initialization (done) | time=0ms
+INFO: Java Main Files AST scan
+INFO: 1 source files to be analyzed
+INFO: Java Main Files AST scan (done) | time=315ms
+INFO: 1/1 source files have been analyzed
+INFO: Java Test Files AST scan
+INFO: 0 source files to be analyzed
+INFO: Java Test Files AST scan (done) | time=0ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor JavaSquidSensor [java] (done) | time=869ms
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph]
+INFO: ----------------------------------------------------------------
+INFO: Sonargraph: Skipping project E la madonna [scantest], since no Sonargraph rules are activated in current SonarQube quality profile.
+INFO: ----------------------------------------------------------------
+INFO: Sensor Sonar-Sonargraph-Plugin [3.5] [Sonargraph] (done) | time=3ms
+INFO: Sensor Embedded CSS Analyzer Sensor [css]
+INFO: 0 source files to be analyzed
+INFO: Sensor Embedded CSS Analyzer Sensor [css] (done) | time=253ms
+INFO: 0/0 source files have been analyzed
+INFO: Sensor SurefireSensor [java]
+INFO: parsing /Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/target/surefire-reports
+INFO: Sensor SurefireSensor [java] (done) | time=1ms
+INFO: Sensor JaCoCoSensor [java]
+INFO: Sensor JaCoCoSensor [java] (done) | time=0ms
+INFO: Sensor SonarJavaXmlFileSensor [java]
+INFO: Sensor SonarJavaXmlFileSensor [java] (done) | time=0ms
+INFO: Sensor jDepend sensor [jdepend]
+INFO: No classes to analyse, skipping analysis
+INFO: Sensor jDepend sensor [jdepend] (done) | time=8ms
+INFO: Sensor Packages sensor [jdepend]
+INFO: Sensor Packages sensor [jdepend] (done) | time=1ms
+INFO: Sensor Analyzer for "php.ini" files [php]
+INFO: Sensor Analyzer for "php.ini" files [php] (done) | time=3ms
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns]
+util.lang.ConcreteReceiverGuard reports a runtime deprecation: calling method "padl.kernel.impl.CodeLevelModel.create()" from class "it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor"
+Please use the methods in "padl.generator.helper.ModelGenerator" to obtain code-level models.
+INFO: Code level model built in 1351 ms
+INFO: Code level model contains 5 top-level entities
+util.io.ProxyDisk reports that "../Temp/.Test/AntiSingleton.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/AntiSingleton.ini")
+util.repository.impl.FileRepositoryFactory has for running path: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.repository.impl.FileRepositoryFactory is creating a JarFileRepository for: util.repository.impl.JarFileRepository
+util.repository.impl.JarFileRepository is the current repository on: /Users/prova/.sonar/cache/d02c241ca3d1b158099098019494e688/CodeSmellsAntiPatterns-0.4.jar_unzip/META-INF/lib/ptidej-smell-1.0.jar
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassKnowsDerivedClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/BaseClassKnowsDerivedClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/BaseClassShouldBeAbstract.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/BaseClassShouldBeAbstract.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/Blob.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/Blob.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ClassDataShouldBePrivate.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/ClassDataShouldBePrivate.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ComplexClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/ComplexClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/FunctionalDecomposition.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/FunctionalDecomposition.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LargeClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/LargeClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LazyClass.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/LazyClass.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongMethod.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/LongMethod.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/LongParameterList.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/LongParameterList.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/ManyFieldAttributesButNotComplex.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/ManyFieldAttributesButNotComplex.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/MessageChains.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/MessageChains.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/RefusedParentBequest.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/RefusedParentBequest.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpaghettiCode.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/SpaghettiCode.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SpeculativeGenerality.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/SpeculativeGenerality.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/SwissArmyKnife.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/SwissArmyKnife.ini")
+util.io.ProxyDisk reports that "../Temp/.Test/TraditionBreaker.ini already exists ("/Users/prova/git/softwareFactory/Test_598151ca1b2453111252f403/../Temp/.Test/TraditionBreaker.ini")
+INFO: Sensor it.unibz.sonarqube_plugin.CodeSmellsAntiPatternsSensor [CodeSmellsAntiPatterns] (done) | time=2682ms
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=11ms
+INFO: Sensor Code Colorizer Sensor
+INFO: Sensor Code Colorizer Sensor (done) | time=0ms
+INFO: Sensor CPD Block Indexer
+INFO: org.sonar.scanner.cpd.deprecated.JavaCpdBlockIndexer@14b4f462 is used for java
+INFO: Sensor CPD Block Indexer (done) | time=13ms
+INFO: SCM provider for this project is: git
+INFO: 1 files to be analyzed
+INFO: 1/1 files analyzed
+INFO: Calculating CPD for 0 files
+INFO: CPD calculation finished
+INFO: Analysis report generated in 71ms, dir size=23 KB
+INFO: Analysis reports compressed in 9ms, zip size=9 KB
+INFO: Analysis report uploaded in 180ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://sonar.inf.unibz.it/dashboard/index/scantest
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://sonar.inf.unibz.it/api/ce/task?id=AV2hKEZ5LhPVrfLDw8mP
+INFO: Executing post-job com.headway.plugins.sonar.ArchViolationBuildBreaker
+INFO: Task total time: 7.948 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 9.424s
+INFO: Final Memory: 67M/569M
+INFO: ------------------------------------------------------------------------
