@@ -11,6 +11,9 @@ public class Project extends BaseEntity
 	private Date analysisStartDate;
 	private String anaysisRepetition;
 	private String idUser;
+	private String email;
+	private String sonarKey;
+	private String sonarVersion;
 	
 	public Project() 
 	{
@@ -67,6 +70,28 @@ public class Project extends BaseEntity
 		this.idUser = idUser;
 	}
 	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public String getIdSonarKey() {
+		return sonarKey;
+	}
+
+	public void setIdSonarKey(String sonarKey) {
+		this.sonarKey = sonarKey;
+	}
+	public String getSonarVersion() {
+		return sonarVersion;
+	}
+
+	public void setSonarVersion(String sonarVersion) {
+		this.sonarVersion = sonarVersion;
+	}
 	
 	
 }

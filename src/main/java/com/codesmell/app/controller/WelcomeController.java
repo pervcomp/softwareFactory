@@ -50,6 +50,7 @@ class WelcomeController {
 	@RequestMapping("/newproject")
 	public String newProject(Model model,HttpServletRequest req, HttpServletResponse resp) {
 		model.addAttribute("email", req.getSession().getAttribute("email"));
+		model.addAttribute("project", new Project());
 		return "newproject";
 	}
 	
