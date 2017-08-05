@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Project extends BaseEntity
 {
-	private String name;
+	private String projectName;
 	private Date creationTime;
 	private String url;
 	private String versionType;
@@ -17,7 +17,6 @@ public class Project extends BaseEntity
 	
 	public Project() 
 	{
-		this.name="";
 		this.creationTime= new Date();
 		this.url="";
 		this.versionType="git";
@@ -25,11 +24,11 @@ public class Project extends BaseEntity
 		this.anaysisRepetition="";
 	}
 	
-	public String getName() {
-		return name;
+	public String getProjectName() {
+		return projectName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 	public Date getCreationTime() {
 		return creationTime;
@@ -43,6 +42,16 @@ public class Project extends BaseEntity
 	public void setUrl(String url) {
 		this.url = url;
 	}
+	
+	public String getName() {
+		return url;
+	}
+	public void setName(String url) {
+		this.url = url;
+	}
+	
+	
+	
 	public String getVersionType() {
 		return versionType;
 	}

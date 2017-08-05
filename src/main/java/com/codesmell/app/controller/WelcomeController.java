@@ -113,6 +113,7 @@ class WelcomeController {
 				req.getSession().setAttribute("email", emailSt);
 				resp.addCookie(new Cookie("email", emailSt));
 				model.addAttribute("email", emailSt);
+			    model.addAttribute("projects",projectDao.findByemail(emailSt));
 				return "landingPage";
 			} else {
 				return "welcome";

@@ -1,14 +1,47 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns:th="http://www.thymeleaf.org">
+<script src="http://mymaplist.com/js/vendor/TweenLite.min.js"></script>
 <head th:replace="~{/fragments/header}" >
 	<title>Dashboard</title>
 	<link href="https://code.fancygrid.com/fancy.min.css" rel="stylesheet">
 	<script src="https://code.fancygrid.com/fancy.min.js"></script>
 </head>
 <body>
-<a href="/Test">TEST</a>
+<link type="text/css" href="css/landingpage.css" rel="stylesheet" />
+
 <h1>Dashboard of your projects</h1>
-<script async src="//jsfiddle.net/o7f1spLb/7/embed/result/"></script>
+<!--  <script async src="//jsfiddle.net/o7f1spLb/7/embed/result/"></script>-->
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>ProjectName</th>
+      <th>Analysis Type</th>
+      <th>Status</th>
+      <th>Created on</th>
+      <th>Completation</th>
+      <th>Last Analysis</th>
+      <th>Run Analysis</th>
+    </tr>
+  </thead>
+  <tbody>
+    <c:forEach var="project" items="${projects}" >
+	<tr>
+      <th scope="row"></th>
+      <td><p th:text="${project.projectName}"></p></td>
+      <td><p>  </p></td>
+      <td><p>Scheduled</p></td>
+      <td><p  th:text="${project.creationTime}"></p></td>
+      <td></td>
+      <td></td>
+      <td> <button type="button" class="btn btn-secondary">Run Analysis Now</button>
+      </td>
+    </tr>		
+	</c:forEach>
+  </tbody>
+</table>
+
 
 </body>
 </html>

@@ -35,8 +35,9 @@ class ProjectController2 {
 			model.addAttribute("email", emailSt);
 		    project.setEmail("luca9294@hotmail.it");
 		    if (projectDao.findByurl(project.getUrl()).length == 0)
-		    		if (projectDao.findByname(project.getName()).length == 0)
-		    				projectDao.save(project); 
+		    		if (projectDao.findByprojectName(project.getName()).length == 0)
+		    				projectDao.save(project);
+		    model.addAttribute("projects",projectDao.findByemail(emailSt));
 	    	    return "landingPage";
 		}
 	    

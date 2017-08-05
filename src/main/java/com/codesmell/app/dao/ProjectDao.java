@@ -13,5 +13,7 @@ public interface ProjectDao extends MongoRepository<Project, String>
 	
 	public Project[] findByurl(String  url);
 	
-	public Project[] findByname(String  name);
+	public Project[] findByprojectName(String  projectName);
+	
+	public Project[] findByemail(String  email);
 }
