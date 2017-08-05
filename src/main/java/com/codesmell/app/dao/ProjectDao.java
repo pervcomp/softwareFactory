@@ -1,5 +1,6 @@
 package com.codesmell.app.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import com.codesmell.app.model.Project;
@@ -15,5 +16,5 @@ public interface ProjectDao extends MongoRepository<Project, String>
 	
 	public Project[] findByprojectName(String  projectName);
 	
-	public Project[] findByemail(String  email);
+	public List<Project> findByemail(String  email);
 }

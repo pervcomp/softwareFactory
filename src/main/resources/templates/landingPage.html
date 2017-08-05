@@ -26,14 +26,17 @@
     </tr>
   </thead>
   <tbody>
-    <c:forEach var="project" items="${projects}" >
-	<tr>
+  
+
+	<tr th:each="project : ${projects}">
       <th scope="row"></th>
       <td><p th:text="${project.projectName}"></p></td>
       <td><p>  </p></td>
       <td><p>Scheduled</p></td>
-      <td><p  th:text="${project.creationTime}"></p></td>
+      <td><p  th:text=    "${project.creationTime}"></p></td>
+      <td><p  th:text= "|0 /   ${project.totalCommits}|"></p></td>
       <td></td>
+      
       <td></td>
       <td> <button type="button" class="btn btn-secondary">Run Analysis Now</button>
       </td>

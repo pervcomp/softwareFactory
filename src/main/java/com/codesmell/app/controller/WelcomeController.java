@@ -1,10 +1,23 @@
 package com.codesmell.app.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.aspectj.weaver.Iterators;
+import org.assertj.core.internal.Iterables;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,9 +53,11 @@ class WelcomeController {
 			HttpServletRequest req, HttpServletResponse resp) {
 		if (req.getSession().getAttribute("email") != null) {
 			model.addAttribute("email", req.getSession().getAttribute("email"));
+			model.addAttribute("projects",getProjects((String)req.getSession().getAttribute("email")));
 			return "landingPage";
 		} else if (!email.isEmpty()) {
 			req.getSession().setAttribute("email", email);
+			model.addAttribute("projects",getProjects((String)req.getSession().getAttribute("email")));
 			model.addAttribute("email",email);
 			return "landingPage";
 		}
@@ -75,22 +90,21 @@ class WelcomeController {
 		return "/";
 	}
 	
-	
-	
-
 	@RequestMapping("/landingPage")
 	public String landingPaget(Model model, HttpServletRequest req, HttpServletResponse resp) {
 		if (req.getSession().getAttribute("email") == null)
 			return "welcome";
 		else {
 			model.addAttribute("email", req.getSession().getAttribute("email"));
+			model.addAttribute("projects",projectDao.findByemail("luca9294@hotmail.it"));			
 			return "landingPage";
 		}
 	}
 
 	@RequestMapping("/logout")
 	public String logout(Model model, HttpServletRequest req, HttpServletResponse resp) {
-		req.getSession().removeAttribute("email");
+		req.getSession().removeAttribute(""
+				+ "email");
 		Cookie cookie = new Cookie("email", null); // Not necessary, but saves
 													// bandwidth.
 		cookie.setHttpOnly(true);
@@ -123,11 +137,44 @@ class WelcomeController {
 		}
 	}
 	
-	  /* @PostMapping("/createNewProject")
-		public String createNewProject(Model model, @ModelAttribute Project project, HttpServletRequest req, HttpServletResponse resp) {
-	    		project.setEmail("luca9294@hotmail.it");
-	    	    this.projectDao.save(project);
-			return "/landingPage";
-		}*/
+	private List<Project> getProjects(String email) {
+		List<Project> projects = projectDao.findByemail(email);
+		for (Project p : projects){
+			String url = p.getUrl();
+			FileRepositoryBuilder repositoryBuilder = new FileRepositoryBuilder();
+	
+
+		
+			try {
+				File d = new File("directory");
+				Git git = Git.cloneRepository()
+						.setURI(url)
+						.setDirectory(d)
+						.call();
+				System.out.println(url);
+				Iterable<RevCommit> commits = git.log().call();
+				int count = 0;
+				for (RevCommit commit : commits)
+					count++;
+				
+				p.setTotalCommits(count);
+				
+				FileUtils.deleteDirectory(d);
+			} catch (GitAPIException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+			
+		}
+		
+		
+		return projects;
+	}
+	
 	    
 }

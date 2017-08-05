@@ -14,6 +14,8 @@ public class Project extends BaseEntity
 	private String email;
 	private String sonarKey;
 	private String sonarVersion;
+	private int totalCommits;
+	private int analysedCommits;
 	
 	public Project() 
 	{
@@ -101,6 +103,20 @@ public class Project extends BaseEntity
 	public void setSonarVersion(String sonarVersion) {
 		this.sonarVersion = sonarVersion;
 	}
+	public int getAnalysedCommits() {
+		return this.analysedCommits;
+	}
+
+	public void setAnalysedCommits(int analysedCommits) {
+		this.analysedCommits = analysedCommits;
+	}
 	
+	public int getTotalCommits() {
+		return  totalCommits;
+	}
+
+	public void setTotalCommits(int totalCommits) {
+		this.totalCommits = totalCommits;
+	}
 	
 }
