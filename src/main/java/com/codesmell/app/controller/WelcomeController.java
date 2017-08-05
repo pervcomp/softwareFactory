@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.codesmell.app.dao.CommitAnalysisDao;
+import com.codesmell.app.dao.ProjectDao;
 import com.codesmell.app.dao.UserDao;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.Project;
@@ -29,6 +30,8 @@ class WelcomeController {
 	private UserDao repository;
 	@Autowired
 	private CommitAnalysisDao commitAnalysisDao;
+	@Autowired
+	private ProjectDao projectDao;
 	@Autowired
 	SonarAnalysis so;
 
@@ -118,4 +121,12 @@ class WelcomeController {
 			return "welcome";
 		}
 	}
+	
+	  /* @PostMapping("/createNewProject")
+		public String createNewProject(Model model, @ModelAttribute Project project, HttpServletRequest req, HttpServletResponse resp) {
+	    		project.setEmail("luca9294@hotmail.it");
+	    	    this.projectDao.save(project);
+			return "/landingPage";
+		}*/
+	    
 }

@@ -23,6 +23,8 @@ import com.codesmell.app.model.User;
 
 
 @Controller
+
+@RequestMapping("/project")
 public class ProjectController {
 
 	private @Autowired ProjectDao projectDao;
@@ -47,13 +49,7 @@ public class ProjectController {
         return "projectDetails";
     }
     
-    
-	@PostMapping("/createNewProject")
-	public String createNewProject(Model model, @ModelAttribute Project project, HttpServletRequest req, HttpServletResponse resp) {
-		this.projectDao.save(project);
-		return "landingPage";
-	}
-    
+ 
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public String deleteProject(@PathVariable("id") String id,Model model) 
