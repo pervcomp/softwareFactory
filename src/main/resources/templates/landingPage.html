@@ -36,9 +36,11 @@
       <td><p  th:text=    "${project.creationTime}"></p></td>
       <td><p  th:text= "|0 /   ${project.totalCommits}|"></p></td>
       <td></td>
-      
-      <td></td>
-      <td> <button type="button" class="btn btn-secondary">Run Analysis Now</button>
+      <td>
+      <form th:action="@{/runAnalysis}" th:object="${projectToSend}" method="POST">
+      <input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>
+      <input type="submit"   class="btn btn-secondary"   value="Run Analysis Now">   
+      </form>
       </td>
     </tr>		
 	</c:forEach>

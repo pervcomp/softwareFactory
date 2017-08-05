@@ -52,10 +52,12 @@ class WelcomeController {
 	public String welcome(@CookieValue(value = "email", defaultValue = "") String email, Model model,
 			HttpServletRequest req, HttpServletResponse resp) {
 		if (req.getSession().getAttribute("email") != null) {
+			model.addAttribute("projectToSend", new Project());
 			model.addAttribute("email", req.getSession().getAttribute("email"));
 			model.addAttribute("projects",getProjects((String)req.getSession().getAttribute("email")));
 			return "landingPage";
 		} else if (!email.isEmpty()) {
+			model.addAttribute("projectToSend", new Project());
 			req.getSession().setAttribute("email", email);
 			model.addAttribute("projects",getProjects((String)req.getSession().getAttribute("email")));
 			model.addAttribute("email",email);
@@ -85,9 +87,8 @@ class WelcomeController {
 		usr.setPwd("");
 		so.setAnalysis(ca);
 		so.setProject(p);
-		so.runAnalysis();
-		model.addAttribute("user", new User());
-		return "/";
+		so.start();
+		return "landingPage";
 	}
 	
 	@RequestMapping("/landingPage")
@@ -96,6 +97,7 @@ class WelcomeController {
 			return "welcome";
 		else {
 			model.addAttribute("email", req.getSession().getAttribute("email"));
+			model.addAttribute("projectToSend", new Project());
 			model.addAttribute("projects",projectDao.findByemail("luca9294@hotmail.it"));			
 			return "landingPage";
 		}
@@ -127,6 +129,7 @@ class WelcomeController {
 				req.getSession().setAttribute("email", emailSt);
 				resp.addCookie(new Cookie("email", emailSt));
 				model.addAttribute("email", emailSt);
+		
 			    model.addAttribute("projects",projectDao.findByemail(emailSt));
 				return "landingPage";
 			} else {

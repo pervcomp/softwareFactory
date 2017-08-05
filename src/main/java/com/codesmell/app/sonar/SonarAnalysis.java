@@ -18,30 +18,26 @@ import org.springframework.stereotype.Component;
 
 import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
+import com.codesmell.app.dao.ProjectDao;
 import com.codesmell.app.model.*;
 
 import com.kotlin.*;
 
 @Component
-public class SonarAnalysis {
+public class SonarAnalysis extends Thread{
 	private Project project  ;
 	private CommitAnalysis analysis;
 	
-
-
 
 	@Autowired
 	private  CommitAnalysisDao commitAnalysisDao;
 	@Autowired
 	private  CommitDao commitDao;
 
-	
 
-	
-	
-	
-	
-	public SonarAnalysis() {
+	public SonarAnalysis(CommitAnalysisDao commitAnalysisDao,CommitDao commitDao) {
+		this.commitAnalysisDao = commitAnalysisDao;
+		this.commitDao = commitDao;
 	}
 
 
@@ -53,7 +49,8 @@ public class SonarAnalysis {
 		this.analysis = analysis;
 	}
 	
-	public void runAnalysis(){
+	@Override
+	public void run() {
 		//Analysis status is updated
 		analysis.setStatus("Processing");
 		analysis.setStartDate(new Date());
@@ -100,10 +97,17 @@ public class SonarAnalysis {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		/*
+		
 		analysis.setStatus("Finished");
 		analysis.setEndDate(new Date());
-		commitAnalysisDao.save(analysis);*/
+		commitAnalysisDao.save(analysis);
+		try {
+			FileUtils.deleteDirectory(theDir);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Folder does not exists");
+		}
+		
 	}
 	
 	public  void addCommit(String str, String analysis){
