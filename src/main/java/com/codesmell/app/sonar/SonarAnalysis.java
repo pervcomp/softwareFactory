@@ -28,7 +28,7 @@ import com.kotlin.*;
 public class SonarAnalysis extends Thread {
 	private Project project;
 	private CommitAnalysis analysis;
-
+	private int interval = 0;
 	@Autowired
 	private CommitAnalysisDao commitAnalysisDao;
 	@Autowired
@@ -38,6 +38,8 @@ public class SonarAnalysis extends Thread {
 		this.commitAnalysisDao = commitAnalysisDao;
 		this.commitDao = commitDao;
 	}
+	
+
 
 	public void setProject(Project project) {
 		this.project = project;
@@ -70,9 +72,14 @@ public class SonarAnalysis extends Thread {
 		Git git = AppKt.cloneRemoteRepository(args[1], theDir);
 
 		try {
+			int count = 0;
+			boolean flag = false;
 			Iterable<RevCommit> commits = git.log().call();
 			for (RevCommit revCommit : commits) {
-				if (commitDao.findBySsa(revCommit.getName()) == null){
+				if (count % interval == 0)
+					flag = true;
+				count++;
+				if (commitDao.findBySsa(revCommit.getName()) == null && flag){
 				String commitStr = AppKt.analyseRevision(git, so, revCommit.getName());
 				String[] commitArray = commitStr.split(" ");
 				Commit commit = new Commit();

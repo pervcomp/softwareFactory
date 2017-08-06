@@ -18,7 +18,9 @@ public class Project extends BaseEntity
 	private Date lastAnalysis;
 	private int totalCommits;
 	private int analysedCommits;
+	private int interval;
 	private Date lastRequest;
+	private boolean analysePast;
 	
 	public Project() 
 	{
@@ -53,8 +55,6 @@ public class Project extends BaseEntity
 	public void setName(String url) {
 		this.url = url;
 	}
-	
-	
 	
 	public String getVersionType() {
 		return versionType;
@@ -145,6 +145,12 @@ public class Project extends BaseEntity
 		this.lastAnalysis = lastAnalysis;
 	}
 	
+	public void setAnalysePast(boolean analysePast){
+		this.analysePast = analysePast;
+	}
+	public boolean getAnalysePast(){
+		return analysePast;
+	}
 	
 	
 }

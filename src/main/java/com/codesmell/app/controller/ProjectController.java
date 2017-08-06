@@ -57,6 +57,25 @@ class ProjectController {
 			if (projectDao.findByprojectName(project.getProjectName()).length == 0) {
 				projectDao.save(project);
 				writeConfigFile(project);
+				if (!project.getAnalysePast()){
+					String projectName = (project.getProjectName());
+					Project p = projectDao.findByprojectName(projectName)[0];
+					CommitAnalysis ca = new CommitAnalysis();
+					ca.setIdProject(p.getProjectName());
+					ca.setConfigurationFile(projectName+".properties");
+					commitAnalysisDao.insert(ca);
+					SonarAnalysis so = new SonarAnalysis(commitAnalysisDao,commitDao);	
+					so.setAnalysis(ca);
+					so.setProject(p);
+					so.start();
+				
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
 		model.addAttribute("projects", getProjects(emailSt));
 		return "landingPage";

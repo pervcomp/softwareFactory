@@ -49,8 +49,7 @@ class WelcomeController {
 	private ProjectDao projectDao;
 	@Autowired
 	private CommitDao commitDao;
-	@Autowired
-	SonarAnalysis so;
+
 
 	@RequestMapping("/")
 	public String welcome(@CookieValue(value = "email", defaultValue = "") String email, Model model,
