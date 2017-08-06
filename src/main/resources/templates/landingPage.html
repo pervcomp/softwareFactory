@@ -72,9 +72,11 @@
 	<tr th:each="project : ${projects}">
       <th scope="row"></th>
       
-      <td>
+      <td>      <input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>
+      
       <form th:action="@{/projectDetails}" th:object="${projectToSend}" method="POST">
       <p th:text="${project.projectName}"></p>
+     <input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>
       
       <input type="submit"   class="btn btn-secondary"   value="Project Details">   
       </form>

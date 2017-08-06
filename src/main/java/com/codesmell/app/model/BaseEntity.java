@@ -2,7 +2,7 @@ package com.codesmell.app.model;
 
 public class BaseEntity {
 
-   protected String _id;
+   public String _id;
 
 public String get_id() {
 	return _id;

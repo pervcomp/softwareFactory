@@ -33,9 +33,11 @@ public class ProjectDetailsController {
 	
 	
 	@PostMapping("/projectDetails")
-    public String getProjectDetails(Model model, @ModelAttribute Project project) 
+    public String getProjectDetails(Model model, @ModelAttribute Project projectToSend) 
     {
-//    	CommitAnalysis commitAnalysis= this.commitAnalysisDao.findByIdProject(project.get_id());
+		
+    	List<CommitAnalysis> commitAnalysisList= this.commitAnalysisDao.findByIdProject(projectToSend.get_id());
+    	List<CommitAnalysis> commitAnalysisList1= commitAnalysisList;
 //    	try {
 //        	List<Commit> commitList= this.commitDao.findByIdCommitAnalysis(commitAnalysis.get_id());
 //        	
