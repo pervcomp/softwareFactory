@@ -64,6 +64,8 @@ class ProjectController {
 	
 	@PostMapping("/runAnalysis")
 	public String newProject(Model model, @ModelAttribute Project projectToSend,HttpServletRequest req, HttpServletResponse resp) {
+		if (projectToSend != null){
+			if (commitAnalysisDao.findByIdProjectAndStatus(projectToSend.getProjectName(),"Processing") == null){
 		String projectName = projectToSend.getProjectName();	
 		Project p = projectDao.findByprojectName(projectName)[0];
 		CommitAnalysis ca = new CommitAnalysis();
@@ -74,6 +76,8 @@ class ProjectController {
 		so.setAnalysis(ca);
 		so.setProject(p);
 		so.start();
+		}
+		}
 		configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
 		return "landingPage";
 	}
@@ -104,20 +108,32 @@ class ProjectController {
 	private List<Project> getProjects(String email) {
 		List<Project> projects = projectDao.findByemail(email);
 		for (Project p : projects) {
+			List<CommitAnalysis> analysis = commitAnalysisDao.findByIdProject(p.getProjectName());
 			String url = p.getUrl();
 			FileRepositoryBuilder repositoryBuilder = new FileRepositoryBuilder();
-			if (p.getAnalysedCommits() == 0
+			if (p.getTotalCommits() == 0
 					|| (((new Date().getTime() - p.getLastRequest().getTime()) / 1000 / 3600) > 6)) {
 				int count = getCommitsCount(url);
+				System.out.println("RENEW AMOUNT");
 				p.setTotalCommits(count);
 				p.setLastRequest(new Date());
+			}
+			if (analysis.size() >0){
+			Date analysisDate = new Date();
+			
+			if (analysis.get(analysis.size()-1).getStatus() == "Processing")
+				analysisDate = analysis.get(analysis.size()-1).getStartDate();
+			else
+				analysisDate = analysis.get(analysis.size()-1).getEndDate();
+			
+			p.setLastAnalysis(analysisDate);
+			p.setStatus(analysis.get(analysis.size()-1).getStatus());
 			}
 			p.setAnalysedCommits(commitDao.findByprojectName(p.getProjectName()).size());
 			projectDao.save(p);
 		}
 		return projects;
 	}
-	
 
 	private int getCommitsCount(String url) {
 		int count = 0;

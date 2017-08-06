@@ -30,10 +30,10 @@
 	<tr th:each="project : ${projects}">
       <th scope="row"></th>
       <td><p th:text="${project.projectName}"></p></td>
-      <td><p>Scheduled</p></td>
-      <td><p  th:text=    "${project.creationTime}"></p></td>
-      <td><p  th:text= "|${project.analysedCommits}  /  ${project.totalCommits}|"></p></td>
-      <td></td>
+      <td><p th:text="${project.status}"></td>
+      <td><p th:text=    "${project.creationTime}"></p></td>
+      <td><p th:text= "|${project.analysedCommits}  /  ${project.totalCommits}|"></p></td>
+      <td><p th:text= "${project.lastAnalysis}"></td>
       <td>
       <form th:action="@{/runAnalysis}" th:object="${projectToSend}" method="POST">
       <input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>

@@ -14,6 +14,8 @@ public class Project extends BaseEntity
 	private String email;
 	private String sonarKey;
 	private String sonarVersion;
+	private String status;
+	private Date lastAnalysis;
 	private int totalCommits;
 	private int analysedCommits;
 	private Date lastRequest;
@@ -23,7 +25,6 @@ public class Project extends BaseEntity
 		this.creationTime= new Date();
 		this.url="";
 		this.versionType="git";
-		this.analysisStartDate=new Date();
 		this.anaysisRepetition="";
 	}
 	
@@ -127,5 +128,23 @@ public class Project extends BaseEntity
 	public void setLastRequest(Date lastRequest) {
 		this.lastRequest = lastRequest;
 	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	public Date getLastAnalysis() {
+		return lastAnalysis;
+	}
+
+	public void setLastAnalysis(Date lastAnalysis) {
+		this.lastAnalysis = lastAnalysis;
+	}
+	
+	
 	
 }
