@@ -6,12 +6,10 @@ import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
@@ -21,10 +19,8 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
@@ -32,7 +28,6 @@ import com.codesmell.app.dao.ProjectDao;
 import com.codesmell.app.dao.UserDao;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.Project;
-import com.codesmell.app.model.User;
 import com.codesmell.app.sonar.SonarAnalysis;
 
 @Controller
@@ -57,7 +52,7 @@ class ProjectController {
 			if (projectDao.findByprojectName(project.getProjectName()).length == 0) {
 				projectDao.save(project);
 				writeConfigFile(project);
-				if (!project.getAnalysePast()){
+				/*if (!project.getAnalysePast()){
 					String projectName = (project.getProjectName());
 					Project p = projectDao.findByprojectName(projectName)[0];
 					CommitAnalysis ca = new CommitAnalysis();
@@ -75,7 +70,7 @@ class ProjectController {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}
+				}*/
 			}
 		model.addAttribute("projects", getProjects(emailSt));
 		return "landingPage";

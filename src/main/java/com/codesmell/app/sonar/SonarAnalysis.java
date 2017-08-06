@@ -5,24 +5,25 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
-
-import javax.annotation.PostConstruct;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
-import com.codesmell.app.dao.ProjectDao;
-import com.codesmell.app.model.*;
-
-import com.kotlin.*;
+import com.codesmell.app.model.Commit;
+import com.codesmell.app.model.CommitAnalysis;
+import com.codesmell.app.model.Project;
+import com.kotlin.AppKt;
+import com.kotlin.ScanOptionsKt;
 
 @Component
 public class SonarAnalysis extends Thread {
@@ -59,7 +60,7 @@ public class SonarAnalysis extends Thread {
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
 		String args[] = { "--git", url, "--properties", conf };
-		ScanOptions so = ScanOptionsKt.parseOptions(args);
+		com.kotlin.ScanOptions so = ScanOptionsKt.parseOptions(args);
 
 		File theDir = new File(project.getName() + "_" + analysis.getIdAnalysis());
 		try {
@@ -76,9 +77,9 @@ public class SonarAnalysis extends Thread {
 			boolean flag = false;
 			Iterable<RevCommit> commits = git.log().call();
 			for (RevCommit revCommit : commits) {
-				if (count % interval == 0)
+				/*if (count % interval == 0)
 					flag = true;
-				count++;
+				count++;*/
 				if (commitDao.findBySsa(revCommit.getName()) == null && flag){
 				String commitStr = AppKt.analyseRevision(git, so, revCommit.getName());
 				String[] commitArray = commitStr.split(" ");
