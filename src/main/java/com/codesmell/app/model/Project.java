@@ -16,6 +16,7 @@ public class Project extends BaseEntity
 	private String sonarVersion;
 	private int totalCommits;
 	private int analysedCommits;
+	private Date lastRequest;
 	
 	public Project() 
 	{
@@ -117,6 +118,14 @@ public class Project extends BaseEntity
 
 	public void setTotalCommits(int totalCommits) {
 		this.totalCommits = totalCommits;
+	}
+	
+	public Date getLastRequest() {
+		return  lastRequest;
+	}
+
+	public void setLastRequest(Date lastRequest) {
+		this.lastRequest = lastRequest;
 	}
 	
 }

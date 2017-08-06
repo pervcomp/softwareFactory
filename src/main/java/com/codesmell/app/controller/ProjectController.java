@@ -51,23 +51,22 @@ class ProjectController {
 		model.addAttribute("email", emailSt);
 		project.setEmail(emailSt);
 		if (projectDao.findByurl(project.getUrl()).length == 0)
-			if (projectDao.findByprojectName(project.getName()).length == 0) {
+			if (projectDao.findByprojectName(project.getProjectName()).length == 0) {
 				projectDao.save(project);
 				writeConfigFile(project);
 			}
-		model.addAttribute("projects", getProjects(emailSt));
+		model.addAttribute("projects", getProjects(emailSt,project.getProjectName()));
 		return "landingPage";
 	}
 	
 	@PostMapping("/runAnalysis")
 	public String newProject(Model model, @ModelAttribute Project projectToSend,HttpServletRequest req, HttpServletResponse resp) {
 		String projectName = projectToSend.getProjectName();	
-		String email = (String)req.getAttribute("email");
 		Project p = projectDao.findByprojectName(projectName)[0];
 		CommitAnalysis ca = new CommitAnalysis();
+		ca.setIdProject(p.getProjectName());
 		ca.setConfigurationFile(projectName+".properties");
 		commitAnalysisDao.insert(ca);
-		User usr = userDao.findByEmail1(email);
 		SonarAnalysis so = new SonarAnalysis(commitAnalysisDao,commitDao);	
 		so.setAnalysis(ca);
 		so.setProject(p);
@@ -98,7 +97,7 @@ class ProjectController {
 
 	}
 
-	private List<Project> getProjects(String email) {
+	private List<Project> getProjects(String email, String projectName) {
 		List<Project> projects = projectDao.findByemail(email);
 		for (Project p : projects) {
 			String url = p.getUrl();
@@ -112,9 +111,11 @@ class ProjectController {
 				int count = 0;
 				for (RevCommit commit : commits)
 					count++;
-
 				p.setTotalCommits(count);
-
+				int tesst = commitDao.findByprojectName(projectName).size();
+				
+				System.out.println(tesst);
+				p.setAnalysedCommits(commitDao.findByprojectName(projectName).size());
 				FileUtils.deleteDirectory(d);
 			} catch (GitAPIException e) {
 				// TODO Auto-generated catch block
@@ -124,7 +125,6 @@ class ProjectController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
 		return projects;
 	}

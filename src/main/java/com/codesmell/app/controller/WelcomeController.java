@@ -2,6 +2,7 @@ package com.codesmell.app.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -14,6 +15,8 @@ import org.aspectj.weaver.Iterators;
 import org.assertj.core.internal.Iterables;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.InvalidRemoteException;
+import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.codesmell.app.dao.CommitAnalysisDao;
+import com.codesmell.app.dao.CommitDao;
 import com.codesmell.app.dao.ProjectDao;
 import com.codesmell.app.dao.UserDao;
 import com.codesmell.app.model.CommitAnalysis;
@@ -45,6 +49,8 @@ class WelcomeController {
 	private CommitAnalysisDao commitAnalysisDao;
 	@Autowired
 	private ProjectDao projectDao;
+	@Autowired
+	private CommitDao commitDao;
 	@Autowired
 	SonarAnalysis so;
 
@@ -73,23 +79,7 @@ class WelcomeController {
 		model.addAttribute("project", new Project());
 		return "newproject";
 	}
-	
-	@RequestMapping("/Test")
-	public String test(Model model,HttpServletRequest req, HttpServletResponse resp) {
-		Project p = new Project();
-		p.setUrl("https://github.com/cuuzis/java-project-for-sonar-scanner-testing.git");
-		p.setName("Test");
-		CommitAnalysis ca = new CommitAnalysis();
-		ca.setConfigurationFile("my.properties");
-		commitAnalysisDao.insert(ca);
-		User usr = new User();
-		usr.setEmail1("");
-		usr.setPwd("");
-		so.setAnalysis(ca);
-		so.setProject(p);
-		so.start();
-		return "landingPage";
-	}
+
 	
 	@RequestMapping("/landingPage")
 	public String landingPaget(Model model, HttpServletRequest req, HttpServletResponse resp) {
@@ -142,42 +132,48 @@ class WelcomeController {
 	
 	private List<Project> getProjects(String email) {
 		List<Project> projects = projectDao.findByemail(email);
-		for (Project p : projects){
+		for (Project p : projects) {
 			String url = p.getUrl();
 			FileRepositoryBuilder repositoryBuilder = new FileRepositoryBuilder();
-	
-
-		
-			try {
-				File d = new File("directory");
-				Git git = Git.cloneRepository()
-						.setURI(url)
-						.setDirectory(d)
-						.call();
-				System.out.println(url);
-				Iterable<RevCommit> commits = git.log().call();
-				int count = 0;
-				for (RevCommit commit : commits)
-					count++;
-				
+			if (p.getAnalysedCommits() == 0 || (((new Date().getTime() - p.getLastRequest().getTime()) / 1000 / 3600) > 6)){
+				int count = getCommitsCount(url);
 				p.setTotalCommits(count);
-				
-				FileUtils.deleteDirectory(d);
-			} catch (GitAPIException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				p.setLastRequest(new Date());
 			}
-		
-			
+			p.setAnalysedCommits(commitDao.findByprojectName(p.getProjectName()).size());
+			projectDao.save(p);
 		}
-		
-		
 		return projects;
 	}
+	
+	private int getCommitsCount(String url){
+		int count = 0;
+		File d = new File("directory");
+		Git git;
+		try {
+			git = Git.cloneRepository().setURI(url).setDirectory(d).call();
+			Iterable<RevCommit> commits = git.log().call();		
+			for (RevCommit commit : commits)
+				count++;
+			FileUtils.deleteDirectory(d);
+		} catch (InvalidRemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransportException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (GitAPIException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return count;
+		
+	}
+
 	
 	    
 }

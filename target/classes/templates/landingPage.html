@@ -17,7 +17,6 @@
     <tr>
       <th>#</th>
       <th>ProjectName</th>
-      <th>Analysis Type</th>
       <th>Status</th>
       <th>Created on</th>
       <th>Completation</th>
@@ -31,10 +30,9 @@
 	<tr th:each="project : ${projects}">
       <th scope="row"></th>
       <td><p th:text="${project.projectName}"></p></td>
-      <td><p>  </p></td>
       <td><p>Scheduled</p></td>
       <td><p  th:text=    "${project.creationTime}"></p></td>
-      <td><p  th:text= "|0 /   ${project.totalCommits}|"></p></td>
+      <td><p  th:text= "|${project.analysedCommits}  /  ${project.totalCommits}|"></p></td>
       <td></td>
       <td>
       <form th:action="@{/runAnalysis}" th:object="${projectToSend}" method="POST">

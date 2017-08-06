@@ -8,6 +8,7 @@ public class Commit extends BaseEntity{
 	private Date creationDate;
 	private Date analysisDate;
 	private String status;
+	private String projectName;
 	
 	public Commit() 
 	{
@@ -58,5 +59,13 @@ public class Commit extends BaseEntity{
 		this.idCommitAnalysis = idCommitAnalysis;
 	}
 	
+	
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
 	
 }
