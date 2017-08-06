@@ -38,8 +38,6 @@ import com.codesmell.app.model.Project;
 import com.codesmell.app.model.User;
 import com.codesmell.app.sonar.SonarAnalysis;
 
-
-
 @Controller
 class WelcomeController {
 
@@ -58,15 +56,12 @@ class WelcomeController {
 	public String welcome(@CookieValue(value = "email", defaultValue = "") String email, Model model,
 			HttpServletRequest req, HttpServletResponse resp) {
 		if (req.getSession().getAttribute("email") != null) {
-			model.addAttribute("projectToSend", new Project());
-			model.addAttribute("email", req.getSession().getAttribute("email"));
-			model.addAttribute("projects",getProjects((String)req.getSession().getAttribute("email")));
+			String emailSession = (String) req.getSession().getAttribute("email");
+			configureModelLandingPage(model, emailSession);
 			return "landingPage";
 		} else if (!email.isEmpty()) {
-			model.addAttribute("projectToSend", new Project());
 			req.getSession().setAttribute("email", email);
-			model.addAttribute("projects",getProjects((String)req.getSession().getAttribute("email")));
-			model.addAttribute("email",email);
+			configureModelLandingPage(model, email);
 			return "landingPage";
 		}
 		model.addAttribute("user", new User());
@@ -74,29 +69,26 @@ class WelcomeController {
 	}
 
 	@RequestMapping("/newproject")
-	public String newProject(Model model,HttpServletRequest req, HttpServletResponse resp) {
+	public String newProject(Model model, HttpServletRequest req, HttpServletResponse resp) {
 		model.addAttribute("email", req.getSession().getAttribute("email"));
 		model.addAttribute("project", new Project());
 		return "newproject";
 	}
 
-	
 	@RequestMapping("/landingPage")
 	public String landingPaget(Model model, HttpServletRequest req, HttpServletResponse resp) {
 		if (req.getSession().getAttribute("email") == null)
 			return "welcome";
 		else {
-			model.addAttribute("email", req.getSession().getAttribute("email"));
-			model.addAttribute("projectToSend", new Project());
-			model.addAttribute("projects",projectDao.findByemail("luca9294@hotmail.it"));			
+			String emailSession = (String) req.getSession().getAttribute("email");
+			configureModelLandingPage(model, emailSession);
 			return "landingPage";
 		}
 	}
 
 	@RequestMapping("/logout")
 	public String logout(Model model, HttpServletRequest req, HttpServletResponse resp) {
-		req.getSession().removeAttribute(""
-				+ "email");
+		req.getSession().removeAttribute("" + "email");
 		Cookie cookie = new Cookie("email", null); // Not necessary, but saves
 													// bandwidth.
 		cookie.setHttpOnly(true);
@@ -118,9 +110,7 @@ class WelcomeController {
 			if (pwd.equals((usr.getPwd()))) {
 				req.getSession().setAttribute("email", emailSt);
 				resp.addCookie(new Cookie("email", emailSt));
-				model.addAttribute("email", emailSt);
-		
-			    model.addAttribute("projects",projectDao.findByemail(emailSt));
+				configureModelLandingPage(model, emailSt);
 				return "landingPage";
 			} else {
 				return "welcome";
@@ -129,13 +119,14 @@ class WelcomeController {
 			return "welcome";
 		}
 	}
-	
+
 	private List<Project> getProjects(String email) {
 		List<Project> projects = projectDao.findByemail(email);
 		for (Project p : projects) {
 			String url = p.getUrl();
 			FileRepositoryBuilder repositoryBuilder = new FileRepositoryBuilder();
-			if (p.getAnalysedCommits() == 0 || (((new Date().getTime() - p.getLastRequest().getTime()) / 1000 / 3600) > 6)){
+			if (p.getAnalysedCommits() == 0
+					|| (((new Date().getTime() - p.getLastRequest().getTime()) / 1000 / 3600) > 6)) {
 				int count = getCommitsCount(url);
 				p.setTotalCommits(count);
 				p.setLastRequest(new Date());
@@ -145,14 +136,14 @@ class WelcomeController {
 		}
 		return projects;
 	}
-	
-	private int getCommitsCount(String url){
+
+	private int getCommitsCount(String url) {
 		int count = 0;
 		File d = new File("directory");
 		Git git;
 		try {
 			git = Git.cloneRepository().setURI(url).setDirectory(d).call();
-			Iterable<RevCommit> commits = git.log().call();		
+			Iterable<RevCommit> commits = git.log().call();
 			for (RevCommit commit : commits)
 				count++;
 			FileUtils.deleteDirectory(d);
@@ -171,9 +162,12 @@ class WelcomeController {
 		}
 
 		return count;
-		
 	}
 
-	
-	    
+	private void configureModelLandingPage(Model model, String email) {
+		model.addAttribute("projects", getProjects(email));
+		model.addAttribute("email", email);
+		model.addAttribute("projectToSend", new Project());
+	}
+
 }

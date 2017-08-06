@@ -3,6 +3,7 @@ package com.codesmell.app.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -13,6 +14,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.InvalidRemoteException;
+import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +58,7 @@ class ProjectController {
 				projectDao.save(project);
 				writeConfigFile(project);
 			}
-		model.addAttribute("projects", getProjects(emailSt,project.getProjectName()));
+		model.addAttribute("projects", getProjects(emailSt));
 		return "landingPage";
 	}
 	
@@ -71,6 +74,7 @@ class ProjectController {
 		so.setAnalysis(ca);
 		so.setProject(p);
 		so.start();
+		configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
 		return "landingPage";
 	}
 	
@@ -96,37 +100,55 @@ class ProjectController {
 		}
 
 	}
-
-	private List<Project> getProjects(String email, String projectName) {
+	
+	private List<Project> getProjects(String email) {
 		List<Project> projects = projectDao.findByemail(email);
 		for (Project p : projects) {
 			String url = p.getUrl();
 			FileRepositoryBuilder repositoryBuilder = new FileRepositoryBuilder();
-
-			try {
-				File d = new File("directory");
-				Git git = Git.cloneRepository().setURI(url).setDirectory(d).call();
-				System.out.println(url);
-				Iterable<RevCommit> commits = git.log().call();
-				int count = 0;
-				for (RevCommit commit : commits)
-					count++;
+			if (p.getAnalysedCommits() == 0
+					|| (((new Date().getTime() - p.getLastRequest().getTime()) / 1000 / 3600) > 6)) {
+				int count = getCommitsCount(url);
 				p.setTotalCommits(count);
-				int tesst = commitDao.findByprojectName(projectName).size();
-				
-				System.out.println(tesst);
-				p.setAnalysedCommits(commitDao.findByprojectName(projectName).size());
-				FileUtils.deleteDirectory(d);
-			} catch (GitAPIException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				p.setLastRequest(new Date());
 			}
+			p.setAnalysedCommits(commitDao.findByprojectName(p.getProjectName()).size());
+			projectDao.save(p);
 		}
 		return projects;
 	}
+	
 
+	private int getCommitsCount(String url) {
+		int count = 0;
+		File d = new File("directory");
+		Git git;
+		try {
+			git = Git.cloneRepository().setURI(url).setDirectory(d).call();
+			Iterable<RevCommit> commits = git.log().call();
+			for (RevCommit commit : commits)
+				count++;
+			FileUtils.deleteDirectory(d);
+		} catch (InvalidRemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransportException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (GitAPIException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return count;
+	}
+
+	private void configureModelLandingPage(Model model, String email) {
+		model.addAttribute("projects", getProjects(email));
+		model.addAttribute("email", email);
+		model.addAttribute("projectToSend", new Project());
+	}
 }
