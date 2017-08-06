@@ -10,15 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.tomcat.util.codec.binary.Base64;
-import org.aspectj.weaver.Iterators;
-import org.assertj.core.internal.Iterables;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.TransportException;
-import org.eclipse.jgit.internal.storage.file.FileRepository;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +31,6 @@ import com.codesmell.app.dao.UserDao;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.Project;
 import com.codesmell.app.model.User;
-import com.codesmell.app.sonar.SonarAnalysis;
 
 @Controller
 class WelcomeController {
