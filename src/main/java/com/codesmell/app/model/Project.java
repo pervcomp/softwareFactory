@@ -21,6 +21,7 @@ public class Project extends BaseEntity
 	private int interval;
 	private Date lastRequest;
 	private boolean analysePast;
+	private boolean analyseAll;
 	
 	public Project() 
 	{
@@ -151,6 +152,21 @@ public class Project extends BaseEntity
 	public boolean getAnalysePast(){
 		return analysePast;
 	}
+	
+	public void setAnalyseAll(boolean analyseAll){
+		this.analyseAll = analyseAll;
+	}
+	public boolean getAnalyseAll(){
+		return analyseAll;
+	}
+	
+	public void setInterval(int interval){
+		this.interval = interval;
+	}
+	public int getInterval(){
+		return interval;
+	}
+	
 	
 	
 }

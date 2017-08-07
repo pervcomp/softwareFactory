@@ -1,6 +1,24 @@
+@CHARSET "UTF-8";
+
+
+
 body {
     margin: 100 !important;
     padding: 100 !important;
     margin-right: 100px;
     margin-left: 100px;
 }
+
+
+
+
+.btn-custom {
+  background-color: #dd9619;
+  border-color: #dd9619;
+  color : white;
+}
+.btn-custom:hover,
+.btn-custom:focus,
+.btn-custom:active,
+.btn-custom.active {
+  background-color: #c68616;}

@@ -50,9 +50,9 @@ class ProjectController {
 		project.setEmail(emailSt);
 		if (projectDao.findByurl(project.getUrl()).length == 0)
 			if (projectDao.findByprojectName(project.getProjectName()).length == 0) {
-				projectDao.save(project);
-				writeConfigFile(project);
-				/*if (!project.getAnalysePast()){
+				 projectDao.save(project);
+				 writeConfigFile(project);
+				if (project.getAnalysePast()){
 					String projectName = (project.getProjectName());
 					Project p = projectDao.findByprojectName(projectName)[0];
 					CommitAnalysis ca = new CommitAnalysis();
@@ -61,6 +61,7 @@ class ProjectController {
 					commitAnalysisDao.insert(ca);
 					SonarAnalysis so = new SonarAnalysis(commitAnalysisDao,commitDao);	
 					so.setAnalysis(ca);
+					so.setInterval(p.getInterval());
 					so.setProject(p);
 					so.start();
 				
@@ -70,7 +71,7 @@ class ProjectController {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}*/
+				}
 			}
 		model.addAttribute("projects", getProjects(emailSt));
 		return "landingPage";

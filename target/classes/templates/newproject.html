@@ -49,18 +49,18 @@
 						<label>Sonar ProjectKey:</label><br> 
 						<input required="required" type="text" th:object="${sonarKey}"  name="projectKey" placeholder="ProjectKey for SonarScanner"><br></br>
 						<label>Sonar ProjectVersion:</label><br> 
-						<input required="required" type="number" th:object="${sonarVersion}"  name="projectKey" placeholder="ProjectVersion for SonarScanner"><br></br>
+						<input required="required" type="number" th:object="${sonarVersion}"  name="sonarVersion" placeholder="ProjectVersion for SonarScanner"><br></br>
 						<label>Type of analysis:</label><p>
-							<input type="checkbox" id="pastAnalysis" checked="checked" th:checked="${analysePast}"> Analyze commits in the past  (Optional)
+							<input type="checkbox" id="pastAnalysis"  th:field="*{analysePast}" th:checked="checked"> Analyze commits in the past  (Optional)
 							<br>
-						    <div class="form-group 12 col-sm-12 desc" id="analysisType2">
-								<legend>Which Commits in the past?</legend>
-								<input type="Radio" Name="commitAnalysisType" Value="Automatic"> All commits in the history until now 
+						    <div hidden class="form-group 12 col-sm-12 desc" id="analysisType2">
+								<legend >Which Commits in the past?</legend>
+								<input type="Radio" Name="analyseAll"  id="analyseAll"  th:field="*{analyseAll}"> All commits in the history until now 
 								<br><br>
-								<input type="Radio" Name="commitAnalysisType" Value="Manual">  Commits Interval (Do an analysis each # commits)
+								<input type="Radio" Name="analyseAll">  Commits Interval (Do an analysis each # commits)
 								<br></br>
-								<input th:object="${sonarVersion}" type="number"
-								name="Number of commits" max="50" value="# Commits"><br>
+								<input  required="required" type="number" th:object="${interval}"  value ='1' name="interval"  max='20' placeholder="interval "><br></br>
+
 							</div>
 							<br></br><br>
 							<div  class="form-group col-md-12 col-sm-12 desc" id="analysisType3">

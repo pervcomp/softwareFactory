@@ -29,7 +29,7 @@ import com.kotlin.ScanOptionsKt;
 public class SonarAnalysis extends Thread {
 	private Project project;
 	private CommitAnalysis analysis;
-	private int interval = 0;
+	private int interval = 1;
 	@Autowired
 	private CommitAnalysisDao commitAnalysisDao;
 	@Autowired
@@ -39,8 +39,6 @@ public class SonarAnalysis extends Thread {
 		this.commitAnalysisDao = commitAnalysisDao;
 		this.commitDao = commitDao;
 	}
-	
-
 
 	public void setProject(Project project) {
 		this.project = project;
@@ -48,6 +46,10 @@ public class SonarAnalysis extends Thread {
 
 	public void setAnalysis(CommitAnalysis analysis) {
 		this.analysis = analysis;
+	}
+	
+	public void setInterval (int interval){
+		this.interval = interval;
 	}
 
 	@Override
@@ -77,9 +79,11 @@ public class SonarAnalysis extends Thread {
 			boolean flag = false;
 			Iterable<RevCommit> commits = git.log().call();
 			for (RevCommit revCommit : commits) {
-				/*if (count % interval == 0)
+				if (count % interval == 0)
 					flag = true;
-				count++;*/
+				else
+					flag = false;
+				count++;
 				if (commitDao.findBySsa(revCommit.getName()) == null && flag){
 				String commitStr = AppKt.analyseRevision(git, so, revCommit.getName());
 				String[] commitArray = commitStr.split(" ");
