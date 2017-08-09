@@ -15,8 +15,21 @@
 	<script src="https://code.fancygrid.com/fancy.min.js"></script>
 </head>
 
-
 <div class="container">
+
+	<!-- PROJECT SUMMARY -->
+	<table class="table table-striped">
+		<tbody>
+		  <tr>Project Name: <p th:text="${project.projectName}"></p></tr>
+		  <tr>Last Analysis: <p th:text="${project.lastAnalysis}"></p></td>
+		  <tr>Last Result: <p th:text="${project.status}"></p></td>
+	      <tr>Overall: <p th:text="|${#lists.size(commits)} / ${project.totalCommits}|" ></p><tr>
+	      <tr>Succeeded: <p th:text="|${#lists.size(project.countFailedCommits)} / ${project.totalCommits}|" ></p> </td>
+	      <tr>Failed: <p th:text="|${#lists.size(project.countSuccessCommits)} / ${project.totalCommits}|" ></p></td>
+	      <tr>Next Analysis: (TO DO FUTURE ITERATION) </td>
+    	</tbody>
+    </table>
+	
 	<!-- ANALYSED COMMITS TABLE -->
 	<table class="table table-striped">
   	<thead>
