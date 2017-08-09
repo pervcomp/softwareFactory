@@ -93,11 +93,11 @@ public class Project extends BaseEntity
 		this.email = email;
 	}
 	
-	public String getIdSonarKey() {
+	public String getSonarKey() {
 		return sonarKey;
 	}
 
-	public void setIdSonarKey(String sonarKey) {
+	public void setSonarKey(String sonarKey) {
 		this.sonarKey = sonarKey;
 	}
 	public String getSonarVersion() {

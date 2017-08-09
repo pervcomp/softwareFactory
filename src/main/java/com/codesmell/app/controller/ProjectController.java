@@ -182,7 +182,7 @@ class ProjectController {
 			File file = new File((project.getProjectName() + ".properties"));
 			PrintWriter writer = new PrintWriter(file);
 			writer.println("# Required metadata");
-			writer.println("sonar.projectKey=" + project.getIdSonarKey());
+			writer.println("sonar.projectKey=" + project.getSonarKey());
 			writer.println("sonar.projectName=" + project.getProjectName());
 			writer.println("sonar.projectVersion=" + project.getSonarVersion());
 			writer.println("sonar.host.url=http://sonar.inf.unibz.it/");
