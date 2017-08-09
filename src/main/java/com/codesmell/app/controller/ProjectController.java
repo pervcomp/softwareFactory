@@ -70,42 +70,7 @@ class ProjectController {
 		
 		
 	
-	        try {
-	        	
-	       	 Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-
-		        JobDetail job = JobBuilder.newJob(SonarAnalysis2.class)
-		            .withIdentity("2", "0") 
-		            .build();
-
-		        String startDateStr = "2017-08-08 21:24:00.0";
-		        String endDateStr = "2013-09-31 00:00:00.0";
-
-		        Date startDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(startDateStr);
-		       
-		        Trigger runOnceTrigger = TriggerBuilder.newTrigger().startAt(startDate).build();
-		        
-		        Project p = projectDao.findByprojectName("SonarScanner")[0];
-		        
-		        CommitAnalysis ca = new CommitAnalysis();
-				ca.setIdProject(p.getProjectName());
-				ca.setConfigurationFile("SonarScanner"+".properties");
-				commitAnalysisDao.insert(ca);
-		        
-		        
-		     
-		        	scheduler.getContext().put("commitAnalysisDao", commitAnalysisDao);
-		        	scheduler.getContext().put("commitDao", commitDao);
-		        	scheduler.getContext().put("project", p);
-		        	scheduler.getContext().put("analysis", ca);
-		        scheduler.getContext().put("interval", 5);
-		        	
-				scheduler.scheduleJob(job, runOnceTrigger);
-				scheduler.start();
-			} catch (SchedulerException | ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	       
 	      
 		
 		
@@ -145,6 +110,69 @@ class ProjectController {
 		model.addAttribute("projects", getProjects(emailSt));*/
 		return "landingPage";
 	}
+	
+	private void schedule(){
+		 try {
+	        	
+	       	 Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+
+		        JobDetail job = JobBuilder.newJob(SonarAnalysis2.class)
+		            .withIdentity("2", "0") 
+		            .build();
+
+		        String startDateStr = "2017-08-08 21:24:00.0";
+		        String endDateStr = "2013-09-31 00:00:00.0";
+
+		        Date startDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(startDateStr);
+		       
+		        Trigger runOnceTrigger = TriggerBuilder.newTrigger().startAt(startDate).build();
+		        
+		        Project p = projectDao.findByprojectName("SonarScanner")[0];
+		        
+		        CommitAnalysis ca = new CommitAnalysis();
+				ca.setIdProject(p.getProjectName());
+				ca.setConfigurationFile("SonarScanner"+".properties");
+				commitAnalysisDao.insert(ca);
+		        
+		        
+		     
+		        	scheduler.getContext().put("commitAnalysisDao", commitAnalysisDao);
+		        	scheduler.getContext().put("commitDao", commitDao);
+		        	scheduler.getContext().put("project", p);
+		        	scheduler.getContext().put("analysis", ca);
+		        scheduler.getContext().put("interval", 5);
+		        	
+				scheduler.scheduleJob(job, runOnceTrigger);
+				scheduler.start();
+			} catch (SchedulerException | ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@PostMapping("/runAnalysis")
 	public String newProject(Model model, @ModelAttribute Project projectToSend,HttpServletRequest req, HttpServletResponse resp) {
