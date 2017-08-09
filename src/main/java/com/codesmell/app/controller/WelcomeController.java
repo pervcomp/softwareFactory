@@ -158,10 +158,14 @@ class WelcomeController {
 		else
 			analysisDate = analysis.get(analysis.size()-1).getEndDate();
 		
+		
+
 		p.setLastAnalysis(analysisDate);
 		p.setStatus(analysis.get(analysis.size()-1).getStatus());
 		}
 		p.setAnalysedCommits(commitDao.findByprojectName(p.getProjectName()).size());
+		p.setCountFailedCommits((commitDao.findByProjectNameAndStatus(p.getProjectName(), "FAILED").size()));
+		p.setCountSuccessCommits((commitDao.findByProjectNameAndStatus(p.getProjectName(), "SUCCESS").size()));
 		projectDao.save(p);
 	}
 	

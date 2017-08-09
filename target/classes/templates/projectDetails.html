@@ -9,50 +9,26 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
 
-<!-- This is a very simple parallax effect achieved by simple CSS 3 multiple backgrounds, made by http://twitter.com/msurguy -->
-
-<style>
-body{
-    background: #282828;
-	background-color: #444;
-    background: #282828;
-}
-
-.vertical-offset-100{
-    padding-top:100px;
-}
-
-img  {
-	margin-top: 50px;
-	margin-bottom: 25px;
-	margin-left: 25%;
-    width: 50%; /* you can use % */
-    height: auto;
-    align: middle;
-}
-
-
-</style>
-
+<head lang="en" th:include="fragments/header">
+	<title>Dashboard</title>
+	<link href="https://code.fancygrid.com/fancy.min.css" rel="stylesheet">
+	<script src="https://code.fancygrid.com/fancy.min.js"></script>
+</head>
 
 <div class="container">
-    <div class="row vertical-offset-100">
-    	<!-- 
-    	<div class="col-md-4 col-md-offset-4">
-    		<div class="panel panel-default">
-			  	<div class="panel-heading">
-			    	<h3 class="panel-title">Please provide the sign up data</h3>
-			 	</div>
-			  	<div class="panel-body">
-			  	<h1 th:text=    "${project.creationTime}"></h1>
-			  	 <dd th:text="${productDetails.project.projectName">Red chair</dd>
-			      	
-			    </div>
-			</div>
-		</div>
-		 -->
-		<img src="https://image.ibb.co/mm9dPa/smellsgood_logo.png"/>
-	</div>
+
+	<!-- PROJECT SUMMARY -->
+	<table class="table table-striped">
+		<tbody>
+		  <tr>Project Name: <p th:text="${project.projectName}"></p></tr>
+		  <tr>Last Analysis: <p th:text="${project.lastAnalysis}"></p></td>
+		  <tr>Last Result: <p th:text="${project.status}"></p></td>
+	      <tr>Overall: <p th:text="|${#lists.size(commits)} / ${project.totalCommits}|" ></p><tr>
+	      <tr>Failed: <p th:text="|${project.countFailedCommits} / ${project.totalCommits}|" ></p> </td>
+	      <tr>Succeeded: <p th:text="|${project.countSuccessCommits} / ${project.totalCommits}|" ></p></td>
+	      <tr>Next Analysis: (TO DO FUTURE ITERATION) </td>
+    	</tbody>
+    </table>
 	
 	<!-- ANALYSED COMMITS TABLE -->
 	<table class="table table-striped">
@@ -69,11 +45,9 @@ img  {
   	<!-- ________ -->
 	<tr th:each="commit : ${commits}">
       <th scope="row"></th>
-      <td><p th:text="${commit.idCommitAnalysis}"></p></td>
-      <td><p th:text="${commit.ssh}"></p></td>
-      <td><p th:text="${commit.status}"></td>
+      <td><p th:text="${commit.ssa}"></p></td>
       <td><p th:text="${commit.analysisDate}"></p></td>
-      <td><p th:text="${commit.commitDate}"></p></td>
+      <td><p th:text="${commit.creationDate}"></p></td>
       <td><p th:text="${commit.status}"></p></td>
     </tr>
   	</tbody>

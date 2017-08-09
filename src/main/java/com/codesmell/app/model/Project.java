@@ -23,6 +23,8 @@ public class Project extends BaseEntity
 	private boolean analysePast;
 	private boolean analyseAll;
 	private boolean scheduleProject;
+	private int countFailedCommits;
+	private int countSuccessCommits;
 	
 	public Project() 
 	{
@@ -175,6 +177,20 @@ public class Project extends BaseEntity
 		return scheduleProject;
 	}
 	
+	public void setCountFailedCommits(int countFailedCommits){
+		this.countFailedCommits = countFailedCommits;
+	}
 	
+	public int getCountFailedCommits(){
+		return this.countFailedCommits;
+	}
+	
+	public void setCountSuccessCommits(int countSuccessCommits){
+		this.countSuccessCommits = countSuccessCommits;
+	}
+	
+	public int getCountSuccessCommits(){
+		return this.countSuccessCommits;
+	}
 	
 }
