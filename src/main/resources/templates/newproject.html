@@ -66,15 +66,16 @@
 							<div  class="form-group col-md-12 col-sm-12 desc" id="analysisType3">
 							<fieldset>
 								<legend>Schedule analysis in the future</legend>
-								<input type="Radio" Name="commitAnalysisTime" Value=5 checked="checked"> Commits Interval (Do an analysis each # new commits)
+								<input type="Radio" Name="scheduleProject"   th:checked="checked"> Commits Interval (Do an analysis each # new commits)
 							    <br><br>
-							    <input type="Radio" Name="commitAnalysisTime" Value=6> Scheduled <br> 
-								<br><br>
-								<div class="form-group 12 col-sm-12 desc1" id="commitAnalysisTime5">
+								<div class="form-group 12 col-sm-12 desc1" id="scheduleProject5">
 									<label>Analysis every (2-100) commits:</label><br>
 									<input type="number" min="2" max="100" name="Analysis every (2-100) commits:" value="# Commits"><br>
 								</div>
-								<div hidden class="form-group 12 col-sm-12 desc1" id="commitAnalysisTime6">
+							    <input type="Radio" Name="scheduleProject"  th:field="*{scheduleProject}" > Scheduled <br> 
+								<br><br>
+
+								<div  class="form-group 12 col-sm-12 desc1" id="scheduleProject6">
 									<p>Starting date: <input type="text" id="datepicker" th:value="${schedule.startingDate}" name="startingDate"></p>
 									<p>Starting time: <input type="text" id="timepicker" th:value="${schedule.startingTime}" name="startingTime"  ></p>
 								    <label>Every:  </label> 
@@ -112,13 +113,6 @@ $(document).ready(function() {
         $("#analysisType" + test).show();
     });
 });
-$(document).ready(function() {
-    $("input[name$='commitAnalysisTime']").click(function() {
-        var test1 = $(this).val();
-        $("div.desc1").hide();
-        $("#commitAnalysisTime" + test1).show();
-    });
-});
 
 
 $(document).ready(function() {
@@ -143,8 +137,9 @@ $( function() {
 
 $(function() {
     	$("#timepicker").timepicker({
-    	    timeFormat: 'h:mm p',
+    	    timeFormat: 'HH:mm',
     	    interval: 30,
+        use24hours: true,
     	    defaultTime: '7',
     	    startTime: '10:00',
     	    dynamic: false,

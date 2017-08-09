@@ -24,6 +24,7 @@ import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
+import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
@@ -38,6 +39,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
 import com.codesmell.app.dao.ProjectDao;
+import com.codesmell.app.dao.ScheduleDao;
 import com.codesmell.app.dao.UserDao;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.Project;
@@ -58,28 +60,12 @@ class ProjectController {
 	private CommitDao commitDao;
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private ScheduleDao scheduleDao;
 
 	@PostMapping("/createNewProject")
-	public String createNewProject(Model model, @ModelAttribute Project project,@ModelAttribute Schedule schedule, HttpServletRequest req,
-			HttpServletResponse resp) {
-		System.out.println(schedule.getRepetitionDay());
-		System.out.println(schedule.getRepetitionHours());
-		System.out.println(schedule.getRepetitionMinutes());
-		System.out.println(schedule.getStartingDate());
-		System.out.println(schedule.getStartingTime());
-		
-		
-	
-	       
-	      
-		
-		
-		
-		
-		
-		
-		
-		/*String emailSt = (String) req.getSession().getAttribute("email");
+	public String createNewProject(Model model, @ModelAttribute Project project,@ModelAttribute Schedule schedule, HttpServletRequest req, HttpServletResponse resp) {		
+		String emailSt = (String) req.getSession().getAttribute("email");
 		model.addAttribute("email", emailSt);
 		project.setEmail(emailSt);
 		if (projectDao.findByurl(project.getUrl()).length == 0)
@@ -98,7 +84,6 @@ class ProjectController {
 					so.setInterval(p.getInterval());
 					so.setProject(p);
 					so.start();
-				
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
@@ -106,41 +91,39 @@ class ProjectController {
 						e.printStackTrace();
 					}
 				}
+				
+				if (project.getScheduleProject()){
+					Project p = projectDao.findByprojectName(project.getProjectName())[0];
+					schedule(p,schedule);
+				}
 			}
-		model.addAttribute("projects", getProjects(emailSt));*/
+		model.addAttribute("projects", getProjects(emailSt));
 		return "landingPage";
 	}
 	
-	private void schedule(){
+	private void schedule(Project p, Schedule s){
 		 try {
-	        	
-	       	 Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-
-		        JobDetail job = JobBuilder.newJob(SonarAnalysis2.class)
-		            .withIdentity("2", "0") 
+	        	Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+	        	JobDetail job = JobBuilder.newJob(SonarAnalysis2.class)
+		            .withIdentity(p.getProjectName(), "0") 
 		            .build();
-
-		        String startDateStr = "2017-08-08 21:24:00.0";
-		        String endDateStr = "2013-09-31 00:00:00.0";
-
-		        Date startDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(startDateStr);
-		       
-		        Trigger runOnceTrigger = TriggerBuilder.newTrigger().startAt(startDate).build();
-		        
-		        Project p = projectDao.findByprojectName("SonarScanner")[0];
+	        		int totalMinutes = s.getRepetitionDay()*24*60 + s.getRepetitionHours()*60 + s.getRepetitionMinutes();
+		        Date startDate = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(s.getStartingDate() + " " + s.getStartingTime() );
+		        Trigger runOnceTrigger = TriggerBuilder.newTrigger()
+		        		.startAt(startDate)
+		        		.withSchedule(SimpleScheduleBuilder.repeatMinutelyForever(totalMinutes)).build();
 		        
 		        CommitAnalysis ca = new CommitAnalysis();
 				ca.setIdProject(p.getProjectName());
 				ca.setConfigurationFile("SonarScanner"+".properties");
 				commitAnalysisDao.insert(ca);
 		        
-		        
-		     
 		        	scheduler.getContext().put("commitAnalysisDao", commitAnalysisDao);
 		        	scheduler.getContext().put("commitDao", commitDao);
 		        	scheduler.getContext().put("project", p);
 		        	scheduler.getContext().put("analysis", ca);
-		        scheduler.getContext().put("interval", 5);
+		        scheduler.getContext().put("interval", 1);
+		        scheduler.getContext().put("lastCommit", commitDao.findByProjectNameOrderByCreationDateDesc(p.getProjectName()));
 		        	
 				scheduler.scheduleJob(job, runOnceTrigger);
 				scheduler.start();

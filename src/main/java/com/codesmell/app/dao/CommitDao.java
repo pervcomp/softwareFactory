@@ -10,4 +10,5 @@ public interface CommitDao extends MongoRepository<Commit, String>
 {	
 	public List<Commit>findByprojectName(String projectName);
 	public Commit findBySsa(String ssa);
+	public Commit findByProjectNameOrderByCreationDateDesc(String projectName);
 }
