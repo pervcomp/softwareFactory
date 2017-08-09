@@ -68,28 +68,22 @@
 								<legend>Schedule analysis in the future</legend>
 								<input type="Radio" Name="commitAnalysisTime" Value=5 checked="checked"> Commits Interval (Do an analysis each # new commits)
 							    <br><br>
-							    <label><input type="Radio" Name="commitAnalysisTime" Value=6> Scheduled <br> </label>
+							    <input type="Radio" Name="commitAnalysisTime" Value=6> Scheduled <br> 
 								<br><br>
 								<div class="form-group 12 col-sm-12 desc1" id="commitAnalysisTime5">
 									<label>Analysis every (2-100) commits:</label><br>
 									<input type="number" min="2" max="100" name="Analysis every (2-100) commits:" value="# Commits"><br>
 								</div>
 								<div hidden class="form-group 12 col-sm-12 desc1" id="commitAnalysisTime6">
-									<p>Starting date: <input type="text" id="datepicker"></p>
-									<p>Starting time: <input type="text" id="timepicker"></p>
-								    <label>Every:  </label> <br>
-								    <input type="Radio" Name="time" Value=7 checked="checked"> hours 
-									<br></br>
-									<input type="Radio" Name="time" Value=8> days
-									<br></br>
+									<p>Starting date: <input type="text" id="datepicker" th:value="${schedule.startingDate}" name="startingDate"></p>
+									<p>Starting time: <input type="text" id="timepicker" th:value="${schedule.startingTime}" name="startingTime"  ></p>
+								    <label>Every:  </label> 
+									<br>
 								<div  class="form-group 12 col-sm-12 desc2" id="commitTime7">
-								    <p>Hours (1-24): <input type="text" value = "5"></p> 
-									<p>Minutes (0-59): <input type="text" value = "30"></p> 
-								</div>
-								
-								<div hidden  class="form-group 12 col-sm-12 desc2" id="commitTime8">
-								    <p>Days (1-30): <input type="text" value = "7"></p>
-								</div>
+								    <p>Hours (0-23): <input  value = "5" type = "number" max='23' min = '0' required="required" th:value="${schedule.repetitionHours}" name="repetitionHours"></p> 
+									<p>Minutes (0-59): <input  value = "30"  type = "number"  max='59' min = '0' required="required"  th:value="${schedule.repetitionMinutes}" name="repetitionMinutes"></p>
+								    <p>Days (0-20): <input  value = "7" type = "number"  max='20' min = '0' required="required"  th:value="${schedule.repetitionDay}" name="repetitionDay"></p>
+									</div>
 								
 								
 								</div>

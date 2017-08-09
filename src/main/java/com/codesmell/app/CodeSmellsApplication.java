@@ -1,5 +1,8 @@
 package com.codesmell.app;
 
+import org.quartz.Scheduler;
+import org.quartz.SchedulerFactory;
+import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -12,9 +15,10 @@ public class CodeSmellsApplication {
 
 	public static void main(String[] args) { 
 		SpringApplication.run(CodeSmellsApplication.class, args);
-/*
-		try {
+
+		/*try {
 			SchedulerFactory sf = new StdSchedulerFactory();
+
 			Scheduler sched = sf.getScheduler();
 			
 			JobDetail job1 = newJob(Testing1.class).withIdentity("job1", "group1").build();

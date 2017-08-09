@@ -9,7 +9,7 @@ public class Testing2 implements org.quartz.Job{
 		// TODO Auto-generated constructor stub
 	}
 	@Override
-	public void execute(JobExecutionContext arg0) throws JobExecutionException {
+	public void execute(JobExecutionContext context) throws JobExecutionException {
 		System.out.println("*********Testing2******");
 		
 	}

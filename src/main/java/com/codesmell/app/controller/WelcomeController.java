@@ -30,6 +30,7 @@ import com.codesmell.app.dao.ProjectDao;
 import com.codesmell.app.dao.UserDao;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.Project;
+import com.codesmell.app.model.Schedule;
 import com.codesmell.app.model.User;
 
 @Controller
@@ -65,6 +66,7 @@ class WelcomeController {
 	public String newProject(Model model, HttpServletRequest req, HttpServletResponse resp) {
 		model.addAttribute("email", req.getSession().getAttribute("email"));
 		model.addAttribute("project", new Project());
+		model.addAttribute("schedule", new Schedule());
 		return "newproject";
 	}
 

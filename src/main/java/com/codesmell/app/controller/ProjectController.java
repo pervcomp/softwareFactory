@@ -3,6 +3,8 @@ package com.codesmell.app.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +18,18 @@ import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.quartz.CronScheduleBuilder;
+import org.quartz.CronTrigger;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,8 +41,12 @@ import com.codesmell.app.dao.ProjectDao;
 import com.codesmell.app.dao.UserDao;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.Project;
+import com.codesmell.app.model.Schedule;
 import com.codesmell.app.sonar.SonarAnalysis;
+import com.codesmell.app.sonar.SonarAnalysis2;
 
+@EnableScheduling
+@EnableAsync
 @Controller
 class ProjectController {
 
@@ -43,9 +60,61 @@ class ProjectController {
 	private UserDao userDao;
 
 	@PostMapping("/createNewProject")
-	public String createNewProject(Model model, @ModelAttribute Project project, HttpServletRequest req,
+	public String createNewProject(Model model, @ModelAttribute Project project,@ModelAttribute Schedule schedule, HttpServletRequest req,
 			HttpServletResponse resp) {
-		String emailSt = (String) req.getSession().getAttribute("email");
+		System.out.println(schedule.getRepetitionDay());
+		System.out.println(schedule.getRepetitionHours());
+		System.out.println(schedule.getRepetitionMinutes());
+		System.out.println(schedule.getStartingDate());
+		System.out.println(schedule.getStartingTime());
+		
+		
+	
+	        try {
+	        	
+	       	 Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+
+		        JobDetail job = JobBuilder.newJob(SonarAnalysis2.class)
+		            .withIdentity("2", "0") 
+		            .build();
+
+		        String startDateStr = "2017-08-08 21:24:00.0";
+		        String endDateStr = "2013-09-31 00:00:00.0";
+
+		        Date startDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(startDateStr);
+		       
+		        Trigger runOnceTrigger = TriggerBuilder.newTrigger().startAt(startDate).build();
+		        
+		        Project p = projectDao.findByprojectName("SonarScanner")[0];
+		        
+		        CommitAnalysis ca = new CommitAnalysis();
+				ca.setIdProject(p.getProjectName());
+				ca.setConfigurationFile("SonarScanner"+".properties");
+				commitAnalysisDao.insert(ca);
+		        
+		        
+		     
+		        	scheduler.getContext().put("commitAnalysisDao", commitAnalysisDao);
+		        	scheduler.getContext().put("commitDao", commitDao);
+		        	scheduler.getContext().put("project", p);
+		        	scheduler.getContext().put("analysis", ca);
+		        scheduler.getContext().put("interval", 5);
+		        	
+				scheduler.scheduleJob(job, runOnceTrigger);
+				scheduler.start();
+			} catch (SchedulerException | ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	      
+		
+		
+		
+		
+		
+		
+		
+		/*String emailSt = (String) req.getSession().getAttribute("email");
 		model.addAttribute("email", emailSt);
 		project.setEmail(emailSt);
 		if (projectDao.findByurl(project.getUrl()).length == 0)
@@ -73,7 +142,7 @@ class ProjectController {
 					}
 				}
 			}
-		model.addAttribute("projects", getProjects(emailSt));
+		model.addAttribute("projects", getProjects(emailSt));*/
 		return "landingPage";
 	}
 	
