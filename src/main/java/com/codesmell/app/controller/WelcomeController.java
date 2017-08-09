@@ -28,6 +28,7 @@ import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
 import com.codesmell.app.dao.ProjectDao;
 import com.codesmell.app.dao.UserDao;
+import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.Project;
 import com.codesmell.app.model.Schedule;
@@ -80,7 +81,22 @@ class WelcomeController {
 			return "landingPage";
 		}
 	}
-
+	
+	@PostMapping("/projectDet")
+	public String projectDetails(Model model, @ModelAttribute Project projectToSend,HttpServletRequest req, HttpServletResponse resp) {
+		String projectName = projectToSend.getProjectName();
+		Project project = projectDao.findByprojectName(projectName)[0];
+		getUpdateProject(project);
+		List<CommitAnalysis> analysis = commitAnalysisDao.findByIdProject(project.getProjectName());
+		List<Commit> commits = commitDao.findByProjectNameOrderByCreationDateDesc(project.getProjectName());
+		model.addAttribute("commits", commits);
+		if (!analysis.isEmpty())
+				model.addAttribute("analysis", analysis.get(analysis.size()-1));
+		model.addAttribute("project", project);
+		model.addAttribute("email", req.getSession().getAttribute("email"));
+		return "projectDetails";
+	}
+	
 	@RequestMapping("/logout")
 	public String logout(Model model, HttpServletRequest req, HttpServletResponse resp) {
 		req.getSession().removeAttribute("" + "email");
@@ -118,32 +134,37 @@ class WelcomeController {
 	private List<Project> getProjects(String email) {
 		List<Project> projects = projectDao.findByemail(email);
 		for (Project p : projects) {
-			List<CommitAnalysis> analysis = commitAnalysisDao.findByIdProject(p.getProjectName());
-			String url = p.getUrl();
-			FileRepositoryBuilder repositoryBuilder = new FileRepositoryBuilder();
-			if (p.getTotalCommits() == 0
-					|| (((new Date().getTime() - p.getLastRequest().getTime()) / 1000 / 3600) > 6)) {
-				int count = getCommitsCount(url);
-				System.out.println("RENEW AMOUNT");
-				p.setTotalCommits(count);
-				p.setLastRequest(new Date());
-			}
-			if (analysis.size() >0){
-			Date analysisDate = new Date();
-			
-			if (analysis.get(analysis.size()-1).getStatus() == "Processing")
-				analysisDate = analysis.get(analysis.size()-1).getStartDate();
-			else
-				analysisDate = analysis.get(analysis.size()-1).getEndDate();
-			
-			p.setLastAnalysis(analysisDate);
-			p.setStatus(analysis.get(analysis.size()-1).getStatus());
-			}
-			p.setAnalysedCommits(commitDao.findByprojectName(p.getProjectName()).size());
-			projectDao.save(p);
+			getUpdateProject(p);
 		}
 		return projects;
 	}
+	
+	private void getUpdateProject(Project p){
+		List<CommitAnalysis> analysis = commitAnalysisDao.findByIdProject(p.getProjectName());
+		String url = p.getUrl();
+		FileRepositoryBuilder repositoryBuilder = new FileRepositoryBuilder();
+		if (p.getTotalCommits() == 0
+				|| (((new Date().getTime() - p.getLastRequest().getTime()) / 1000 / 3600) > 6)) {
+			int count = getCommitsCount(url);
+			System.out.println("RENEW AMOUNT");
+			p.setTotalCommits(count);
+			p.setLastRequest(new Date());
+		}
+		if (analysis.size() >0){
+		Date analysisDate = new Date();
+		
+		if (analysis.get(analysis.size()-1).getStatus() == "Processing")
+			analysisDate = analysis.get(analysis.size()-1).getStartDate();
+		else
+			analysisDate = analysis.get(analysis.size()-1).getEndDate();
+		
+		p.setLastAnalysis(analysisDate);
+		p.setStatus(analysis.get(analysis.size()-1).getStatus());
+		}
+		p.setAnalysedCommits(commitDao.findByprojectName(p.getProjectName()).size());
+		projectDao.save(p);
+	}
+	
 
 	private int getCommitsCount(String url) {
 		int count = 0;

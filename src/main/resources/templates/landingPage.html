@@ -32,7 +32,13 @@
 
 	<tr th:each="project : ${projects}">
       <th scope="row"></th>
-      <td><p th:text="${project.projectName}"></p></td>
+      <td>
+      <form id="my_form" th:action="@{/projectDet}" th:object="${projectToSend}" method="POST">
+      <input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>
+      <a href="javascript:{}" onclick="document.getElementById('my_form').submit(); return false;">
+      <p th:text="${project.projectName}"></p></a>
+      </form>
+      </td>
       <td><p th:text="${project.status}"></td>
       <td><p th:text=    "${project.creationTime}"></p></td>
       <td><p th:text= "|${project.analysedCommits}  /  ${project.totalCommits}|"></p></td>
@@ -43,7 +49,7 @@
       <input type="submit"   class="btn btn-secondary"   value="Run Analysis Now">   
       </form>
       </td>
-    </tr>
+    </tr>		
   </tbody>
 </table>
 

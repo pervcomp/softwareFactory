@@ -64,7 +64,7 @@ public class SonarAnalysis extends Thread {
 		String args[] = { "--git", url, "--properties", conf };
 		com.kotlin.ScanOptions so = ScanOptionsKt.parseOptions(args);
 
-		File theDir = new File(project.getName() + "_" + analysis.getIdAnalysis());
+		File theDir = new File(project.getProjectName() + "_" + analysis.getIdAnalysis());
 		try {
 			FileUtils.deleteDirectory(theDir);
 		} catch (IOException e) {
