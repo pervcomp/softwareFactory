@@ -37,6 +37,7 @@ img  {
 
 <div class="container">
     <div class="row vertical-offset-100">
+    	<!-- 
     	<div class="col-md-4 col-md-offset-4">
     		<div class="panel panel-default">
 			  	<div class="panel-heading">
@@ -49,8 +50,35 @@ img  {
 			    </div>
 			</div>
 		</div>
+		 -->
 		<img src="https://image.ibb.co/mm9dPa/smellsgood_logo.png"/>
 	</div>
+	
+	<!-- ANALYSED COMMITS TABLE -->
+	<table class="table table-striped">
+  	<thead>
+    <tr>
+      <th># analysis</th>
+      <th>Commit SHA</th>
+      <th>Analyzed on</th>
+      <th>Commit date</th>
+      <th>Result</th><!-- status of the analysis: either SUCCESS or FAIL -->
+    </tr>
+  	</thead>
+  	<tbody>
+  	<!-- ________ -->
+	<tr th:each="commit : ${commits}">
+      <th scope="row"></th>
+      <td><p th:text="${commit.idCommitAnalysis}"></p></td>
+      <td><p th:text="${commit.ssh}"></p></td>
+      <td><p th:text="${commit.status}"></td>
+      <td><p th:text="${commit.analysisDate}"></p></td>
+      <td><p th:text="${commit.commitDate}"></p></td>
+      <td><p th:text="${commit.status}"></p></td>
+    </tr>
+  	</tbody>
+	</table>
+
 	
 </div>
 
