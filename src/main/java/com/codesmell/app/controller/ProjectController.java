@@ -76,14 +76,16 @@ class ProjectController {
 					String projectName = (project.getProjectName());
 					Project p = projectDao.findByprojectName(projectName)[0];
 					CommitAnalysis ca = new CommitAnalysis();
-					ca.setIdProject(p.getProjectName());
+					ca.setIdProject(projectName);
 					ca.setConfigurationFile(projectName+".properties");
-					commitAnalysisDao.insert(ca);
+					commitAnalysisDao.save(ca);
 					SonarAnalysis so = new SonarAnalysis(commitAnalysisDao,commitDao);	
 					so.setAnalysis(ca);
 					so.setInterval(p.getInterval());
 					so.setProject(p);
 					so.start();
+					configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
+
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
@@ -91,13 +93,8 @@ class ProjectController {
 						e.printStackTrace();
 					}
 				}
-				
-				if (project.getScheduleProject()){
-					Project p = projectDao.findByprojectName(project.getProjectName())[0];
-					schedule(p,schedule);
-				}
 			}
-		model.addAttribute("projects", getProjects(emailSt));
+		//model.addAttribute("projects", getProjects(emailSt));
 		return "landingPage";
 	}
 	
@@ -141,20 +138,6 @@ class ProjectController {
 		
 	}
 	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@PostMapping("/runAnalysis")
 	public String newProject(Model model, @ModelAttribute Project projectToSend,HttpServletRequest req, HttpServletResponse resp) {
 		if (projectToSend != null){
@@ -165,7 +148,8 @@ class ProjectController {
 		ca.setIdProject(p.getProjectName());
 		ca.setConfigurationFile(projectName+".properties");
 		commitAnalysisDao.insert(ca);
-		SonarAnalysis so = new SonarAnalysis(commitAnalysisDao,commitDao);	
+		SonarAnalysis so = new SonarAnalysis(commitAnalysisDao,commitDao);
+		so.setJustLatest(true);
 		so.setAnalysis(ca);
 		so.setProject(p);
 		so.start();
@@ -211,7 +195,7 @@ class ProjectController {
 				p.setTotalCommits(count);
 				p.setLastRequest(new Date());
 			}
-			if (analysis.size() >0){
+			if (analysis.size() > 0){
 			Date analysisDate = new Date();
 			
 			if (analysis.get(analysis.size()-1).getStatus() == "Processing")
