@@ -47,6 +47,8 @@ import com.codesmell.app.model.Schedule;
 import com.codesmell.app.sonar.SonarAnalysis;
 import com.codesmell.app.sonar.SonarAnalysis2;
 
+import code.codesmell.app.controllerUtilities.ControllerUtilities;
+
 @EnableScheduling
 @EnableAsync
 @Controller
@@ -63,38 +65,31 @@ class ProjectController {
 	@Autowired
 	private ScheduleDao scheduleDao;
 
+	/**
+	 * Response to createNewProject.
+	 * It creates a new project. If pastAnalysis is selected, it launches an analysis of past commits
+	 * @param model
+	 * @param project
+	 * @param schedule
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
 	@PostMapping("/createNewProject")
 	public String createNewProject(Model model, @ModelAttribute Project project,@ModelAttribute Schedule schedule, HttpServletRequest req, HttpServletResponse resp) {		
+	    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao);
 		String emailSt = (String) req.getSession().getAttribute("email");
 		model.addAttribute("email", emailSt);
 		project.setEmail(emailSt);
-		if (projectDao.findByurl(project.getUrl()).length == 0)
-			if (projectDao.findByprojectName(project.getProjectName()).length == 0) {
+			if (projectDao.findByprojectName(project.getProjectName()) == null) {
 				 projectDao.save(project);
 				 writeConfigFile(project);
 				if (project.getAnalysePast()){
 					String projectName = (project.getProjectName());
-					Project p = projectDao.findByprojectName(projectName)[0];
-					CommitAnalysis ca = new CommitAnalysis();
-					ca.setIdProject(projectName);
-					ca.setConfigurationFile(projectName+".properties");
-					commitAnalysisDao.save(ca);
-					SonarAnalysis so = new SonarAnalysis(commitAnalysisDao,commitDao);	
-					so.setAnalysis(ca);
-					so.setInterval(p.getInterval());
-					so.setProject(p);
-					so.start();
-					configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
-
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					cu.performHistoryAnalysis(projectName);
 				}
 			}
-		//model.addAttribute("projects", getProjects(emailSt));
+		cu.configureModelLandingPage(model, emailSt);
 		return "landingPage";
 	}
 	
@@ -128,34 +123,26 @@ class ProjectController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
-		
-		
-		
-		
-		
-		
-		
 	}
-	
+	/**
+	 * It runs just the analysis of the latest commit. From Landing Page, "Run Analysis button"
+	 * @param model
+	 * @param projectToSend
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
 	@PostMapping("/runAnalysis")
-	public String newProject(Model model, @ModelAttribute Project projectToSend,HttpServletRequest req, HttpServletResponse resp) {
+	public String runJustLatestAnalysis(Model model, @ModelAttribute Project projectToSend,HttpServletRequest req, HttpServletResponse resp) {
+		ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao);
 		if (projectToSend != null){
 			if (commitAnalysisDao.findByIdProjectAndStatus(projectToSend.getProjectName(),"Processing") == null){
-		String projectName = projectToSend.getProjectName();	
-		Project p = projectDao.findByprojectName(projectName)[0];
-		CommitAnalysis ca = new CommitAnalysis();
-		ca.setIdProject(p.getProjectName());
-		ca.setConfigurationFile(projectName+".properties");
-		commitAnalysisDao.insert(ca);
-		SonarAnalysis so = new SonarAnalysis(commitAnalysisDao,commitDao);
-		so.setJustLatest(true);
-		so.setAnalysis(ca);
-		so.setProject(p);
-		so.start();
-		}
-		}
-		configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
+				String projectName = projectToSend.getProjectName();	
+				Project p = projectDao.findByprojectName(projectName);
+				cu.performAnalysisLatestsCommit(projectName);
+				}
+			}
+		cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
 		return "landingPage";
 	}
 	
@@ -182,66 +169,4 @@ class ProjectController {
 
 	}
 	
-	private List<Project> getProjects(String email) {
-		List<Project> projects = projectDao.findByemail(email);
-		for (Project p : projects) {
-			List<CommitAnalysis> analysis = commitAnalysisDao.findByIdProject(p.getProjectName());
-			String url = p.getUrl();
-			FileRepositoryBuilder repositoryBuilder = new FileRepositoryBuilder();
-			if (p.getTotalCommits() == 0
-					|| (((new Date().getTime() - p.getLastRequest().getTime()) / 1000 / 3600) > 6)) {
-				int count = getCommitsCount(url);
-				System.out.println("RENEW AMOUNT");
-				p.setTotalCommits(count);
-				p.setLastRequest(new Date());
-			}
-			if (analysis.size() > 0){
-			Date analysisDate = new Date();
-			
-			if (analysis.get(analysis.size()-1).getStatus() == "Processing")
-				analysisDate = analysis.get(analysis.size()-1).getStartDate();
-			else
-				analysisDate = analysis.get(analysis.size()-1).getEndDate();
-			
-			p.setLastAnalysis(analysisDate);
-			p.setStatus(analysis.get(analysis.size()-1).getStatus());
-			}
-			p.setAnalysedCommits(commitDao.findByprojectName(p.getProjectName()).size());
-			projectDao.save(p);
-		}
-		return projects;
-	}
-
-	private int getCommitsCount(String url) {
-		int count = 0;
-		File d = new File("directory");
-		Git git;
-		try {
-			git = Git.cloneRepository().setURI(url).setDirectory(d).call();
-			Iterable<RevCommit> commits = git.log().call();
-			for (RevCommit commit : commits)
-				count++;
-			FileUtils.deleteDirectory(d);
-		} catch (InvalidRemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransportException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (GitAPIException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return count;
-	}
-
-	private void configureModelLandingPage(Model model, String email) {
-		model.addAttribute("projects", getProjects(email));
-		model.addAttribute("email", email);
-		model.addAttribute("projectToSend", new Project());
-	}
 }

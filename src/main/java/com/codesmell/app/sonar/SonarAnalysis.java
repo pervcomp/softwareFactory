@@ -69,7 +69,7 @@ public class SonarAnalysis extends Thread {
 		String args[] = { "--git", url, "--properties", conf };
 		com.kotlin.ScanOptions so = ScanOptionsKt.parseOptions(args);
 
-		File theDir = new File(project.getProjectName() + "_" + analysis.getIdAnalysis());
+		File theDir = new File(project.getProjectName() + "_" + analysis.getIdSerial());
 		try {
 			FileUtils.deleteDirectory(theDir);
 		} catch (IOException e) {
@@ -90,10 +90,10 @@ public class SonarAnalysis extends Thread {
 				count++;
 				if (commitDao.findBySsa(revCommit.getName()) == null && flag) {
 					String commitStr = AppKt.analyseRevision(git, so, revCommit.getName());
-					addCommit(commitStr,analysis.get_id());
-					if (justLatest)
-						break;
+					addCommit(commitStr,analysis.getIdSerial());
 				}
+				if (justLatest)
+					break;
 			}
 			closeAnalysis(analysis.get_id());
 			FileUtils.deleteDirectory(theDir);
@@ -107,7 +107,7 @@ public class SonarAnalysis extends Thread {
 	}
 
 	// Add commit to the db
-	public void addCommit(String str, String analysisId) {
+	public void addCommit(String str, int analysisId) {
 		String[] commitArray = str.split(" ");
 		System.out.println(str);
 			Commit commit = new Commit();
@@ -115,8 +115,8 @@ public class SonarAnalysis extends Thread {
 			commit.setProjectName(project.getProjectName());
 			commit.setSsa(commitArray[3]);
 			commit.setIdCommitAnalysis(analysisId);
-			commit.setStatus(commitArray[13]);
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+			commit.setStatus(commitArray[13].replace(" ", "").replace(",", ""));
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ITALIAN);
 			try {
 				commit.setCreationDate(df.parse(commitArray[2].replace("T", " ")));
 			} catch (ParseException e) {

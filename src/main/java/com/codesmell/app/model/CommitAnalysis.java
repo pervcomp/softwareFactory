@@ -6,6 +6,7 @@ public class CommitAnalysis extends BaseEntity{
 	private String status;
 	private Date startDate,endDate;
 	private String idProject;
+	private int idSerial;
 	private String configurationFile;
 	
 	public CommitAnalysis() {
@@ -58,6 +59,14 @@ public class CommitAnalysis extends BaseEntity{
 	
 	public String getConfigurationFile() {
 		return configurationFile ;
+	}
+	
+	public void setIdSerial(int idSerial) {
+		this.idSerial = idSerial;
+	}
+	
+	public int getIdSerial() {
+		return idSerial ;
 	}
 	
 	

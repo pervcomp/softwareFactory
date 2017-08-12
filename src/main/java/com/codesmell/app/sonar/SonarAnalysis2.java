@@ -108,7 +108,7 @@ public class SonarAnalysis2 implements org.quartz.Job {
 				Commit commit = new Commit();
 				commit.setAnalysisDate(new Date());
 				commit.setSsa(commitArray[3]);
-				commit.setIdCommitAnalysis(analysis.getIdAnalysis());
+				//commit.setIdCommitAnalysis(analysis.getIdAnalysis());
 				commit.setStatus(commitArray[13]);
 				commit.setProjectName(analysis.getIdProject());
 				DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
@@ -147,7 +147,7 @@ public class SonarAnalysis2 implements org.quartz.Job {
 			Commit commit = new Commit();
 			commit.setAnalysisDate(new Date());
 			commit.setSsa(commitArray[3]);
-			commit.setIdCommitAnalysis(analysis);
+	       //	commit.setIdCommitAnalysis(analysis);
 			commit.setStatus(commitArray[13]);
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
 			try {

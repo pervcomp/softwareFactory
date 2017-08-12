@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Commit extends BaseEntity{
 	private String ssa;
-	private String idCommitAnalysis;
+	private int idCommitAnalysis;
 	private Date creationDate;
 	private Date analysisDate;
 	private String status;
@@ -51,11 +51,11 @@ public class Commit extends BaseEntity{
 		this.status = status;
 	}
 
-	public String getIdCommitAnalysis() {
+	public int getIdCommitAnalysis() {
 		return idCommitAnalysis;
 	}
 
-	public void setIdCommitAnalysis(String idCommitAnalysis) {
+	public void setIdCommitAnalysis(int idCommitAnalysis) {
 		this.idCommitAnalysis = idCommitAnalysis;
 	}
 	

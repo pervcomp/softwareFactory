@@ -44,7 +44,7 @@
   	<tbody>
   	<!-- ________ -->
 	<tr th:each="commit : ${commits}">
-      <th scope="row"></th>
+      <td><p th:text="${commit.idCommitAnalysis}"></p></td>
       <td><p th:text="${commit.ssa}"></p></td>
       <td><p th:text="${commit.analysisDate}"></p></td>
       <td><p th:text="${commit.creationDate}"></p></td>

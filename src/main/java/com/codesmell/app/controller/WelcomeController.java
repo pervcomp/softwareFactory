@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
 import com.codesmell.app.dao.ProjectDao;
+import com.codesmell.app.dao.ScheduleDao;
 import com.codesmell.app.dao.UserDao;
 import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
@@ -34,29 +35,34 @@ import com.codesmell.app.model.Project;
 import com.codesmell.app.model.Schedule;
 import com.codesmell.app.model.User;
 
+import code.codesmell.app.controllerUtilities.ControllerUtilities;
+
 @Controller
 class WelcomeController {
 
 	@Autowired
-	private UserDao repository;
+	private UserDao userDao;
 	@Autowired
 	private CommitAnalysisDao commitAnalysisDao;
 	@Autowired
 	private ProjectDao projectDao;
 	@Autowired
 	private CommitDao commitDao;
+	@Autowired
+	private ScheduleDao scheduleDao;
 
 
 	@RequestMapping("/")
 	public String welcome(@CookieValue(value = "email", defaultValue = "") String email, Model model,
 			HttpServletRequest req, HttpServletResponse resp) {
+	    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao);
 		if (req.getSession().getAttribute("email") != null) {
 			String emailSession = (String) req.getSession().getAttribute("email");
-			configureModelLandingPage(model, emailSession);
+			cu.configureModelLandingPage(model, emailSession);
 			return "landingPage";
 		} else if (!email.isEmpty()) {
 			req.getSession().setAttribute("email", email);
-			configureModelLandingPage(model, email);
+			cu.configureModelLandingPage(model, email);
 			return "landingPage";
 		}
 		model.addAttribute("user", new User());
@@ -76,23 +82,33 @@ class WelcomeController {
 		if (req.getSession().getAttribute("email") == null)
 			return "welcome";
 		else {
+		    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao);
 			String emailSession = (String) req.getSession().getAttribute("email");
-			configureModelLandingPage(model, emailSession);
+			cu.configureModelLandingPage(model, emailSession);
 			return "landingPage";
 		}
 	}
 	
+	/**
+	 * Prepares the projectDetails page
+	 * @param model
+	 * @param projectToSend
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
 	@PostMapping("/projectDet")
 	public String projectDetails(Model model, @ModelAttribute Project projectToSend,HttpServletRequest req, HttpServletResponse resp) {
+	    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao);
 		String projectName = projectToSend.getProjectName();
-		Project project = projectDao.findByprojectName(projectName)[0];
-		getUpdateProject(project);
-		List<CommitAnalysis> analysis = commitAnalysisDao.findByIdProject(project.getProjectName());
-		List<Commit> commits = commitDao.findByProjectNameOrderByCreationDateDesc(project.getProjectName());
+		Project p = projectDao.findByprojectName(projectName);
+		cu.getUpdateProject(p);
+		CommitAnalysis analysis = commitAnalysisDao.findByIdProjectOrderByStartDateDesc(projectName);
+		List<Commit> commits = commitDao.findByProjectNameOrderByCreationDateDesc(projectName);
 		model.addAttribute("commits", commits);
-		if (!analysis.isEmpty())
-				model.addAttribute("analysis", analysis.get(analysis.size()-1));
-		model.addAttribute("project", project);
+		if (analysis != null)
+				model.addAttribute("analysis", analysis);
+		model.addAttribute("project", p);
 		model.addAttribute("email", req.getSession().getAttribute("email"));
 		return "projectDetails";
 	}
@@ -115,92 +131,20 @@ class WelcomeController {
 		try {
 			String emailSt = user.getEmail1();
 			String pwd = user.getPwd();
-			User usr = repository.findByEmail1(emailSt);
-			System.out.println(usr.getPwd());
-			System.out.println(usr.getEmail1());
+			User usr = userDao.findByEmail1(emailSt);
 			if (pwd.equals((usr.getPwd()))) {
+			    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao);
 				req.getSession().setAttribute("email", emailSt);
 				resp.addCookie(new Cookie("email", emailSt));
-				configureModelLandingPage(model, emailSt);
+				cu.configureModelLandingPage(model, emailSt);
 				return "landingPage";
 			} else {
 				return "welcome";
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return "welcome";
 		}
-	}
-
-	private List<Project> getProjects(String email) {
-		List<Project> projects = projectDao.findByemail(email);
-		for (Project p : projects) {
-			getUpdateProject(p);
-		}
-		return projects;
-	}
-	
-	private void getUpdateProject(Project p){
-		List<CommitAnalysis> analysis = commitAnalysisDao.findByIdProject(p.getProjectName());
-		String url = p.getUrl();
-		FileRepositoryBuilder repositoryBuilder = new FileRepositoryBuilder();
-		if (p.getTotalCommits() == 0
-				|| (((new Date().getTime() - p.getLastRequest().getTime()) / 1000 / 3600) > 6)) {
-			int count = getCommitsCount(url);
-			System.out.println("RENEW AMOUNT");
-			p.setTotalCommits(count);
-			p.setLastRequest(new Date());
-		}
-		if (analysis.size() >0){
-		Date analysisDate = new Date();
-		
-		if (analysis.get(analysis.size()-1).getStatus() == "Processing")
-			analysisDate = analysis.get(analysis.size()-1).getStartDate();
-		else
-			analysisDate = analysis.get(analysis.size()-1).getEndDate();
-		
-		
-
-		p.setLastAnalysis(analysisDate);
-		p.setStatus(analysis.get(analysis.size()-1).getStatus());
-		}
-		p.setAnalysedCommits(commitDao.findByprojectName(p.getProjectName()).size());
-		p.setCountFailedCommits((commitDao.findByProjectNameAndStatus(p.getProjectName(), "FAILED").size()));
-		p.setCountSuccessCommits((commitDao.findByProjectNameAndStatus(p.getProjectName(), "SUCCESS").size()));
-		projectDao.save(p);
-	}
-	
-
-	private int getCommitsCount(String url) {
-		int count = 0;
-		File d = new File("directory");
-		Git git;
-		try {
-			git = Git.cloneRepository().setURI(url).setDirectory(d).call();
-			Iterable<RevCommit> commits = git.log().call();
-			for (RevCommit commit : commits)
-				count++;
-			FileUtils.deleteDirectory(d);
-		} catch (InvalidRemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransportException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (GitAPIException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return count;
-	}
-
-	private void configureModelLandingPage(Model model, String email) {
-		model.addAttribute("projects", getProjects(email));
-		model.addAttribute("email", email);
-		model.addAttribute("projectToSend", new Project());
 	}
 
 }
