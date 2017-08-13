@@ -5,6 +5,12 @@ public class CommitError extends BaseEntity{
 	private String idCommit;
 	private String errorMessage;
 	
+	public CommitError(String idCommit,String errorMessage)
+	{
+		this.idCommit=idCommit;
+		this.errorMessage=errorMessage;
+	}
+	
 	public CommitError() {
 		this.errorMessage="";
 	}

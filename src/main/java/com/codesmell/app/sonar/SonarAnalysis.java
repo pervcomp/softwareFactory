@@ -19,11 +19,12 @@ import org.springframework.stereotype.Component;
 
 import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
+import com.codesmell.app.dao.CommitErrorDao;
 import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
+import com.codesmell.app.model.CommitError;
 import com.codesmell.app.model.Project;
-import com.kotlin.App;
-import com.kotlin.ScanOptionsKt;
+import com.kotlin.*;
 
 @Component
 public class SonarAnalysis extends Thread {
@@ -36,6 +37,7 @@ public class SonarAnalysis extends Thread {
 	private CommitAnalysisDao commitAnalysisDao;
 	@Autowired
 	private CommitDao commitDao;
+	private @Autowired CommitErrorDao commitErrorDao;
 
 	public SonarAnalysis(CommitAnalysisDao commitAnalysisDao, CommitDao commitDao) {
 		this.commitAnalysisDao = commitAnalysisDao;
@@ -120,6 +122,10 @@ public class SonarAnalysis extends Thread {
 			commit.setIdCommitAnalysis(analysisId);
 			commit.setStatus(commitArray[13].replace(" ", "").replace(",", ""));
 			String error = app.getActualError();
+			
+			//wrting the commit error in the database
+			writeCommitError(commit.getStatus(),commit.get_id(),error);
+			
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ITALIAN);
 			try {
 				commit.setCreationDate(df.parse(commitArray[2].replace("T", " ")));
@@ -138,6 +144,15 @@ public class SonarAnalysis extends Thread {
 		ca.setEndDate(new Date());
 		commitAnalysisDao.save(ca);
 
+	}
+	
+	private void writeCommitError(String status,String idCommit,String message)
+	{
+		if(status.equalsIgnoreCase("failed"))
+		{
+			CommitError commitError= new CommitError(idCommit, message);
+			this.commitErrorDao.insert(commitError);
+		}
 	}
 
 }

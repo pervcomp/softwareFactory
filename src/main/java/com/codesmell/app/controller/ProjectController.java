@@ -162,7 +162,7 @@ class ProjectController {
 			writer.println("sonar.projectKey=" + project.getSonarKey());
 			writer.println("sonar.projectName=" + project.getProjectName());
 			writer.println("sonar.projectVersion=" + project.getSonarVersion());
-			writer.println("sonar.host.url=http://sonar.inf.unibz.it/");
+			writer.println("sonar.host.url=http://sonar.inf.ciao.it/");
 			writer.println("# Comma-separated paths to directories with sources (required)");
 			writer.println("sonar.sources=.");
 			writer.println("# Language");

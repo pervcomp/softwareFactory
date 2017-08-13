@@ -6,7 +6,7 @@ import com.codesmell.app.model.CommitError;
 import com.codesmell.app.model.Project;
 
 
-public interface ErrorDao extends MongoRepository<CommitError, String> {
+public interface CommitErrorDao extends MongoRepository<CommitError, String> {
 	
 	public Project findByIdCommit(String  idCommit);
 
