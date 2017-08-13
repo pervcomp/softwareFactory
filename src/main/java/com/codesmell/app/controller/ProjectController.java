@@ -123,10 +123,10 @@ class ProjectController {
 		        	scheduler.getContext().put("project", p);
 		        	scheduler.getContext().put("analysis", ca);
 		        scheduler.getContext().put("interval", 1);
-		        scheduler.getContext().put("lastCommit", commitDao.findByProjectNameOrderByCreationDateDesc(p.getProjectName()).get(0));
 		        	
 				scheduler.scheduleJob(job, runOnceTrigger);
 				scheduler.start();
+				scheduleDao.save(s);
 			} catch (SchedulerException | ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

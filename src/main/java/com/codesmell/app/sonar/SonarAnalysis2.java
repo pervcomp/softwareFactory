@@ -26,12 +26,14 @@ import com.codesmell.app.dao.CommitDao;
 import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.Project;
+import com.kotlin.App;
 import com.kotlin.AppKt;
 import com.kotlin.ScanOptionsKt;
 
 @Component
 public class SonarAnalysis2 implements org.quartz.Job {
 	private Project project;
+	private App app;
 	private Date startDate;
 	private Commit lastCommit;
 	private CommitAnalysis analysis;
@@ -72,8 +74,8 @@ public class SonarAnalysis2 implements org.quartz.Job {
 		this.interval  = (int)context.get("interval");
 		this.commitAnalysisDao = (CommitAnalysisDao)context.get("commitAnalysisDao");
 		this.commitDao = (CommitDao)context.get("commitDao");
-		this.lastCommit = (Commit)context.get("lastCommit");
-		
+        this.lastCommit = commitDao.findByProjectNameOrderByCreationDateDesc(project.getProjectName()).get(0);
+
 		
 		// TODO Auto-generated method stub
 		// Analysis status is updated
@@ -93,7 +95,8 @@ public class SonarAnalysis2 implements org.quartz.Job {
 			// TODO Auto-generated catch block
 			System.out.println("Folder does not exists");
 		}
-		Git git = AppKt.cloneRemoteRepository(args[1], theDir);
+	    app = new App();
+		Git git = app.cloneRemoteRepository(args[1], theDir);
 		List<RevCommit> commitsList = new LinkedList<RevCommit>();
 
 		try {
@@ -106,7 +109,7 @@ public class SonarAnalysis2 implements org.quartz.Job {
 			}
 			for (RevCommit revCommit : commits){
 			if (commitDao.findBySsa(revCommit.getName()) == null && flag){
-				String commitStr = AppKt.analyseRevision(git, so, revCommit.getName());
+				String commitStr = app.analyseRevision(git, so, revCommit.getName());
 				String[] commitArray = commitStr.split(" ");
 				Commit commit = new Commit();
 				commit.setAnalysisDate(new Date());
@@ -114,6 +117,7 @@ public class SonarAnalysis2 implements org.quartz.Job {
 				commit.setIdCommitAnalysis(analysis.getIdSerial());
 				commit.setStatus(commitArray[13]);
 				commit.setProjectName(analysis.getIdProject());
+				String mistake = app.getActualError();
 				DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
 				try {
 					commit.setCreationDate(df.parse(commitArray[2].replace("T", " ")));
@@ -143,7 +147,7 @@ public class SonarAnalysis2 implements org.quartz.Job {
 
 	}
 
-	public void addCommit(String str, String analysis) {
+	public void addCommit(String str, String analysis, App app) {
 		String[] strArray = str.split(" ");
 		// Each commits must be inserted in the db
 		for (String commitStr : strArray) {
@@ -153,6 +157,7 @@ public class SonarAnalysis2 implements org.quartz.Job {
 			commit.setSsa(commitArray[3]);
 	       //	commit.setIdCommitAnalysis(analysis);
 			commit.setStatus(commitArray[13]);
+			String mistake = app.getActualError();
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
 			try {
 				commit.setCreationDate(df.parse(commitArray[2].replace("T", " ")));

@@ -14,32 +14,14 @@ import java.util.*
 import java.time.temporal.ChronoUnit
 import java.lang.ProcessBuilder.Redirect
 
-fun main(args: Array<String>) {
-	
- /*   val scanOptions = parseOptions(args)
-    if (scanOptions != null) {
-        var tempScanDirectory: File? = null
-        val git =
-                if (scanOptions.repositoryPath.startsWith("http")) {
-                    tempScanDirectory = File("temp-scan-directory")
-                    cloneRemoteRepository(scanOptions.repositoryPath, tempScanDirectory)
-                } else {
-                    openLocalRepository(scanOptions.repositoryPath)
-                }
-        try {
-          var list  = analyseAllRevisions(git, scanOptions)
-        } finally {
-            git.close()
-        }
 
-        if (tempScanDirectory != null) {
-            if (tempScanDirectory.deleteRecursively())
-                println("Deleted $tempScanDirectory")
-            else
-                println("Could not delete $tempScanDirectory")
-        }
-    }*/
-}
+class App constructor(){
+
+var error = "";
+
+
+
+
 
 /*
 Analyses all past revisions for the specified project.
@@ -107,17 +89,27 @@ fun analyseRevision(git: Git, scanOptions: ScanOptions, sha : String) : String  
                 print(allText)
                 if (returnCode == 0){
 					result.add("Analysing revision: $sonarDate $logHash .. $allText ${Calendar.getInstance().time}: EXECUTION SUCCESS");
-                    return ("Analysing revision: $sonarDate $logHash .. $allText ${Calendar.getInstance().time}: EXECUTION SUCCESS")
+                    logFile.deleteRecursively();
+					return ("Analysing revision: $sonarDate $logHash .. $allText ${Calendar.getInstance().time}: EXECUTION SUCCESS")
                    
 				}
                 else{
+					error = "";
                     println("${Calendar.getInstance().time}: EXECUTION FAILURE, return code $returnCode")
+					logFile.forEachLine { line -> error += line; }
+					logFile.deleteRecursively();
 					return ("Analysing revision: $sonarDate $logHash .. $allText ${Calendar.getInstance().time}: EXECUTION FAILURE, return code $returnCode")
 				}
         }
     }}
 	return "";
 }
+
+fun getActualError() : String{
+	return error;
+}
+
+
 
 fun  copyPropertyFiles(git: Git, scanOptions: ScanOptions) {
     for (propertiesFile in scanOptions.changeProperties + scanOptions.propertiesFile) {
@@ -233,4 +225,5 @@ fun cloneRemoteRepository(repositoryURL: String, directory: File): Git {
     } catch (e: Exception) {
         throw Exception("Could not clone the remote repository", e)
     }
+}
 }

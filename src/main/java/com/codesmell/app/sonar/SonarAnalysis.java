@@ -22,6 +22,7 @@ import com.codesmell.app.dao.CommitDao;
 import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.Project;
+import com.kotlin.App;
 import com.kotlin.AppKt;
 import com.kotlin.ScanOptionsKt;
 
@@ -89,8 +90,9 @@ public class SonarAnalysis extends Thread {
 					flag = false;
 				count++;
 				if (commitDao.findBySsa(revCommit.getName()) == null && flag) {
-					String commitStr = AppKt.analyseRevision(git, so, revCommit.getName());
-					addCommit(commitStr,analysis.getIdSerial());
+					App app = new App();
+					String commitStr = app.analyseRevision(git, so, revCommit.getName());
+					addCommit(commitStr,analysis.getIdSerial(), app);
 				}
 				if (justLatest)
 					break;
@@ -107,7 +109,7 @@ public class SonarAnalysis extends Thread {
 	}
 
 	// Add commit to the db
-	public void addCommit(String str, int analysisId) {
+	public void addCommit(String str, int analysisId, App app) {
 		String[] commitArray = str.split(" ");
 		System.out.println(str);
 			Commit commit = new Commit();
@@ -116,6 +118,7 @@ public class SonarAnalysis extends Thread {
 			commit.setSsa(commitArray[3]);
 			commit.setIdCommitAnalysis(analysisId);
 			commit.setStatus(commitArray[13].replace(" ", "").replace(",", ""));
+			String error = app.getActualError();
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ITALIAN);
 			try {
 				commit.setCreationDate(df.parse(commitArray[2].replace("T", " ")));
