@@ -23,12 +23,12 @@ import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.Project;
 import com.kotlin.App;
-import com.kotlin.AppKt;
 import com.kotlin.ScanOptionsKt;
 
 @Component
 public class SonarAnalysis extends Thread {
 	private Project project;
+	private App app;
 	private CommitAnalysis analysis;
 	private int interval = 1;
 	private boolean justLatest = false;
@@ -40,6 +40,7 @@ public class SonarAnalysis extends Thread {
 	public SonarAnalysis(CommitAnalysisDao commitAnalysisDao, CommitDao commitDao) {
 		this.commitAnalysisDao = commitAnalysisDao;
 		this.commitDao = commitDao;
+		app = new App();
 	}
 
 	public void setProject(Project project) {
@@ -77,7 +78,7 @@ public class SonarAnalysis extends Thread {
 			// TODO Auto-generated catch block
 			System.out.println("Folder does not exists");
 		}
-		Git git = AppKt.cloneRemoteRepository(args[1], theDir);
+		Git git = app.cloneRemoteRepository(args[1], theDir);
 		int count = 0;
 		boolean flag = false;
 		Iterable<RevCommit> commits;

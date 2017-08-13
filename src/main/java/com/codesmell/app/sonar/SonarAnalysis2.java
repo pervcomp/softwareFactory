@@ -27,7 +27,6 @@ import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.Project;
 import com.kotlin.App;
-import com.kotlin.AppKt;
 import com.kotlin.ScanOptionsKt;
 
 @Component
@@ -44,7 +43,7 @@ public class SonarAnalysis2 implements org.quartz.Job {
 	private CommitDao commitDao;
 
 	public SonarAnalysis2() {
-
+     app = new App();
 	}
 
 	public void setProject(Project project) {
