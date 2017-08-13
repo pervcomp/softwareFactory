@@ -32,6 +32,8 @@ import com.kotlin.ScanOptionsKt;
 @Component
 public class SonarAnalysis2 implements org.quartz.Job {
 	private Project project;
+	private Date startDate;
+	private Commit lastCommit;
 	private CommitAnalysis analysis;
 	private int interval = 1;
 	@Autowired
@@ -70,6 +72,8 @@ public class SonarAnalysis2 implements org.quartz.Job {
 		this.interval  = (int)context.get("interval");
 		this.commitAnalysisDao = (CommitAnalysisDao)context.get("commitAnalysisDao");
 		this.commitDao = (CommitDao)context.get("commitDao");
+		this.lastCommit = (Commit)context.get("lastCommit");
+		
 		
 		// TODO Auto-generated method stub
 		// Analysis status is updated
@@ -89,26 +93,25 @@ public class SonarAnalysis2 implements org.quartz.Job {
 			// TODO Auto-generated catch block
 			System.out.println("Folder does not exists");
 		}
-		List<String> str = new LinkedList<String>();
 		Git git = AppKt.cloneRemoteRepository(args[1], theDir);
+		List<RevCommit> commitsList = new LinkedList<RevCommit>();
 
 		try {
 			int count = 0;
 			boolean flag = false;
 			Iterable<RevCommit> commits = git.log().call();
 			for (RevCommit revCommit : commits) {
-				if (count % interval == 0)
-					flag = true;
-				else
-					flag = false;
-				count++;
-				if (commitDao.findBySsa(revCommit.getName()) == null && flag){
+				if (revCommit.getCommitTime() > this.lastCommit.getCreationDate().getTime())
+					commitsList.add(0, revCommit);
+			}
+			for (RevCommit revCommit : commits){
+			if (commitDao.findBySsa(revCommit.getName()) == null && flag){
 				String commitStr = AppKt.analyseRevision(git, so, revCommit.getName());
 				String[] commitArray = commitStr.split(" ");
 				Commit commit = new Commit();
 				commit.setAnalysisDate(new Date());
 				commit.setSsa(commitArray[3]);
-				//commit.setIdCommitAnalysis(analysis.getIdAnalysis());
+				commit.setIdCommitAnalysis(analysis.getIdSerial());
 				commit.setStatus(commitArray[13]);
 				commit.setProjectName(analysis.getIdProject());
 				DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
@@ -121,12 +124,13 @@ public class SonarAnalysis2 implements org.quartz.Job {
 				commitDao.insert(commit);
 				}
 			}
+			
 
 		} catch (GitAPIException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+	
 		analysis.setStatus("Finished");
 		analysis.setEndDate(new Date());
 		commitAnalysisDao.save(analysis);

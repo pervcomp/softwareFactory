@@ -137,7 +137,7 @@ public class ControllerUtilities {
 		project.setStatus(analysis.getStatus());
 		}
 	    project.setAnalysedCommits(commitDao.findByProjectName(project.getProjectName()).size());
-		project.setCountFailedCommits((commitDao.findByProjectNameAndStatus(project.getProjectName(), "FAILED").size()));
+		project.setCountFailedCommits((commitDao.findByProjectNameAndStatus(project.getProjectName(), "FAILURE").size()));
 		project.setCountSuccessCommits((commitDao.findByProjectNameAndStatus(project.getProjectName(), "SUCCESS").size()));
 		projectDao.save(project);
 	}

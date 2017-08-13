@@ -88,8 +88,16 @@ class ProjectController {
 					String projectName = (project.getProjectName());
 					cu.performHistoryAnalysis(projectName);
 				}
+				String projectName = project.getProjectName();	
+				cu.performAnalysisLatestsCommit(projectName);
 			}
+			if (project.getScheduleProject())
+				schedule(project,schedule);
+			
+			
 		cu.configureModelLandingPage(model, emailSt);
+		
+		
 		return "landingPage";
 	}
 	
@@ -107,7 +115,7 @@ class ProjectController {
 		        
 		        CommitAnalysis ca = new CommitAnalysis();
 				ca.setIdProject(p.getProjectName());
-				ca.setConfigurationFile("SonarScanner"+".properties");
+				ca.setConfigurationFile(p.getProjectName()+".properties");
 				commitAnalysisDao.insert(ca);
 		        
 		        	scheduler.getContext().put("commitAnalysisDao", commitAnalysisDao);
@@ -115,7 +123,7 @@ class ProjectController {
 		        	scheduler.getContext().put("project", p);
 		        	scheduler.getContext().put("analysis", ca);
 		        scheduler.getContext().put("interval", 1);
-		        scheduler.getContext().put("lastCommit", commitDao.findByProjectNameOrderByCreationDateDesc(p.getProjectName()));
+		        scheduler.getContext().put("lastCommit", commitDao.findByProjectNameOrderByCreationDateDesc(p.getProjectName()).get(0));
 		        	
 				scheduler.scheduleJob(job, runOnceTrigger);
 				scheduler.start();
