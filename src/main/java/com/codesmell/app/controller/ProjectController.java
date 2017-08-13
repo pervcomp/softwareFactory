@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
+import com.codesmell.app.dao.CommitErrorDao;
 import com.codesmell.app.dao.ProjectDao;
 import com.codesmell.app.dao.ScheduleDao;
 import com.codesmell.app.dao.UserDao;
@@ -64,6 +65,8 @@ class ProjectController {
 	private UserDao userDao;
 	@Autowired
 	private ScheduleDao scheduleDao;
+	@Autowired
+	private CommitErrorDao commitErrorDao;
 
 	/**
 	 * Response to createNewProject.
@@ -77,7 +80,7 @@ class ProjectController {
 	 */
 	@PostMapping("/createNewProject")
 	public String createNewProject(Model model, @ModelAttribute Project project,@ModelAttribute Schedule schedule, HttpServletRequest req, HttpServletResponse resp) {		
-	    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao);
+	    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,commitErrorDao);
 		String emailSt = (String) req.getSession().getAttribute("email");
 		model.addAttribute("email", emailSt);
 		project.setEmail(emailSt);
@@ -142,7 +145,7 @@ class ProjectController {
 	 */
 	@PostMapping("/runAnalysis")
 	public String runJustLatestAnalysis(Model model, @ModelAttribute Project projectToSend,HttpServletRequest req, HttpServletResponse resp) {
-		ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao);
+		ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,commitErrorDao);
 		if (projectToSend != null){
 			if (commitAnalysisDao.findByIdProjectAndStatus(projectToSend.getProjectName(),"Processing") == null){
 				String projectName = projectToSend.getProjectName();	

@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
+import com.codesmell.app.dao.CommitErrorDao;
 import com.codesmell.app.dao.ProjectDao;
 import com.codesmell.app.dao.ScheduleDao;
 import com.codesmell.app.dao.UserDao;
@@ -50,12 +51,14 @@ class WelcomeController {
 	private CommitDao commitDao;
 	@Autowired
 	private ScheduleDao scheduleDao;
+	@Autowired
+	private CommitErrorDao commitErrorDao;
 
 
 	@RequestMapping("/")
 	public String welcome(@CookieValue(value = "email", defaultValue = "") String email, Model model,
 			HttpServletRequest req, HttpServletResponse resp) {
-	    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao);
+	    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,commitErrorDao);
 		if (req.getSession().getAttribute("email") != null) {
 			String emailSession = (String) req.getSession().getAttribute("email");
 			cu.configureModelLandingPage(model, emailSession);
@@ -82,7 +85,7 @@ class WelcomeController {
 		if (req.getSession().getAttribute("email") == null)
 			return "welcome";
 		else {
-		    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao);
+		    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,commitErrorDao);
 			String emailSession = (String) req.getSession().getAttribute("email");
 			cu.configureModelLandingPage(model, emailSession);
 			return "landingPage";
@@ -99,7 +102,7 @@ class WelcomeController {
 	 */
 	@PostMapping("/projectDet")
 	public String projectDetails(Model model, @ModelAttribute Project projectToSend,HttpServletRequest req, HttpServletResponse resp) {
-	    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao);
+	    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,commitErrorDao);
 		String projectName = projectToSend.getProjectName();
 		Project p = projectDao.findByprojectName(projectName);
 		cu.getUpdateProject(p);
@@ -133,7 +136,7 @@ class WelcomeController {
 			String pwd = user.getPwd();
 			User usr = userDao.findByEmail1(emailSt);
 			if (pwd.equals((usr.getPwd()))) {
-			    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao);
+			    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,commitErrorDao);
 				req.getSession().setAttribute("email", emailSt);
 				resp.addCookie(new Cookie("email", emailSt));
 				cu.configureModelLandingPage(model, emailSt);

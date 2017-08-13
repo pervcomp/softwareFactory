@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 
 import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
+import com.codesmell.app.dao.CommitErrorDao;
 import com.codesmell.app.dao.ProjectDao;
 import com.codesmell.app.dao.ScheduleDao;
 import com.codesmell.app.dao.UserDao;
@@ -31,6 +32,7 @@ public class ControllerUtilities {
 	private CommitDao commitDao;
 	private UserDao userDao;
 	private ScheduleDao scheduleDao;
+	private CommitErrorDao commitErrorDao;
 	
 	/**
 	 * This class contains helpers methods that required from the controllers.
@@ -43,12 +45,13 @@ public class ControllerUtilities {
 	 * @param scheduleDao
 	 */
 	public ControllerUtilities (ProjectDao projectDao, CommitAnalysisDao commitAnalysisDao,CommitDao commitDao,
-			UserDao userDao, ScheduleDao scheduleDao	){
+			UserDao userDao, ScheduleDao scheduleDao,CommitErrorDao commitErrorDao	){
 		this.projectDao = projectDao;
 		this.commitAnalysisDao = commitAnalysisDao;
 		this.commitDao = commitDao;
 		this.userDao   = userDao; 
 		this.scheduleDao = scheduleDao;
+		this.commitErrorDao =  commitErrorDao;
 	}
 	
     /**
@@ -64,7 +67,7 @@ public class ControllerUtilities {
 		ca.setConfigurationFile(projectName+".properties");
 		ca.setIdSerial(commitAnalysisDao.findByIdProject(projectName).size()+1);
 		commitAnalysisDao.save(ca);
-		SonarAnalysis so = new SonarAnalysis(commitAnalysisDao,commitDao);	
+		SonarAnalysis so = new SonarAnalysis(commitAnalysisDao,commitDao,commitErrorDao);	
 		so.setAnalysis(ca);
 		so.setInterval(project.getInterval());
 		so.setProject(project);
@@ -83,7 +86,7 @@ public class ControllerUtilities {
 		ca.setConfigurationFile(projectName+".properties");
 		ca.setIdSerial(commitAnalysisDao.findByIdProject(projectName).size()+1);
 		commitAnalysisDao.save(ca);
-		SonarAnalysis so = new SonarAnalysis(commitAnalysisDao,commitDao);	
+		SonarAnalysis so = new SonarAnalysis(commitAnalysisDao,commitDao,commitErrorDao);	
 		so.setAnalysis(ca);
 		so.setInterval(project.getInterval());
 		so.setProject(project);

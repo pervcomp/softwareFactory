@@ -39,9 +39,10 @@ public class SonarAnalysis extends Thread {
 	private CommitDao commitDao;
 	private @Autowired CommitErrorDao commitErrorDao;
 
-	public SonarAnalysis(CommitAnalysisDao commitAnalysisDao, CommitDao commitDao) {
+	public SonarAnalysis(CommitAnalysisDao commitAnalysisDao, CommitDao commitDao,CommitErrorDao commitErrorDao) {
 		this.commitAnalysisDao = commitAnalysisDao;
 		this.commitDao = commitDao;
+		this.commitErrorDao = commitErrorDao;
 		app = new App();
 	}
 
@@ -148,7 +149,7 @@ public class SonarAnalysis extends Thread {
 	
 	private void writeCommitError(String status,String idCommit,String message)
 	{
-		if(status.equalsIgnoreCase("failed"))
+		if(status.equalsIgnoreCase("failure"))
 		{
 			CommitError commitError= new CommitError(idCommit, message);
 			this.commitErrorDao.insert(commitError);

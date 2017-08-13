@@ -96,7 +96,7 @@ fun analyseRevision(git: Git, scanOptions: ScanOptions, sha : String) : String  
                 else{
 					error = "";
                     println("${Calendar.getInstance().time}: EXECUTION FAILURE, return code $returnCode")
-					logFile.forEachLine { line -> error += line; }
+					logFile.forEachLine { line -> error += '\n' + line; }
 					logFile.deleteRecursively();
 					return ("Analysing revision: $sonarDate $logHash .. $allText ${Calendar.getInstance().time}: EXECUTION FAILURE, return code $returnCode")
 				}
