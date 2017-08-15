@@ -30,7 +30,7 @@ import com.kotlin.App;
 import com.kotlin.ScanOptionsKt;
 
 @Component
-public class SonarAnalysis2 implements org.quartz.Job {
+public class SonarAnalysisSchedule implements org.quartz.Job {
 	private Project project;
 	private App app;
 	private Date startDate;
@@ -42,7 +42,7 @@ public class SonarAnalysis2 implements org.quartz.Job {
 	@Autowired
 	private CommitDao commitDao;
 
-	public SonarAnalysis2() {
+	public SonarAnalysisSchedule() {
      app = new App();
 	}
 

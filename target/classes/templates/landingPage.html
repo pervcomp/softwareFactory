@@ -24,6 +24,7 @@
       <th>Created on</th>
       <th>Completation</th>
       <th>Last Analysis</th>
+      <th>Next Analysis</th>
       <th>Run Analysis</th>
     </tr>
   </thead>
@@ -42,6 +43,7 @@
       <td><p th:text=    "${project.creationTime}"></p></td>
       <td><p th:text= "|${project.analysedCommits}  /  ${project.totalCommits}|"></p></td>
       <td><p th:text= "${project.lastAnalysis}"></td>
+      <td><p th:text= "${project.nextAnalysis}"></td>
       <td>
       <form th:action="@{/runAnalysis}" th:object="${projectToSend}" method="POST">
       <input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>

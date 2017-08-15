@@ -12,6 +12,12 @@ import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.quartz.JobKey;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.quartz.impl.StdSchedulerFactory;
+import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
@@ -142,6 +148,8 @@ public class ControllerUtilities {
 	    project.setAnalysedCommits(commitDao.findByProjectName(project.getProjectName()).size());
 		project.setCountFailedCommits((commitDao.findByProjectNameAndStatus(project.getProjectName(), "FAILURE").size()));
 		project.setCountSuccessCommits((commitDao.findByProjectNameAndStatus(project.getProjectName(), "SUCCESS").size()));
+		if (getNextFire(project.getProjectName()) != null)
+			project.setNextAnalysis(getNextFire(project.getProjectName()));
 		projectDao.save(project);
 	}
 	
@@ -176,5 +184,23 @@ public class ControllerUtilities {
 		return count;
 	}
 	
+	private Date getNextFire(String projectName) {
+		Date date = null;
+		try {
+			Scheduler scheduler = new StdSchedulerFactory().getScheduler();
+			for (String groupName : scheduler.getJobGroupNames()) {
+				for (JobKey jobKey : scheduler.getJobKeys(GroupMatcher.jobGroupEquals(projectName))) {
+					String jobName = jobKey.getName();
+					String jobGroup = jobKey.getGroup();
+					List<Trigger> triggers;
+					triggers = (List<Trigger>) scheduler.getTriggersOfJob(jobKey);
+					date = triggers.get(0).getNextFireTime();
+				}
+			}
+		} catch (SchedulerException e) {
+			e.printStackTrace();
+		}
+		return date;
+	}
 	
 }

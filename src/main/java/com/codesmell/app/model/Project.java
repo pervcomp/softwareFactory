@@ -25,6 +25,7 @@ public class Project extends BaseEntity
 	private boolean scheduleProject;
 	private int countFailedCommits;
 	private int countSuccessCommits;
+	private Date nextAnalysis;
 	
 	public Project() 
 	{
@@ -191,6 +192,14 @@ public class Project extends BaseEntity
 	
 	public int getCountSuccessCommits(){
 		return this.countSuccessCommits;
+	}
+	
+	public void setNextAnalysis(Date nextAnalysis){
+		this.nextAnalysis = nextAnalysis;
+	}
+	
+	public Date getNextAnalysis(){
+		return this.nextAnalysis;
 	}
 	
 }

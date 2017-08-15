@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +47,7 @@ import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.Project;
 import com.codesmell.app.model.Schedule;
 import com.codesmell.app.sonar.SonarAnalysis;
-import com.codesmell.app.sonar.SonarAnalysis2;
+import com.codesmell.app.sonar.SonarAnalysisSchedule;
 
 import code.codesmell.app.controllerUtilities.ControllerUtilities;
 
@@ -96,19 +97,71 @@ class ProjectController {
 			}
 			if (project.getScheduleProject())
 				schedule(project,schedule);
-			
-			
+			else
+				scheduleWithInterval(project,project.getInterval());	
 		cu.configureModelLandingPage(model, emailSt);
-		
-		
 		return "landingPage";
 	}
 	
+	/**
+	 * Analysis schedule each day at 12am and 12pm one commit each n new
+	 * @param p
+	 * @param interval
+	 */
+	private void scheduleWithInterval(Project p, int interval)   {
+	try {
+		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+    	    JobDetail job = JobBuilder.newJob(SonarAnalysisSchedule.class)
+                .withIdentity(p.getProjectName(), p.getProjectName()) 
+                .build();
+        int totalMinutes = 6*60;
+        Date startDate = new Date();
+        if (startDate.getHours() < 12){
+        		startDate.setHours(12);
+        		startDate.setMinutes(0);
+        		startDate.setSeconds(0);
+        }
+        else{
+        	Calendar c = Calendar.getInstance();
+        	c.add(Calendar.DATE, 1); 
+        startDate = c.getTime();
+		startDate.setHours(0);
+		startDate.setMinutes(0);
+		startDate.setSeconds(0);
+       
+        }
+        	
+        	Trigger runOnceTrigger = TriggerBuilder.newTrigger()
+        		.startAt(startDate)
+        		.withSchedule(SimpleScheduleBuilder.repeatMinutelyForever(totalMinutes)).build();
+        	 CommitAnalysis ca = new CommitAnalysis();
+				ca.setIdProject(p.getProjectName());
+				ca.setConfigurationFile(p.getProjectName()+".properties");
+				commitAnalysisDao.insert(ca);
+				ca.setIdSerial(commitAnalysisDao.findByIdProject(p.getProjectName()).size()+1);
+		        	scheduler.getContext().put("commitAnalysisDao", commitAnalysisDao);
+		        	scheduler.getContext().put("commitDao", commitDao);
+		        	scheduler.getContext().put("project", p);
+		        	scheduler.getContext().put("analysis", ca);
+		        scheduler.getContext().put("interval", interval );
+				scheduler.scheduleJob(job, runOnceTrigger);
+				scheduler.start();
+	} catch (SchedulerException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	}
+	
+	/**
+	 *  It schedule an analysis at the specific startDate and repetion.
+	 * @param p
+	 * @param s
+	 */
 	private void schedule(Project p, Schedule s){
 		 try {
 	        	Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-	        	JobDetail job = JobBuilder.newJob(SonarAnalysis2.class)
-		            .withIdentity(p.getProjectName(), "0") 
+	        	JobDetail job = JobBuilder.newJob(SonarAnalysisSchedule.class)
+		            .withIdentity(p.getProjectName(), p.getProjectName()) 
 		            .build();
 	        		int totalMinutes = s.getRepetitionDay()*24*60 + s.getRepetitionHours()*60 + s.getRepetitionMinutes();
 		        Date startDate = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(s.getStartingDate() + " " + s.getStartingTime() );
@@ -120,16 +173,15 @@ class ProjectController {
 				ca.setIdProject(p.getProjectName());
 				ca.setConfigurationFile(p.getProjectName()+".properties");
 				commitAnalysisDao.insert(ca);
-		        
+				ca.setIdSerial(commitAnalysisDao.findByIdProject(p.getProjectName()).size()+1);
 		        	scheduler.getContext().put("commitAnalysisDao", commitAnalysisDao);
 		        	scheduler.getContext().put("commitDao", commitDao);
 		        	scheduler.getContext().put("project", p);
 		        	scheduler.getContext().put("analysis", ca);
-		        scheduler.getContext().put("interval", 1);
+		        scheduler.getContext().put("interval", 1 );
 		        	
 				scheduler.scheduleJob(job, runOnceTrigger);
 				scheduler.start();
-				scheduleDao.save(s);
 			} catch (SchedulerException | ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -165,7 +217,7 @@ class ProjectController {
 			writer.println("sonar.projectKey=" + project.getSonarKey());
 			writer.println("sonar.projectName=" + project.getProjectName());
 			writer.println("sonar.projectVersion=" + project.getSonarVersion());
-			writer.println("sonar.host.url=http://sonar.inf.ciao.it/");
+			writer.println("sonar.host.url=http://sonar.inf.unibz.it/");
 			writer.println("# Comma-separated paths to directories with sources (required)");
 			writer.println("sonar.sources=.");
 			writer.println("# Language");
