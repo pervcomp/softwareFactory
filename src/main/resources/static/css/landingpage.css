@@ -21,3 +21,41 @@ body {
 .btn-custom:active,
 .btn-custom.active {
   background-color: #c68616;}
+  
+  .yellow {
+    color: yellow;
+}
+
+  .green {
+    color: green;
+}
+  
+ .red {
+    color: red;
+}
+
+.glyphicon-ok-circle {
+    font-size: 30px;
+}
+  
+
+.glyphicon-remove-circle {
+    font-size: 30px;
+}
+
+
+.glyphicon-warning-sign {
+    font-size: 30px;
+}
+
+.table-striped.test{
+	width:30%;
+	margin-bottom: 0px;
+	
+}
+  
+  .table > tbody > tr > td {
+     vertical-align: middle;
+    
+}
+  

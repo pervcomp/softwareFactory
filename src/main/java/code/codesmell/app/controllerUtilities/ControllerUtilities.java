@@ -157,6 +157,9 @@ public class ControllerUtilities {
 		project.setCountSuccessCommits((commitDao.findByProjectNameAndStatus(project.getProjectName(), "SUCCESS").size()));
 		if (getNextFire(project.getProjectName()) != null)
 			project.setNextAnalysis(getNextFire(project.getProjectName()));
+		else 
+			project.setNextAnalysis(null);
+		getReportColor(project);
 		projectDao.save(project);
 	}
 	
