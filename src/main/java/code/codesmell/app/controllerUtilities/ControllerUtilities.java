@@ -2,6 +2,7 @@ package code.codesmell.app.controllerUtilities;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -145,6 +146,12 @@ public class ControllerUtilities {
 		project.setLastAnalysis(analysisDate);
 		project.setStatus(analysis.getStatus());
 		}
+		else{
+			project.setLastAnalysis(null);
+			project.setStatus("");
+		}
+			
+		
 	    project.setAnalysedCommits(commitDao.findByProjectName(project.getProjectName()).size());
 		project.setCountFailedCommits((commitDao.findByProjectNameAndStatus(project.getProjectName(), "FAILURE").size()));
 		project.setCountSuccessCommits((commitDao.findByProjectNameAndStatus(project.getProjectName(), "SUCCESS").size()));
@@ -160,7 +167,14 @@ public class ControllerUtilities {
 	 */
 	private int getCommitsCount(String url) {
 		int count = 0;
+		try {
+			FileUtils.deleteDirectory(new File("directory"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		File d = new File("directory");
+		d.deleteOnExit();
 		Git git;
 		try {
 			git = Git.cloneRepository().setURI(url).setDirectory(d).call();
@@ -201,6 +215,32 @@ public class ControllerUtilities {
 			e.printStackTrace();
 		}
 		return date;
+	}
+	
+	/**
+	 * Color to display, it calculates percentage of failures commits of last week
+	 * @param project
+	 */
+	private void getReportColor(Project project){
+			Date d = new Date();
+		    Calendar c = Calendar.getInstance();
+		    c.setTime(d);
+		    c.add(Calendar.DATE, -7);
+		    d.setTime( c.getTime().getTime());	
+		    int failureLastWeek      = commitDao.findByAnalysisDateGreaterThanAndProjectNameAndStatus(d, project.getProjectName(), "FAILURE").size();
+		    	int totalCommitsLastWeek = commitDao.findByAnalysisDateGreaterThanAndProjectName(d, project.getProjectName()).size();
+		    	
+		    	if (totalCommitsLastWeek == 0)
+		    		project.setLastWeekReport("GREEN");
+		    	else{
+		    		int percentage = (failureLastWeek/totalCommitsLastWeek*100);
+		    		if (percentage >= 70)
+			    		project.setLastWeekReport("RED");
+		    		else if (percentage >= 30)
+		    			project.setLastWeekReport("YELLOW");
+		    		else
+		    			project.setLastWeekReport("GREEN");
+		    	}
 	}
 	
 }
