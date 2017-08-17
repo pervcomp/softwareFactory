@@ -41,7 +41,7 @@
 			</tr>
 			<tr>
 				<strong>Last Analysis: </strong>
-				<p th:text="${project.lastAnalysis}"></p>
+				<p th:text="${#dates.format(project.lastAnalysis,'dd-MM-yyyy HH:mm')}"></p>
 				</td>
 			<tr>
 				<strong>Last Result: </strong>
@@ -62,31 +62,37 @@
 					th:text="|${project.countSuccessCommits} / ${project.totalCommits}|"></p>
 				</td>
 			<tr th:if="${project.nextAnalysis != null}">
-				<td> <strong>Next Analysis:</strong>
-					<p th:text="${project.nextAnalysis}"></td>
-					
+				<td><strong>Next Analysis:</strong>
+					<p th:text="${#dates.format(project.nextAnalysis,'dd-MM-yyyy HH:mm')}"></td>
+
 				<td>
-				      <form id="${project.projectName}" th:action="@{/projectDet2}" th:object="${projectToSend}" method="POST">
-				<p data-placement="top" data-toggle="tooltip" title="Edit">
-						<button type="submit" class="btn btn-primary btn-xs" data-title="Edit"
-							data-toggle="modal" data-target="#edit">
-							<span class="glyphicon glyphicon-pencil"></span>
-						</button>
-					</p>
-					</form></td>
-					<td>
-					
-			<form id="${project.projectName}" th:action="@{/deleteSchedule}" th:object="${project}" method="POST">
-				<p data-placement="top" data-toggle="tooltip" title="Edit">
-						<button type="submit" class="btn btn-danger btn-xs" data-title="Edit"
-							data-toggle="modal" data-target="#edit">
-							<span class="glyphicon glyphicon-trash"></span>
-						</button>
-						<input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>
-						
-					</p>
-				</form>
-					</td>
+					<form id="${project.projectName}" th:action="@{/modifySchedule}"
+						th:object="${projectToSend}" method="POST">
+						<p data-placement="top" data-toggle="tooltip" title="Edit">
+							<button type="submit" class="btn btn-primary btn-xs"
+								data-title="Edit" data-toggle="modal" data-target="#edit">
+								<span class="glyphicon glyphicon-pencil"></span>
+							<input type="hidden" id="projectName" name="projectName"
+								th:value="${project.projectName}" />
+							</button>
+						</p>
+					</form>
+				</td>
+				<td>
+
+					<form id="${project.projectName}" th:action="@{/deleteSchedule}"
+						th:object="${project}" method="POST">
+						<p data-placement="top" data-toggle="tooltip" title="Edit">
+							<button type="submit" class="btn btn-danger btn-xs"
+								data-title="Edit" data-toggle="modal" data-target="#edit">
+								<span class="glyphicon glyphicon-trash"></span>
+							</button>
+							<input type="hidden" id="projectName" name="projectName"
+								th:value="${project.projectName}" />
+
+						</p>
+					</form>
+				</td>
 			</tr>
 		</tbody>
 	</table>
@@ -94,22 +100,25 @@
 		th:if="${project.nextAnalysis == null}">
 		<thead>
 			<tr>
-				<th>New Analysis Scheduling
-				</th>
+				<th>New Analysis Scheduling</th>
 			</tr>
-	
-			
+
+
 		</thead>
-		
+
 		<tr th:if="${project.nextAnalysis == null}">
-		
-		<td>
-			<input  type="Radio" Name="scheduleProject"   class ="scheduleInt" > Commits Interval (Do an analysis each # new commits)
-		    <br>
-		    <input type="Radio" Name="scheduleProject"  class ="schedule" id="scheduleProject"   value="1"  th:checked="*{scheduleProject}" checked="checked"> Scheduled <br>
-		</td>
-		
-		<td>
+			<form id="${project.projectName}" th:action="@{/reSchedule}" th:object="${project}" method="POST">
+			<input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>
+			<td><input  type="Radio" Name="scheduleProject"
+				class="schedule" id="scheduleProject" value="1"
+				th:checked="*{scheduleProject}" > Scheduled
+				<br> 
+				<input type="Radio" Name="scheduleProject"
+				class="scheduleInt"  value="0" th:checked="*{scheduleProject} == false"> Commits Interval (Do an analysis each
+				# new commits) 
+				<br></td>
+
+			<td>
 			<td>
 				<button class="btn btn-custom" data-toggle="modal"
 					data-target="#myModal">
@@ -117,50 +126,47 @@
 					analysis
 				</button>
 			</td>
-		
-		
-		</tr>
-        <tr th:if="${project.nextAnalysis == null}">
-			<td class='scheduleOp'><div class='input-group date ' id='datetimepicker1'>
-					<input type='text' class="form-control " /> <span
-						class="input-group-addon"> <span
-						class="glyphicon glyphicon-calendar"></span>
-					</span>
-				</div></td>
-		
-		
 
-		<tr th:if="${project.nextAnalysis == null}" class="scheduleOp">
-			<td>Hours (0-23): <input value="5" type="number" max='23'
-				min='0' name="repetitionHours">  
-			</td>
-		</tr>
-		<tr th:if="${project.nextAnalysis == null}" class="scheduleOp">
-			<td>Minutes (0-59): <input value="30" type="number" max='59'
-				min='0' name="repetitionMinutes">
-			</td>
-		</tr>
-		 
-		<tr th:if="${project.nextAnalysis == null}" class="scheduleOp">
-			<td>  Days (0-20): <input value="7" type="number" max='20'
-				min='0' name="repetitionDay">
-			</td>
-		</tr>
-		
-		
-		<tr th:if="${project.nextAnalysis == null}" class="scheduleIntOp" hidden>
-			<td> 
-		    <label>Analysis every (2-100) commits:</label><br>
-			<input type="number" min="2" max="100" name="Analysis every (2-100) commits:" value="# Commits"><br>
 
-		</td>
 		</tr>
 		<tr th:if="${project.nextAnalysis == null}" >
-		
-		
+			<td class='scheduleOp' hidden ><div class='input-group date '
+					id='datetimepicker1' >
+					<input type='text' class="form-control " th:value="${schedule.startingDate}" name="startingDate" /> <span
+						class="input-group-addon"> <span
+						class="glyphicon glyphicon-calendar"  ></span>
+					</span>
+				</div></td>
+		<tr th:if="${project.nextAnalysis == null}" class="scheduleOp" hidden>
+			<td>Hours (0-23): <input type="number" value="5" max='23'
+				min='0' required="required" th:value="${schedule.repetitionHours}"
+				name="repetitionHours">  
+			</td>
+		</tr>
+		<tr th:if="${project.nextAnalysis == null}" class="scheduleOp" hidden>
+			<td>Minutes (0-59): <input value="30" type="number" max='59'
+				min='0' required="required" th:value="${schedule.repetitionMinutes}"
+				name="repetitionMinutes">
+			</p>
+			</td>
 		
 		</tr>
-		
+		 
+		<tr th:if="${project.nextAnalysis == null}" class="scheduleOp" hidden>
+			<td>  Days (0-20): <input value="7" type="number" max='20'
+				min='0' required="required" th:value="${schedule.repetitionDay}"
+				name="repetitionDay">
+			</td>
+		</tr>
+		<tr th:if="${project.nextAnalysis == null}" class="scheduleIntOp"
+			>
+			<td>  <label>Analysis every (2-100) commits:</label><br> <input
+				type="number" min="2" max="100"
+				name="Analysis every (2-100) commits:" value="# Commits">    <br>
+
+			</td>
+		</tr>
+    </form>
 
 	</table>
 
@@ -184,8 +190,8 @@
 			<tr th:each="commit : ${commits}">
 				<td><p th:text="${commit.idCommitAnalysis}"></p></td>
 				<td><p th:text="${commit.ssa}"></p></td>
-				<td><p th:text="${commit.analysisDate}"></p></td>
-				<td><p th:text="${commit.creationDate}"></p></td>
+				<td><p th:text="${#dates.format(commit.analysisDate,'dd-MM-yyyy HH:mm')}"></p></td>
+				<td><p th:text="${#dates.format(commit.creationDate,'dd-MM-yyyy HH:mm')}"></p></td>
 				<td><p th:text="${commit.status}"></p></td>
 			</tr>
 		</tbody>
@@ -195,7 +201,7 @@
 		$(function() {
 			$('#datetimepicker1').datetimepicker({
 				setDate : new Date(),
-				format : 'DD/MM/YYYY HH:mm',
+				format : 'DD-MM-YYYY HH:mm',
 				defaultDate : new Date()
 			});
 		});

@@ -31,6 +31,7 @@ import com.codesmell.app.dao.UserDao;
 import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.Project;
+import com.codesmell.app.model.Schedule;
 import com.codesmell.app.sonar.SonarAnalysis;
 
 public class ControllerUtilities {
@@ -106,11 +107,28 @@ public class ControllerUtilities {
 	 * @param model
 	 * @param email
 	 */
-	public void configureModelLandingPage(Model model, String email) {
-		model.addAttribute("projects", getProjects(email));
-		model.addAttribute("email", email);
-		model.addAttribute("projectToSend", new Project());
+	public void configureModelDetailsPage(Model model, String email, Project p) {
+        CommitAnalysis analysis = commitAnalysisDao.findByIdProjectOrderByStartDateDesc(p.getProjectName());
+        List<Commit> commits = commitDao.findByProjectNameOrderByCreationDateDesc(p.getProjectName());
+        model.addAttribute("commits", commits);
+        if (analysis != null)
+            model.addAttribute("analysis", analysis);
+        model.addAttribute("project", p);
+        model.addAttribute("schedule", new Schedule());
+        model.addAttribute("email", email);
 	}
+    
+    
+    /**
+     * Sets mode for the projectLandingPage
+     * @param model
+     * @param email
+     */
+    public void configureModelLandingPage(Model model, String email) {
+        model.addAttribute("projects", getProjects(email));
+        model.addAttribute("email", email);
+        model.addAttribute("projectToSend", new Project());
+    }
 	
 	/**
 	 * Updates all projects of a user

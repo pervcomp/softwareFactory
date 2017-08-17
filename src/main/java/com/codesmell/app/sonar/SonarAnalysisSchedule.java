@@ -126,7 +126,12 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 		}
 	}
 
-	// Add commit to the db
+	/**
+	 *  Add commit to the db
+	 * @param str
+	 * @param analysisId
+	 * @param app
+	 */
 	public void addCommit(String str, int analysisId, App app) {
 		String[] commitArray = str.split(" ");
 		System.out.println(str);
@@ -148,7 +153,10 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 		}
 	
 
-	// Set finish a processing analsis
+	/**
+	 *  Set finish a processing analsis
+	 * @param analysis
+	 */
 	public void closeAnalysis(String analysis) {
 		CommitAnalysis ca = commitAnalysisDao.findBy_id(analysis);
 		ca.setStatus("Finished");

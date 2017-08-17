@@ -151,15 +151,9 @@ class ProjectController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Project p = projectDao.findByprojectName(project.getProjectName());
-		cu.getUpdateProject(p);
-		CommitAnalysis analysis = commitAnalysisDao.findByIdProjectOrderByStartDateDesc(project.getProjectName());
-		List<Commit> commits = commitDao.findByProjectNameOrderByCreationDateDesc(project.getProjectName());
-		model.addAttribute("commits", commits);
-		if (analysis != null)
-				model.addAttribute("analysis", analysis);
-		model.addAttribute("project", p);
-		model.addAttribute("email", req.getSession().getAttribute("email"));
+	    project = projectDao.findByprojectName(project.getProjectName());
+		cu.getUpdateProject(project);
+		cu.configureModelDetailsPage(model,(String)req.getSession().getAttribute("email"),project);
 		return "projectDetails";
 	}
 	
@@ -224,7 +218,11 @@ class ProjectController {
 			int totalMinutes = s.getRepetitionDay() * 24 * 60 + s.getRepetitionHours() * 60 + s.getRepetitionMinutes();
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 			sdf.setTimeZone(TimeZone.getTimeZone("Europe/Rome"));
-			Date startDate = sdf.parse(s.getStartingDate() + " " + s.getStartingTime());
+			Date startDate = new Date();
+				if (s.getStartingTime() != null)
+					startDate = sdf.parse(s.getStartingDate() + " " + s.getStartingTime());
+				else
+					startDate = sdf.parse(s.getStartingDate());
 			Trigger runOnceTrigger = TriggerBuilder.newTrigger().startAt(startDate)
 					.withSchedule(SimpleScheduleBuilder.repeatMinutelyForever(totalMinutes)).build();
 			CommitAnalysis ca = new CommitAnalysis();
@@ -244,6 +242,44 @@ class ProjectController {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * It reschedules an analysis. It is called from the project Details page
+	 * 
+	 * @param model
+	 * @param projectToSend
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
+	@PostMapping("/reSchedule")
+	public String reScheduler(Model model, @ModelAttribute Project project, @ModelAttribute Schedule schedule,
+			HttpServletRequest req, HttpServletResponse resp) {
+		ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
+				commitErrorDao);
+		String emailSt = (String) req.getSession().getAttribute("email");
+		model.addAttribute("email", emailSt);
+		project.setEmail(emailSt);
+		String projectName = project.getProjectName();
+	    cu.performAnalysisLatestsCommit(projectName);
+		if (project.getScheduleProject()){
+		    project = projectDao.findByprojectName(project.getProjectName());
+			schedule(project, schedule);}
+		else{
+		    project = projectDao.findByprojectName(project.getProjectName());
+			scheduleWithInterval(project, project.getInterval());}
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		cu.getUpdateProject(project);
+		cu.configureModelDetailsPage(model,(String)req.getSession().getAttribute("email"),project);
+		return "projectDetails";
+	}
+	
+	
 
 	/**
 	 * It runs just the analysis of the latest commit. From Landing Page, "Run

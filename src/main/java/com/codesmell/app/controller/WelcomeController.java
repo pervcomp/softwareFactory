@@ -105,14 +105,8 @@ class WelcomeController {
 	    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,commitErrorDao);
 		String projectName = projectToSend.getProjectName();
 		Project p = projectDao.findByprojectName(projectName);
-		cu.getUpdateProject(p);
-		CommitAnalysis analysis = commitAnalysisDao.findByIdProjectOrderByStartDateDesc(projectName);
-		List<Commit> commits = commitDao.findByProjectNameOrderByCreationDateDesc(projectName);
-		model.addAttribute("commits", commits);
-		if (analysis != null)
-				model.addAttribute("analysis", analysis);
-		model.addAttribute("project", p);
-		model.addAttribute("email", req.getSession().getAttribute("email"));
+		cu.getUpdateProject(p);		
+		cu.configureModelDetailsPage(model,(String)req.getSession().getAttribute("email"),p);
 		return "projectDetails";
 	}
 	
