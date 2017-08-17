@@ -33,11 +33,9 @@ public class SonarAnalysis extends Thread {
 	private CommitAnalysis analysis;
 	private int interval = 1;
 	private boolean justLatest = false;
-	@Autowired
 	private CommitAnalysisDao commitAnalysisDao;
-	@Autowired
 	private CommitDao commitDao;
-	private @Autowired CommitErrorDao commitErrorDao;
+	private CommitErrorDao commitErrorDao;
 
 	public SonarAnalysis(CommitAnalysisDao commitAnalysisDao, CommitDao commitDao,CommitErrorDao commitErrorDao) {
 		this.commitAnalysisDao = commitAnalysisDao;
@@ -124,8 +122,8 @@ public class SonarAnalysis extends Thread {
 			commit.setStatus(commitArray[13].replace(" ", "").replace(",", ""));
 			String error = app.getActualError();
 			
-			//wrting the commit error in the database
-			writeCommitError(commit.getStatus(),commit.get_id(),error);
+			//writing the commit error in the database
+			writeCommitError(commit.getStatus(),commit.getSsa(),error,project.getProjectName(),analysisId);
 			
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ITALIAN);
 			try {
@@ -138,7 +136,10 @@ public class SonarAnalysis extends Thread {
 		}
 	
 
-	// Set finish a processing analsis
+	/**
+	 * It closes the opened analysis
+	 * @param analysis
+	 */
 	public void closeAnalysis(String analysis) {
 		CommitAnalysis ca = commitAnalysisDao.findBy_id(analysis);
 		ca.setStatus("Finished");
@@ -147,12 +148,20 @@ public class SonarAnalysis extends Thread {
 
 	}
 	
-	private void writeCommitError(String status,String idCommit,String message)
+	/**
+	 * Writes the StackTrace on the db
+	 * @param status
+	 * @param idCommit
+	 * @param message
+	 */
+	private void writeCommitError(String status,String idCommit,String message, String projectName, int analysisId)
 	{
 		if(status.equalsIgnoreCase("failure"))
 		{
 			CommitError commitError= new CommitError(idCommit, message);
-			this.commitErrorDao.insert(commitError);
+			commitError.setAnalysisId(analysisId);
+			commitError.setProjectName(projectName);
+			commitErrorDao.insert(commitError);
 		}
 	}
 

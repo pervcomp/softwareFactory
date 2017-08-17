@@ -1,14 +1,21 @@
 package com.codesmell.app.model;
 
+import java.util.Date;
+
 public class CommitError extends BaseEntity{
 
-	private String idCommit;
+	private String email;
+	private String shaCommit;
 	private String errorMessage;
+	private Date errorDate;
+	private String projectName;
+	private int analysisId;
 	
 	public CommitError(String idCommit,String errorMessage)
 	{
-		this.idCommit=idCommit;
+		this.shaCommit=idCommit;
 		this.errorMessage=errorMessage;
+		errorDate= new Date();
 	}
 	
 	public CommitError() {
@@ -16,11 +23,11 @@ public class CommitError extends BaseEntity{
 	}
 
 	public String getIdCommit() {
-		return idCommit;
+		return shaCommit;
 	}
 
-	public void setIdCommit(String idCommit) {
-		this.idCommit = idCommit;
+	public void setIdCommit(String shaCommit) {
+		this.shaCommit = shaCommit;
 	}
 
 	public String getErrorMessage() {
@@ -29,6 +36,34 @@ public class CommitError extends BaseEntity{
 
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
+	}
+	
+	public int getAnalysisId() {
+		return analysisId;
+	}
+
+	public void setAnalysisId(int analysisId) {
+		this.analysisId = analysisId;
+	}
+	
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public Date getDate() {
+		return this.errorDate;
 	}
 	
 	

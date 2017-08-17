@@ -23,8 +23,10 @@ import org.springframework.stereotype.Component;
 
 import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
+import com.codesmell.app.dao.CommitErrorDao;
 import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
+import com.codesmell.app.model.CommitError;
 import com.codesmell.app.model.Project;
 import com.kotlin.App;
 import com.kotlin.ScanOptionsKt;
@@ -41,6 +43,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 	private CommitAnalysisDao commitAnalysisDao;
 	@Autowired
 	private CommitDao commitDao;
+	private CommitErrorDao commitErrorDao;
 
 	public SonarAnalysisSchedule() {
      app = new App();
@@ -73,6 +76,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 		this.interval  = (int)context.get("interval");
 		this.commitAnalysisDao = (CommitAnalysisDao)context.get("commitAnalysisDao");
 		this.commitDao = (CommitDao)context.get("commitDao");
+		this.commitErrorDao = (CommitErrorDao)context.get("commitErrorDao");
         this.lastCommit = commitDao.findByProjectNameOrderByCreationDateDesc(project.getProjectName()).get(0);
 		// Analysis status is updated
 		analysis.setStatus("Processing");
@@ -142,6 +146,10 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 			commit.setIdCommitAnalysis(analysisId);
 			commit.setStatus(commitArray[13].replace(" ", "").replace(",", ""));
 			String error = app.getActualError();
+			
+			//writing the commit error in the database
+			writeCommitError(commit.getStatus(),commit.getSsa(),error,project.getProjectName(),analysisId);
+			
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ITALIAN);
 			try {
 				commit.setCreationDate(df.parse(commitArray[2].replace("T", " ")));
@@ -163,5 +171,22 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 		ca.setEndDate(new Date());
 		commitAnalysisDao.save(ca);
 
+	}
+	
+	/**
+	 * Writes the StackTrace on the db
+	 * @param status
+	 * @param idCommit
+	 * @param message
+	 */
+	private void writeCommitError(String status,String idCommit,String message, String projectName, int analysisId)
+	{
+		if(status.equalsIgnoreCase("failure"))
+		{
+			CommitError commitError= new CommitError(idCommit, message);
+			commitError.setAnalysisId(analysisId);
+			commitError.setProjectName(projectName);
+			commitErrorDao.insert(commitError);
+		}
 	}
 	}

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +19,8 @@ import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -53,6 +57,8 @@ class WelcomeController {
 	private ScheduleDao scheduleDao;
 	@Autowired
 	private CommitErrorDao commitErrorDao;
+	@Autowired
+	private JavaMailSender mailSender;
 
 
 	@RequestMapping("/")
@@ -120,6 +126,7 @@ class WelcomeController {
 								// cookie!
 		resp.addCookie(cookie);
 		model.addAttribute("user", new User());
+	
 		return "welcome";
 	}
 
