@@ -116,6 +116,7 @@ public class ControllerUtilities {
         model.addAttribute("project", p);
         model.addAttribute("schedule", new Schedule());
         model.addAttribute("email", email);
+        model.addAttribute("commitDao", new Commit());
 	}
     
     

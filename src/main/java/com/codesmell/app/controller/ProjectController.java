@@ -47,6 +47,7 @@ import com.codesmell.app.dao.ScheduleDao;
 import com.codesmell.app.dao.UserDao;
 import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
+import com.codesmell.app.model.CommitError;
 import com.codesmell.app.model.Project;
 import com.codesmell.app.model.Schedule;
 import com.codesmell.app.sonar.SonarAnalysis;
@@ -307,6 +308,17 @@ class ProjectController {
 		}
 		cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
 		return "landingPage";
+	}
+	
+	@PostMapping("/stacktraceDetails")
+	public String getStackTraceDetails(Model model, @ModelAttribute Commit commitDao, HttpServletRequest req,
+			HttpServletResponse resp) {
+		
+		CommitError ce = this.commitErrorDao.findByShaCommit(commitDao.getSsa());
+		model.addAttribute("commitError",ce);
+		model.addAttribute("email",(String)req.getSession().getAttribute("email"));
+		
+		return "stacktraceDetails";
 	}
 
 	private void writeConfigFile(Project project) {

@@ -192,7 +192,17 @@
 				<td><p th:text="${commit.ssa}"></p></td>
 				<td><p th:text="${#dates.format(commit.analysisDate,'dd-MM-yyyy HH:mm')}"></p></td>
 				<td><p th:text="${#dates.format(commit.creationDate,'dd-MM-yyyy HH:mm')}"></p></td>
-				<td><p th:text="${commit.status}"></p></td>
+				<td>
+					<!-- if FAILURE, display button needed to open the stacktrace details -->
+					<p th:if="${commit.status == 'FAILURE'}" class="scheduleOp" hidden>
+					<input type="submit"   class="btn btn-secondary"   th:value="${project.status}">
+					</p>
+					<!-- else, display the SUCCESS status -->
+					<p th:if="${commit.status == 'SUCCESS'}" class="scheduleOp" hidden>
+					<p th:text="${commit.status}"></p>
+					</p>
+					
+				</td>
 			</tr>
 		</tbody>
 	</table>
