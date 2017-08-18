@@ -186,15 +186,8 @@ public class ControllerUtilities {
         project.setAnalysedCommits(commitDao.findByProjectName(project.getProjectName()).size());
         project.setCountFailedCommits((commitDao.findByProjectNameAndStatus(project.getProjectName(), "FAILURE").size()));
         project.setCountSuccessCommits((commitDao.findByProjectNameAndStatus(project.getProjectName(), "SUCCESS").size()));
-        if (getNextFire(project.getProjectName()) != null){
-        	   SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-		   sdf.setTimeZone(TimeZone.getTimeZone("Europe/Rome"));
-        	   try {
-				project.setNextAnalysis(sdf.parse(getNextFire(project.getProjectName())));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}}
+        if (getNextFire(project.getProjectName()) != null)
+        	   project.setNextAnalysis((getNextFire(project.getProjectName())));
         else
             project.setNextAnalysis(null);
         getReportColor(project);
@@ -239,7 +232,7 @@ public class ControllerUtilities {
         return count;
     }
     
-    private String getNextFire(String projectName) {
+    private Date getNextFire(String projectName) {
         Date date = null;
         try {
             Scheduler scheduler = new StdSchedulerFactory().getScheduler();
@@ -255,10 +248,9 @@ public class ControllerUtilities {
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-		sdf.setTimeZone(TimeZone.getTimeZone("Europe/Rome"));
+	;
 
-        return sdf.format(date);
+        return date;
     }
     
     /**
