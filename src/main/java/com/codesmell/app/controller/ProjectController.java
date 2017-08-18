@@ -225,7 +225,8 @@ class ProjectController {
 					startDate = sdf.parse(s.getStartingDate() + " " + s.getStartingTime());
 				else
 					startDate = sdf.parse(s.getStartingDate());
-			Trigger runOnceTrigger = TriggerBuilder.newTrigger().startAt(startDate)
+			
+			    Trigger runOnceTrigger = TriggerBuilder.newTrigger().startAt(startDate)
 					.withSchedule(SimpleScheduleBuilder.repeatMinutelyForever(totalMinutes))
 					.build();
 					
