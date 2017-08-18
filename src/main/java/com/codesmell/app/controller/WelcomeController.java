@@ -68,10 +68,12 @@ class WelcomeController {
 		if (req.getSession().getAttribute("email") != null) {
 			String emailSession = (String) req.getSession().getAttribute("email");
 			cu.configureModelLandingPage(model, emailSession);
+			cu.scheduleDailyReport(userDao.findByEmail1((String)req.getSession().getAttribute("email")), mailSender);
 			return "landingPage";
 		} else if (!email.isEmpty()) {
 			req.getSession().setAttribute("email", email);
 			cu.configureModelLandingPage(model, email);
+			cu.scheduleDailyReport(userDao.findByEmail1((String)req.getSession().getAttribute("email")), mailSender);
 			return "landingPage";
 		}
 		model.addAttribute("user", new User());
@@ -94,6 +96,7 @@ class WelcomeController {
 		    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,commitErrorDao);
 			String emailSession = (String) req.getSession().getAttribute("email");
 			cu.configureModelLandingPage(model, emailSession);
+			cu.scheduleDailyReport(userDao.findByEmail1((String)req.getSession().getAttribute("email")), mailSender);
 			return "landingPage";
 		}
 	}
@@ -141,6 +144,7 @@ class WelcomeController {
 				req.getSession().setAttribute("email", emailSt);
 				resp.addCookie(new Cookie("email", emailSt));
 				cu.configureModelLandingPage(model, emailSt);
+				cu.scheduleDailyReport(userDao.findByEmail1((String)req.getSession().getAttribute("email")), mailSender);
 				return "landingPage";
 			} else {
 				return "welcome";

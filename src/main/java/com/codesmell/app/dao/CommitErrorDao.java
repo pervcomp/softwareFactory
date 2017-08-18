@@ -12,6 +12,5 @@ import com.codesmell.app.model.Project;
 public interface CommitErrorDao extends MongoRepository<CommitError, String> {
 	public Project findByIdCommit(String  idCommit);
 	public List<CommitError> findByEmailAndErrorDateBetweenOrderByErrorDateDesc(String email, Date start, Date end);
-	public CommitError findByShaCommit(String shaCommit);
-	
+	public  CommitError findByShaCommit(String sha);
 }
