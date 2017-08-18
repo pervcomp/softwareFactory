@@ -31,6 +31,7 @@ EXPOSE 8080
 ADD target/spring-softwarefactory-1.5.1.war  app.jar
 ADD my.properties my.properties
 ENV JAVA_OPTS=""
+RUN ln -fs /usr/share/zoneinfo/Europe/Rome /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
 
 #RUN apt-get install git
 
