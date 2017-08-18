@@ -186,6 +186,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 			CommitError commitError= new CommitError(idCommit, message);
 			commitError.setAnalysisId(analysisId);
 			commitError.setProjectName(projectName);
+			commitError.setEmail(project.getEmail());
 			commitErrorDao.insert(commitError);
 		}
 	}

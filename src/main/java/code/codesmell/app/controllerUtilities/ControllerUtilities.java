@@ -289,21 +289,20 @@ public class ControllerUtilities {
                 Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
                 JobDetail job = JobBuilder.newJob(MailUtilities.class)
                 .withIdentity(usr.getEmail1(),usr.getEmail1()).build();
-                //Calendar c = Calendar.getInstance();
-                //c.add(Calendar.DAY_OF_YEAR, 1);
-                //c.set(Calendar.HOUR_OF_DAY, 0);
-                //c.set(Calendar.HOUR, 17);
-                //c.set(Calendar.MINUTE, 50);
-                SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-                Date startDate= df.parse("17-08-2017 18:11");
-                Trigger runOnceTrigger = TriggerBuilder.newTrigger().startAt(startDate)
+                Calendar c = Calendar.getInstance();
+                c.add(Calendar.DATE, 1);
+                c.set(Calendar.HOUR_OF_DAY, 0);
+                c.set(Calendar.HOUR, 0);
+                c.set(Calendar.MINUTE, 0);
+
+                Trigger runOnceTrigger = TriggerBuilder.newTrigger().startAt(c.getTime())
                 .withSchedule(SimpleScheduleBuilder.repeatMinutelyForever(24*60)).build();
                 scheduler.getContext().put("mailSender", mailSender);
                 scheduler.getContext().put("user", usr);
                 scheduler.getContext().put("commitErrorDao", commitErrorDao);
                 scheduler.scheduleJob(job, runOnceTrigger);
                 scheduler.start();
-            } catch (SchedulerException | ParseException e) {
+            } catch (SchedulerException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }

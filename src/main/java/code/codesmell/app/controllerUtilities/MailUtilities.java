@@ -59,24 +59,28 @@ public class MailUtilities implements org.quartz.Job {
 	}
 	
 	private String getMessage(){
-		Calendar c = Calendar.getInstance();
-		//c.add(Calendar.DAY_OF_YEAR, -1);
-		c.set(Calendar.HOUR_OF_DAY, 0);
-		Date start = c.getTime();
-		c.set(Calendar.HOUR, 23);
-		c.set(Calendar.MINUTE, 59);
-		Date end =  c.getTime();
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE, -1);  // number of days to add
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        Date start = c.getTime();
+        Calendar c2 = Calendar.getInstance();
+        c2.add(Calendar.DATE, -1);  // number of days to add
+        c2.set(Calendar.HOUR_OF_DAY, 23);
+        c2.set(Calendar.MINUTE, 59);
+        Date end = c2.getTime();
+        
 		List<CommitError> errorsOfDay = commitErrorDao.findByEmailAndErrorDateBetweenOrderByErrorDateDesc(user.getEmail1(), start, end);
 		if (errorsOfDay.isEmpty())
 			return null;
 		String message = "<html>";
 		for (CommitError ce : errorsOfDay){
 		    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyy HH:mm");
-		    message +="<strong>Project: </strong>"+ce.getProjectName()+"<br>"   +
-				      "<strong>Analysis: </strong>"+ ce.getAnalysisId() + "<br>"+
-				      "<strong>Date: </strong> "+ format.format(ce.getDate()) + "<br>" + 
-				      "<strong>Commit: </strong>"+ce.getIdCommit()+"<br>";
-            message += "<details>";
+		    message +=" <strong>Project: </strong>"+ce.getProjectName()+"<br>"   +
+				      " <strong>Analysis: </strong>"+ ce.getAnalysisId() + "<br>"+
+				      " <strong>Date: </strong> "+ format.format(ce.getDate()) + "<br>" + 
+				      " <strong>Commit: </strong>"+ce.getIdCommit()+"<br>";
+            message += " <details>";
             String errMessage = ce.getErrorMessage();
             errMessage = errMessage.replace("\n", "<br>");
             errMessage = errMessage.replace("\tat", "&nbsp&nbsp&nbsp");

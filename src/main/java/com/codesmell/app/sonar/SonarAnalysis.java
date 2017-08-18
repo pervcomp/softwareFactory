@@ -161,6 +161,7 @@ public class SonarAnalysis extends Thread {
 			CommitError commitError= new CommitError(idCommit, message);
 			commitError.setAnalysisId(analysisId);
 			commitError.setProjectName(projectName);
+			commitError.setEmail(project.getEmail());
 			commitErrorDao.insert(commitError);
 		}
 	}
