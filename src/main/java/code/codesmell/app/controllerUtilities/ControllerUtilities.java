@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
@@ -157,6 +158,7 @@ public class ControllerUtilities {
     /**
      * Update variables of the project p (latest analysis, number of commits.....)
      * @param project
+     * @throws  
      */
     public void getUpdateProject(Project project){
         CommitAnalysis analysis = commitAnalysisDao.findByIdProjectOrderByStartDateDesc(project.getProjectName());
@@ -184,8 +186,15 @@ public class ControllerUtilities {
         project.setAnalysedCommits(commitDao.findByProjectName(project.getProjectName()).size());
         project.setCountFailedCommits((commitDao.findByProjectNameAndStatus(project.getProjectName(), "FAILURE").size()));
         project.setCountSuccessCommits((commitDao.findByProjectNameAndStatus(project.getProjectName(), "SUCCESS").size()));
-        if (getNextFire(project.getProjectName()) != null)
-            project.setNextAnalysis(getNextFire(project.getProjectName()));
+        if (getNextFire(project.getProjectName()) != null){
+        	   SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		   sdf.setTimeZone(TimeZone.getTimeZone("Europe/Rome"));
+        	   try {
+				project.setNextAnalysis(sdf.parse(getNextFire(project.getProjectName())));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}}
         else
             project.setNextAnalysis(null);
         getReportColor(project);
@@ -230,7 +239,7 @@ public class ControllerUtilities {
         return count;
     }
     
-    private Date getNextFire(String projectName) {
+    private String getNextFire(String projectName) {
         Date date = null;
         try {
             Scheduler scheduler = new StdSchedulerFactory().getScheduler();
@@ -246,7 +255,10 @@ public class ControllerUtilities {
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
-        return date;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		sdf.setTimeZone(TimeZone.getTimeZone("Europe/Rome"));
+
+        return sdf.format(date);
     }
     
     /**

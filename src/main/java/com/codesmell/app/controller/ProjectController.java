@@ -226,8 +226,10 @@ class ProjectController {
 				else
 					startDate = sdf.parse(s.getStartingDate());
 			Trigger runOnceTrigger = TriggerBuilder.newTrigger().startAt(startDate)
-					.withSchedule(SimpleScheduleBuilder.repeatMinutelyForever(totalMinutes)).build();
-			CommitAnalysis ca = new CommitAnalysis();
+					.withSchedule(SimpleScheduleBuilder.repeatMinutelyForever(totalMinutes))
+					.build();
+					
+					CommitAnalysis ca = new CommitAnalysis();
 			ca.setIdProject(p.getProjectName());
 			ca.setConfigurationFile(p.getProjectName() + ".properties");
 			commitAnalysisDao.insert(ca);
