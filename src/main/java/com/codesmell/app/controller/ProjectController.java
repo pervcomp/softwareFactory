@@ -42,6 +42,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
 import com.codesmell.app.dao.CommitErrorDao;
+import com.codesmell.app.dao.ProjectAnalysisDetailsDao;
 import com.codesmell.app.dao.ProjectDao;
 import com.codesmell.app.dao.ScheduleDao;
 import com.codesmell.app.dao.UserDao;
@@ -49,10 +50,10 @@ import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.CommitError;
 import com.codesmell.app.model.Project;
+import com.codesmell.app.model.ProjetcAnalysisDetails;
 import com.codesmell.app.model.Schedule;
 import com.codesmell.app.sonar.SonarAnalysis;
 import com.codesmell.app.sonar.SonarAnalysisSchedule;
-
 import code.codesmell.app.controllerUtilities.ControllerUtilities;
 
 @EnableScheduling
@@ -72,7 +73,9 @@ class ProjectController {
 	private ScheduleDao scheduleDao;
 	@Autowired
 	private CommitErrorDao commitErrorDao;
-
+	@Autowired
+	private ProjectAnalysisDetailsDao projectAnalysisDetailsDao;
+	
 	/**
 	 * Response to createNewProject. It creates a new project. If pastAnalysis
 	 * is selected, it launches an analysis of past commits
@@ -346,5 +349,51 @@ class ProjectController {
 		}
 
 	}
+	
+	// to remove the project
+	@PostMapping("/removeProject")
+	public String removeProject(Model model, @ModelAttribute Project projectToSend, HttpServletRequest req,
+			HttpServletResponse resp) 
+	{
+		
+		removeProjectData(projectToSend);
+//		
+//		
+//		ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
+//				commitErrorDao);
+//		if (projectToSend != null) {
+//			if (commitAnalysisDao.findByIdProjectAndStatus(projectToSend.getProjectName(), "Processing") == null) {
+//				String projectName = projectToSend.getProjectName();
+//				Project p = projectDao.findByprojectName(projectName);
+//				cu.performAnalysisLatestsCommit(projectName);
+//			}
+//		}
+//		cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
+		return "landingPage";
+	}
 
+	private void removeProjectData(Project project) 
+	{
+		//deleting the commit
+		List<Commit> commitList= this.commitDao.findByProjectName(project.getName());
+		for(Commit commit: commitList)
+			this.commitDao.delete(commit);
+		
+		//deleting the CommitAnalysis
+		List<CommitAnalysis> commitAnalysisList= this.commitAnalysisDao.findByIdProject(project.get_id());
+		for(CommitAnalysis commitAnalysis: commitAnalysisList)
+			this.commitAnalysisDao.delete(commitAnalysis);
+
+		//delete the Project Analysis Details
+		List<ProjetcAnalysisDetails> projectAnalysisDetailsList= this.projectAnalysisDetailsDao.findByIdProject(project.get_id());
+		for(ProjetcAnalysisDetails ProjetcAnalysisDetails: projectAnalysisDetailsList)
+			this.projectAnalysisDetailsDao.delete(ProjetcAnalysisDetails);
+		
+		//delete the project Schedule
+		Schedule schedule= this.scheduleDao.findByProjectName (project.getProjectName());
+		this.scheduleDao.delete(schedule);
+		
+		//remove the project
+		this.projectDao.delete(project);
+	}
 }
