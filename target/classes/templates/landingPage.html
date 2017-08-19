@@ -24,6 +24,7 @@
       <th>Created on</th>
       <th>Completation</th>
       <th>Last Analysis</th>
+      <th>Next Analysis</th>
       <th>Run Analysis</th>
     </tr>
   </thead>
@@ -31,7 +32,19 @@
   
 
 	<tr th:each="project : ${projects}">
-      <th scope="row"></th>
+     
+      <td th:if="${project.lastWeekReport == 'RED'}">
+      <span class="glyphicon glyphicon-remove-circle red"></span>
+      </td>
+       <td th:if="${project.lastWeekReport == 'YELLOW'}">
+      <span class="glyphicon glyphicon-warning-sign yellow"></span>
+      </td>
+       <td th:if="${project.lastWeekReport == 'GREEN'}">
+        <p><span class="glyphicon glyphicon-ok-circle green"></span></p>
+      </td>
+      
+      
+      
       <td>
       <form id="${project.projectName}" th:action="@{/projectDet}" th:object="${projectToSend}" method="POST">
       <input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>
@@ -39,9 +52,10 @@
       </form>
       </td>
       <td><p th:text="${project.status}"></td>
-      <td><p th:text=    "${project.creationTime}"></p></td>
+      <td><p th:text= "${#dates.format(project.creationTime,'dd-MM-yyyy HH:mm')}"></p></td>
       <td><p th:text= "|${project.analysedCommits}  /  ${project.totalCommits}|"></p></td>
-      <td><p th:text= "${project.lastAnalysis}"></td>
+      <td><p th:text= "${#dates.format(project.lastAnalysis,'dd-MM-yyyy HH:mm')}"></td>
+      <td><p th:text=  "${#dates.format(project.nextAnalysis,'dd-MM-yyyy HH:mm')}"></td>
       <td>
       <form th:action="@{/runAnalysis}" th:object="${projectToSend}" method="POST">
       <input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>

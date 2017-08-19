@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +19,8 @@ import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -53,6 +57,8 @@ class WelcomeController {
 	private ScheduleDao scheduleDao;
 	@Autowired
 	private CommitErrorDao commitErrorDao;
+	@Autowired
+	private JavaMailSender mailSender;
 
 
 	@RequestMapping("/")
@@ -62,10 +68,12 @@ class WelcomeController {
 		if (req.getSession().getAttribute("email") != null) {
 			String emailSession = (String) req.getSession().getAttribute("email");
 			cu.configureModelLandingPage(model, emailSession);
+			cu.scheduleDailyReport(userDao.findByEmail1((String)req.getSession().getAttribute("email")), mailSender);
 			return "landingPage";
 		} else if (!email.isEmpty()) {
 			req.getSession().setAttribute("email", email);
 			cu.configureModelLandingPage(model, email);
+			cu.scheduleDailyReport(userDao.findByEmail1((String)req.getSession().getAttribute("email")), mailSender);
 			return "landingPage";
 		}
 		model.addAttribute("user", new User());
@@ -88,6 +96,7 @@ class WelcomeController {
 		    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,commitErrorDao);
 			String emailSession = (String) req.getSession().getAttribute("email");
 			cu.configureModelLandingPage(model, emailSession);
+			cu.scheduleDailyReport(userDao.findByEmail1((String)req.getSession().getAttribute("email")), mailSender);
 			return "landingPage";
 		}
 	}
@@ -105,14 +114,8 @@ class WelcomeController {
 	    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,commitErrorDao);
 		String projectName = projectToSend.getProjectName();
 		Project p = projectDao.findByprojectName(projectName);
-		cu.getUpdateProject(p);
-		CommitAnalysis analysis = commitAnalysisDao.findByIdProjectOrderByStartDateDesc(projectName);
-		List<Commit> commits = commitDao.findByProjectNameOrderByCreationDateDesc(projectName);
-		model.addAttribute("commits", commits);
-		if (analysis != null)
-				model.addAttribute("analysis", analysis);
-		model.addAttribute("project", p);
-		model.addAttribute("email", req.getSession().getAttribute("email"));
+		cu.getUpdateProject(p);		
+		cu.configureModelDetailsPage(model,(String)req.getSession().getAttribute("email"),p);
 		return "projectDetails";
 	}
 	
@@ -126,6 +129,7 @@ class WelcomeController {
 								// cookie!
 		resp.addCookie(cookie);
 		model.addAttribute("user", new User());
+	
 		return "welcome";
 	}
 
@@ -140,6 +144,7 @@ class WelcomeController {
 				req.getSession().setAttribute("email", emailSt);
 				resp.addCookie(new Cookie("email", emailSt));
 				cu.configureModelLandingPage(model, emailSt);
+				cu.scheduleDailyReport(userDao.findByEmail1((String)req.getSession().getAttribute("email")), mailSender);
 				return "landingPage";
 			} else {
 				return "welcome";

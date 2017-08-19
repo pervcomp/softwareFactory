@@ -23,14 +23,16 @@ import org.springframework.stereotype.Component;
 
 import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
+import com.codesmell.app.dao.CommitErrorDao;
 import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
+import com.codesmell.app.model.CommitError;
 import com.codesmell.app.model.Project;
 import com.kotlin.App;
 import com.kotlin.ScanOptionsKt;
 
 @Component
-public class SonarAnalysis2 implements org.quartz.Job {
+public class SonarAnalysisSchedule implements org.quartz.Job {
 	private Project project;
 	private App app;
 	private Date startDate;
@@ -41,8 +43,9 @@ public class SonarAnalysis2 implements org.quartz.Job {
 	private CommitAnalysisDao commitAnalysisDao;
 	@Autowired
 	private CommitDao commitDao;
+	private CommitErrorDao commitErrorDao;
 
-	public SonarAnalysis2() {
+	public SonarAnalysisSchedule() {
      app = new App();
 	}
 
@@ -73,6 +76,7 @@ public class SonarAnalysis2 implements org.quartz.Job {
 		this.interval  = (int)context.get("interval");
 		this.commitAnalysisDao = (CommitAnalysisDao)context.get("commitAnalysisDao");
 		this.commitDao = (CommitDao)context.get("commitDao");
+		this.commitErrorDao = (CommitErrorDao)context.get("commitErrorDao");
         this.lastCommit = commitDao.findByProjectNameOrderByCreationDateDesc(project.getProjectName()).get(0);
 		// Analysis status is updated
 		analysis.setStatus("Processing");
@@ -126,7 +130,12 @@ public class SonarAnalysis2 implements org.quartz.Job {
 		}
 	}
 
-	// Add commit to the db
+	/**
+	 *  Add commit to the db
+	 * @param str
+	 * @param analysisId
+	 * @param app
+	 */
 	public void addCommit(String str, int analysisId, App app) {
 		String[] commitArray = str.split(" ");
 		System.out.println(str);
@@ -137,6 +146,10 @@ public class SonarAnalysis2 implements org.quartz.Job {
 			commit.setIdCommitAnalysis(analysisId);
 			commit.setStatus(commitArray[13].replace(" ", "").replace(",", ""));
 			String error = app.getActualError();
+			
+			//writing the commit error in the database
+			writeCommitError(commit.getStatus(),commit.getSsa(),error,project.getProjectName(),analysisId);
+			
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ITALIAN);
 			try {
 				commit.setCreationDate(df.parse(commitArray[2].replace("T", " ")));
@@ -148,12 +161,33 @@ public class SonarAnalysis2 implements org.quartz.Job {
 		}
 	
 
-	// Set finish a processing analsis
+	/**
+	 *  Set finish a processing analsis
+	 * @param analysis
+	 */
 	public void closeAnalysis(String analysis) {
 		CommitAnalysis ca = commitAnalysisDao.findBy_id(analysis);
 		ca.setStatus("Finished");
 		ca.setEndDate(new Date());
 		commitAnalysisDao.save(ca);
 
+	}
+	
+	/**
+	 * Writes the StackTrace on the db
+	 * @param status
+	 * @param idCommit
+	 * @param message
+	 */
+	private void writeCommitError(String status,String idCommit,String message, String projectName, int analysisId)
+	{
+		if(status.equalsIgnoreCase("failure"))
+		{
+			CommitError commitError= new CommitError(idCommit, message);
+			commitError.setAnalysisId(analysisId);
+			commitError.setProjectName(projectName);
+			commitError.setEmail(project.getEmail());
+			commitErrorDao.insert(commitError);
+		}
 	}
 	}

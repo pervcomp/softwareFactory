@@ -25,6 +25,8 @@ public class Project extends BaseEntity
 	private boolean scheduleProject;
 	private int countFailedCommits;
 	private int countSuccessCommits;
+	private Date nextAnalysis;
+	private String lastWeekReport;
 	
 	public Project() 
 	{
@@ -136,6 +138,15 @@ public class Project extends BaseEntity
 	public String getStatus() {
 		return status;
 	}
+	
+	
+	public void setLastWeekReport(String lastWeekReport) {
+		this.lastWeekReport = lastWeekReport;
+	}
+	
+	public String getLastWeekReport() {
+		return this.lastWeekReport;
+	}
 
 	public void setStatus(String status) {
 		this.status = status;
@@ -191,6 +202,14 @@ public class Project extends BaseEntity
 	
 	public int getCountSuccessCommits(){
 		return this.countSuccessCommits;
+	}
+	
+	public void setNextAnalysis(Date nextAnalysis){
+		this.nextAnalysis = nextAnalysis;
+	}
+	
+	public Date getNextAnalysis(){
+		return this.nextAnalysis;
 	}
 	
 }
