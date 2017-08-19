@@ -27,6 +27,7 @@
       <th>Next Analysis</th>
       <th>Run Analysis</th>
       <th>Removed Project</th>
+      <th>Edit Project </th>
     </tr>
   </thead>
   <tbody>
@@ -70,7 +71,21 @@
       <input type="submit"   class="btn btn-secondary"   value="x">   
       </form>
       </td>
-            
+      
+       <td>
+	      <form th:action="@{/removeProject}" th:object="${projectToSend}" method="POST">
+	      <input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>
+	      <input type="submit"   class="btn btn-secondary"   value="x">   
+	      </form>
+      </td>
+ 
+        <td>
+	      <form th:action="@{/editProject}" th:object="${projectToSend}" method="POST">
+	      <input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>
+	      <input type="submit"   class="btn btn-secondary"   value="Edit">   
+	      </form>
+      </td>
+                 
     </tr>		
   </tbody>
 </table>

@@ -30,10 +30,34 @@ public class Project extends BaseEntity
 	
 	public Project() 
 	{
-		this.creationTime= new Date();
+		this.projectName="New project Name";
+		this.creationTime=new Date();
 		this.url="";
 		this.versionType="git";
+		this.analysisStartDate=new Date();
 		this.anaysisRepetition="";
+//		private String idUser;
+//		private String email;
+//		private String sonarKey;
+//		private String sonarVersion;
+//		private String status;
+//		private Date lastAnalysis;
+//		private int totalCommits;
+//		private int analysedCommits;
+//		private int interval;
+//		private Date lastRequest;
+//		private boolean analysePast;
+//		private boolean analyseAll;
+//		private boolean scheduleProject;
+//		private int countFailedCommits;
+//		private int countSuccessCommits;
+//		private Date nextAnalysis;
+//		private String lastWeekReport;
+		
+		this.creationTime= new Date();
+		this.url="";
+		
+		
 	}
 	
 	public String getProjectName() {

@@ -52,6 +52,7 @@ import com.codesmell.app.model.CommitError;
 import com.codesmell.app.model.Project;
 import com.codesmell.app.model.ProjetcAnalysisDetails;
 import com.codesmell.app.model.Schedule;
+import com.codesmell.app.model.User;
 import com.codesmell.app.sonar.SonarAnalysis;
 import com.codesmell.app.sonar.SonarAnalysisSchedule;
 import code.codesmell.app.controllerUtilities.ControllerUtilities;
@@ -395,5 +396,15 @@ class ProjectController {
 		
 		//remove the project
 		this.projectDao.delete(project);
+	}
+	
+	// to edit the project
+	@PostMapping("/editProject")
+	public String editProject(Model model, @ModelAttribute Project project, HttpServletRequest req,
+			HttpServletResponse resp) 
+	{
+		model.addAttribute("project", project);
+		
+		return "editProject";
 	}
 }
