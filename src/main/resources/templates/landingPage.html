@@ -26,8 +26,6 @@
       <th>Last Analysis</th>
       <th>Next Analysis</th>
       <th>Run Analysis</th>
-      <th>Removed Project</th>
-      <th>Edit Project </th>
     </tr>
   </thead>
   <tbody>
@@ -68,7 +66,10 @@
       <td>
       <form th:action="@{/removeProject}" th:object="${projectToSend}" method="POST">
       <input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>
-      <input type="submit"   class="btn btn-secondary"   value="x">   
+      <button type="submit" class="btn btn-danger btn-xs"
+		data-title="Edit" data-toggle="modal" data-target="#edit">
+		<span class="glyphicon glyphicon-trash"></span>
+	 </button>
       </form>
       </td>
       

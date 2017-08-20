@@ -371,6 +371,22 @@ public class ControllerUtilities {
 		return  restTemplate.getForEntity(temp, String.class).getBody();
 	}
     
+	/**
+	 * Deletes temp file of a deleted project
+	 * @return
+	 */
+	public void deleteProjectFiles(String projectName)  {
+		String urlWs = "http://localhost:8090/deleteProject";
+		//String urlWs = "http://54.202.111.96:8090/getActualError";
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).
+				queryParam("projectName", projectName);
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+		RestTemplate restTemplate = new RestTemplate();
+		String temp = builder.build().encode().toUri().toString();
+	}
     
     
     

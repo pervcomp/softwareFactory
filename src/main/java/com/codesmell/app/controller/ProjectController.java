@@ -357,43 +357,26 @@ class ProjectController {
 			HttpServletResponse resp) 
 	{
 		
-		removeProjectData(projectToSend);
-//		
-//		
-//		ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
-//				commitErrorDao);
-//		if (projectToSend != null) {
-//			if (commitAnalysisDao.findByIdProjectAndStatus(projectToSend.getProjectName(), "Processing") == null) {
-//				String projectName = projectToSend.getProjectName();
-//				Project p = projectDao.findByprojectName(projectName);
-//				cu.performAnalysisLatestsCommit(projectName);
-//			}
-//		}
-//		cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
-		return "landingPage";
+		removeProjectData(this.projectDao.findByprojectName(projectToSend.getProjectName()));
+        ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
+        commitErrorDao);
+ 		cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
+		cu.deleteProjectFiles(projectToSend.getProjectName());
+ 		return "landingPage";
 	}
 
 	private void removeProjectData(Project project) 
 	{
 		//deleting the commit
-		List<Commit> commitList= this.commitDao.findByProjectName(project.getName());
+		List<Commit> commitList= this.commitDao.findByProjectName(project.getProjectName());
 		for(Commit commit: commitList)
 			this.commitDao.delete(commit);
 		
 		//deleting the CommitAnalysis
-		List<CommitAnalysis> commitAnalysisList= this.commitAnalysisDao.findByIdProject(project.get_id());
+		List<CommitAnalysis> commitAnalysisList= this.commitAnalysisDao.findByIdProject(project.getProjectName());
 		for(CommitAnalysis commitAnalysis: commitAnalysisList)
 			this.commitAnalysisDao.delete(commitAnalysis);
-
-		//delete the Project Analysis Details
-		List<ProjetcAnalysisDetails> projectAnalysisDetailsList= this.projectAnalysisDetailsDao.findByIdProject(project.get_id());
-		for(ProjetcAnalysisDetails ProjetcAnalysisDetails: projectAnalysisDetailsList)
-			this.projectAnalysisDetailsDao.delete(ProjetcAnalysisDetails);
-		
-		//delete the project Schedule
-		Schedule schedule= this.scheduleDao.findByProjectName (project.getProjectName());
-		this.scheduleDao.delete(schedule);
-		
+	   
 		//remove the project
 		this.projectDao.delete(project);
 	}
