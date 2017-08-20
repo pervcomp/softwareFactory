@@ -14,7 +14,6 @@
   </parent>
   <name>softwarefactory</name>
   <properties>
-    <kotlin.version>1.1.3-2</kotlin.version>
     <docker.image.prefix>softwarefactory</docker.image.prefix>
     
     <!-- Generic properties -->
@@ -34,11 +33,6 @@
   </properties>
 
   <dependencies>
-  <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib</artifactId>
-            <version>${kotlin.version}</version>
-   </dependency>
   <dependency>
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-web</artifactId>
@@ -228,32 +222,6 @@
   <build>
     <plugins>
       <plugin>
-                <artifactId>kotlin-maven-plugin</artifactId>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <version>${kotlin.version}</version>
-                <executions>
-                    <execution>
-                        <id>compile</id>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                   
-						<configuration>
-                        <sourceDirs>
-                            <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
-                            <sourceDir>${project.basedir}/src/main/java</sourceDir>
-                        </sourceDirs>
-                    </configuration>       
-                    </execution>
-                    <execution>
-                        <id>test-compile</id>
-                        <goals>
-                            <goal>test-compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-      <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <version>3.5.1</version>
@@ -326,15 +294,6 @@
           </execution>
         </executions>
       </plugin>
-      
-      
-      
-      
-      
-      
-      
-      
-      
             <!-- Spring Boot Actuator displays build-related information if a git.properties 
         file is present at the classpath -->
       <plugin>

@@ -2,6 +2,8 @@ package com.codesmell.app.sonar;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,9 +15,18 @@ import java.util.Locale;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.InvalidRemoteException;
+import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
@@ -24,12 +35,12 @@ import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.CommitError;
 import com.codesmell.app.model.Project;
-import com.kotlin.*;
+
+import code.codesmell.app.controllerUtilities.ControllerUtilities;
 
 @Component
 public class SonarAnalysis extends Thread {
 	private Project project;
-	private App app;
 	private CommitAnalysis analysis;
 	private int interval = 1;
 	private boolean justLatest = false;
@@ -41,7 +52,6 @@ public class SonarAnalysis extends Thread {
 		this.commitAnalysisDao = commitAnalysisDao;
 		this.commitDao = commitDao;
 		this.commitErrorDao = commitErrorDao;
-		app = new App();
 	}
 
 	public void setProject(Project project) {
@@ -70,7 +80,6 @@ public class SonarAnalysis extends Thread {
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
 		String args[] = { "--git", url, "--properties", conf };
-		com.kotlin.ScanOptions so = ScanOptionsKt.parseOptions(args);
 
 		File theDir = new File(project.getProjectName() + "_" + analysis.getIdSerial());
 		try {
@@ -79,7 +88,22 @@ public class SonarAnalysis extends Thread {
 			// TODO Auto-generated catch block
 			System.out.println("Folder does not exists");
 		}
-		Git git = app.cloneRemoteRepository(args[1], theDir);
+		
+		Git git = null;
+		try {
+			git = Git.cloneRepository()
+					  .setURI(url)
+					  .setDirectory(theDir).call();
+		} catch (InvalidRemoteException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (TransportException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (GitAPIException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		int count = 0;
 		boolean flag = false;
 		Iterable<RevCommit> commits;
@@ -92,9 +116,8 @@ public class SonarAnalysis extends Thread {
 					flag = false;
 				count++;
 				if (commitDao.findBySsa(revCommit.getName()) == null && flag) {
-					App app = new App();
-					String commitStr = app.analyseRevision(git, so, revCommit.getName());
-					addCommit(commitStr,analysis.getIdSerial(), app);
+					String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(),revCommit.getName(),  analysis.getIdSerial()+"",url);
+					addCommit(commitStr,analysis.getIdSerial());
 				}
 				if (justLatest)
 					break;
@@ -111,7 +134,7 @@ public class SonarAnalysis extends Thread {
 	}
 
 	// Add commit to the db
-	public void addCommit(String str, int analysisId, App app) {
+	public void addCommit(String str, int analysisId) {
 		String[] commitArray = str.split(" ");
 		System.out.println(str);
 			Commit commit = new Commit();
@@ -120,7 +143,7 @@ public class SonarAnalysis extends Thread {
 			commit.setSsa(commitArray[3]);
 			commit.setIdCommitAnalysis(analysisId);
 			commit.setStatus(commitArray[13].replace(" ", "").replace(",", ""));
-			String error = app.getActualError();
+			String error = new ControllerUtilities().restGetActualError();
 			
 			//writing the commit error in the database
 			writeCommitError(commit.getStatus(),commit.getSsa(),error,project.getProjectName(),analysisId);
@@ -165,5 +188,12 @@ public class SonarAnalysis extends Thread {
 			commitErrorDao.insert(commitError);
 		}
 	}
+	
+
+	
+	
+	
+	
+	
 
 }

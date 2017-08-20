@@ -195,8 +195,7 @@
 				<td>
 					<!-- if FAILURE, display button needed to open the stacktrace details -->
 					<p th:if="${commit.status == 'FAILURE'}" class="scheduleOp" hidden>
-					<p >tEST</p>
-					</p>
+				
 					<!-- else, display the SUCCESS status -->
 					<p th:if="${commit.status == 'SUCCESS'}" class="scheduleOp" hidden>
 					<p th:text="${commit.status}"></p>

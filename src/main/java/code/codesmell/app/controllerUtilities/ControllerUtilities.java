@@ -2,6 +2,8 @@ package code.codesmell.app.controllerUtilities;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,8 +30,14 @@ import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.codec.Base64;
 import org.springframework.ui.Model;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
@@ -72,6 +80,8 @@ public class ControllerUtilities {
         this.scheduleDao = scheduleDao;
         this.commitErrorDao = commitErrorDao;
     }
+    
+    public ControllerUtilities(){}
     
     /**
               * It performs an analysis of all commits in the project till now.
@@ -310,6 +320,57 @@ public class ControllerUtilities {
             
         }	
     }
+    /**
+     * Run an analysis invoking a REST WEB SERVICE
+     * @param projectName
+     * @param sha
+     * @param analysisId
+     * @param url
+     * @return
+     */
+	public String restAnalysis(String projectName,String sha, String analysisId, String url)  {
+		String urlWs = "http://54.202.111.96:8090/analyseRevision";
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+  		String st="";
+		try {
+			st = new String(Base64.encode(Files.readAllBytes(Paths.get(projectName + ".properties"))),"UTF-8");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs)
+		        .queryParam("projectName", projectName)
+		        .queryParam("sha", sha)
+		        .queryParam("analysis", analysisId)
+		        .queryParam("url", url)
+		        .queryParam("conf", st);
+
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+		RestTemplate restTemplate = new RestTemplate();
+		String temp = builder.build().encode().toUri().toString();
+		return  restTemplate.getForEntity(temp, String.class).getBody();
+	}
+    
+	/**
+	 * It gets Actual Error using REST web Service
+	 * @return
+	 */
+	public String restGetActualError()  {
+		String urlWs = "http://54.202.111.96:8090/getActualError";
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs);
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+		RestTemplate restTemplate = new RestTemplate();
+		String temp = builder.build().encode().toUri().toString();
+		return  restTemplate.getForEntity(temp, String.class).getBody();
+	}
+    
+    
+    
+    
+    
     
 }
 

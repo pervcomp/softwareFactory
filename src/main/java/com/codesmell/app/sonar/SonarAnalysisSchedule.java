@@ -13,6 +13,8 @@ import java.util.Locale;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.InvalidRemoteException;
+import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -28,13 +30,13 @@ import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.CommitError;
 import com.codesmell.app.model.Project;
-import com.kotlin.App;
-import com.kotlin.ScanOptionsKt;
+
+import code.codesmell.app.controllerUtilities.ControllerUtilities;
+
 
 @Component
 public class SonarAnalysisSchedule implements org.quartz.Job {
 	private Project project;
-	private App app;
 	private Date startDate;
 	private Commit lastCommit;
 	private CommitAnalysis analysis;
@@ -46,7 +48,6 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 	private CommitErrorDao commitErrorDao;
 
 	public SonarAnalysisSchedule() {
-     app = new App();
 	}
 
 	public void setProject(Project project) {
@@ -86,7 +87,6 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
 		String args[] = { "--git", url, "--properties", conf };
-		com.kotlin.ScanOptions so = ScanOptionsKt.parseOptions(args);
 
 		File theDir = new File(project.getProjectName() + "_" + analysis.getIdSerial());
 		try {
@@ -95,7 +95,21 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 			// TODO Auto-generated catch block
 			System.out.println("Folder does not exists");
 		}
-		Git git = app.cloneRemoteRepository(args[1], theDir);
+		Git git = null;
+		try {
+			git = Git.cloneRepository()
+					  .setURI(url)
+					  .setDirectory(theDir).call();
+		} catch (InvalidRemoteException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (TransportException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (GitAPIException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		int count = 0;
 		boolean flag = false;
 		Iterable<RevCommit> commits;
@@ -114,9 +128,8 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 					flag = false;
 				count++;
 				if (commitDao.findBySsa(revCommit.getName()) == null && flag) {
-					App app = new App();
-					String commitStr = app.analyseRevision(git, so, revCommit.getName());
-					addCommit(commitStr,analysis.getIdSerial(), app);
+					String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(),revCommit.getName(),  analysis.getIdSerial()+"",url);
+					addCommit(commitStr,analysis.getIdSerial());
 				}
 			}
 			closeAnalysis(analysis.get_id());
@@ -136,7 +149,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 	 * @param analysisId
 	 * @param app
 	 */
-	public void addCommit(String str, int analysisId, App app) {
+	public void addCommit(String str, int analysisId) {
 		String[] commitArray = str.split(" ");
 		System.out.println(str);
 			Commit commit = new Commit();
@@ -145,7 +158,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 			commit.setSsa(commitArray[3]);
 			commit.setIdCommitAnalysis(analysisId);
 			commit.setStatus(commitArray[13].replace(" ", "").replace(",", ""));
-			String error = app.getActualError();
+			String error = new ControllerUtilities().restGetActualError();
 			
 			//writing the commit error in the database
 			writeCommitError(commit.getStatus(),commit.getSsa(),error,project.getProjectName(),analysisId);
