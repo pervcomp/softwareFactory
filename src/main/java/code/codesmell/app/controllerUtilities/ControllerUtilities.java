@@ -329,7 +329,9 @@ public class ControllerUtilities {
      * @return
      */
 	public String restAnalysis(String projectName,String sha, String analysisId, String url)  {
-		String urlWs = "http://54.202.111.96:8090/analyseRevision";
+		//String urlWs = "http://54.202.111.96:8090/analyseRevision";
+		String urlWs = "http://localhost:8090/analyseRevision";
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
   		String st="";
@@ -357,7 +359,9 @@ public class ControllerUtilities {
 	 * @return
 	 */
 	public String restGetActualError()  {
-		String urlWs = "http://54.202.111.96:8090/getActualError";
+		String urlWs = "http://localhost:8090/getActualError";
+		//String urlWs = "http://54.202.111.96:8090/getActualError";
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs);
