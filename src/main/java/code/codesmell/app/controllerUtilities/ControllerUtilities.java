@@ -331,7 +331,7 @@ public class ControllerUtilities {
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		String st="";
-		if (!new File(projectName + ".properties").exists()){	
+		if (new File(projectName + ".properties").exists()){	
 		try {
 			st = new String(Base64.encode(Files.readAllBytes(Paths.get(projectName + ".properties"))),"UTF-8");
 		} catch (IOException e) {
