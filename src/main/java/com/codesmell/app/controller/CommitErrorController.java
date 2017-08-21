@@ -34,6 +34,8 @@ public class CommitErrorController {
         errMessage = errMessage.replace("\tat", "&nbsp&nbsp&nbsp");
         errMessage = errMessage.replace("\t", "&nbsp");
         errMessage += "</html>";
+        String emailSt = (String) req.getSession().getAttribute("email");
+		model.addAttribute("email", emailSt);
         commitError.setErrorMessage(errMessage);
 	    model.addAttribute("commitError", commitError);
 		return "stacktraceDetails";

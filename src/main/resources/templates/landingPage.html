@@ -64,13 +64,15 @@
       </td>
       
       <td>
-      <form th:action="@{/removeProject}" th:object="${projectToSend}" method="POST">
+      <form id="removeButtonForm" th:action="@{/removeProject}" th:object="${projectToSend}" method="POST" onsubmit="return confirm('Do you really want to delete this project?');">
       <input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>
       <button type="submit" class="btn btn-danger btn-xs"
 		data-title="Edit" data-toggle="modal" data-target="#edit">
 		<span class="glyphicon glyphicon-trash"></span>
 	 </button>
+	 
       </form>
+      
       </td>
       
        <td>
