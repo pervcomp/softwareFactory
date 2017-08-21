@@ -378,6 +378,16 @@ class ProjectController {
 	   
 		//remove the project
 		this.projectDao.delete(project);
+		
+		Scheduler scheduler;
+		try {
+			scheduler = StdSchedulerFactory.getDefaultScheduler();
+			scheduler.deleteJob(new JobKey(project.getProjectName(), project.getProjectName()));
+		} catch (SchedulerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	// to edit the project

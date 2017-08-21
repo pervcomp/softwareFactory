@@ -27,6 +27,8 @@ public class Project extends BaseEntity
 	private int countSuccessCommits;
 	private Date nextAnalysis;
 	private String lastWeekReport;
+	private String portNr;
+	private String container;
 	
 	public Project() 
 	{
@@ -35,25 +37,7 @@ public class Project extends BaseEntity
 		this.url="";
 		this.versionType="git";
 		this.analysisStartDate=new Date();
-		this.anaysisRepetition="";
-//		private String idUser;
-//		private String email;
-//		private String sonarKey;
-//		private String sonarVersion;
-//		private String status;
-//		private Date lastAnalysis;
-//		private int totalCommits;
-//		private int analysedCommits;
-//		private int interval;
-//		private Date lastRequest;
-//		private boolean analysePast;
-//		private boolean analyseAll;
-//		private boolean scheduleProject;
-//		private int countFailedCommits;
-//		private int countSuccessCommits;
-//		private Date nextAnalysis;
-//		private String lastWeekReport;
-		
+		this.anaysisRepetition="";		
 		this.creationTime= new Date();
 		this.url="";
 		
@@ -235,5 +219,22 @@ public class Project extends BaseEntity
 	public Date getNextAnalysis(){
 		return this.nextAnalysis;
 	}
+	
+	public String getPortNr(){
+		return this.portNr;
+	}
+	
+	public void setPortNr(String portNr){
+		this.portNr = portNr;
+	}
+	
+	public String getContainer(){
+		return this.container;
+	}
+	
+	public void setContainer(String container){
+		this.container = container;
+	}
+	
 	
 }

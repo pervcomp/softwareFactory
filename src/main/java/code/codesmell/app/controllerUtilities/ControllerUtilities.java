@@ -380,6 +380,23 @@ public class ControllerUtilities {
 		RestTemplate restTemplate = new RestTemplate();
 		String temp = builder.build().encode().toUri().toString();
 	}
+	
+	/**
+	 * It creates a new Docker Container at the specified port
+	 * @param portNr
+	 * @return
+	 */
+	public String createContainerRest(String portNr){
+		String urlWs = "http://54.201.103.160:8080/createMicroservice/";
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).
+				queryParam("port", portNr);
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+		RestTemplate restTemplate = new RestTemplate();
+		String temp = builder.build().encode().toUri().toString();
+		return temp;
+	}
 
 }
 
