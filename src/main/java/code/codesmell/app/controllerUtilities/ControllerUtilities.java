@@ -330,7 +330,7 @@ public class ControllerUtilities {
      */
 	public String restAnalysis(String projectName,String sha, String analysisId, String url)  {
 		//String urlWs = "http://54.202.111.96:8090/analyseRevision";
-		String urlWs = "http://localhost:8090/analyseRevision";
+		String urlWs = "http://34.212.167.21:8090/analyseRevision";
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
@@ -359,7 +359,7 @@ public class ControllerUtilities {
 	 * @return
 	 */
 	public String restGetActualError()  {
-		String urlWs = "http://localhost:8090/getActualError";
+		String urlWs = "http://34.212.167.21:8090/getActualError";
 		//String urlWs = "http://54.202.111.96:8090/getActualError";
 
 		HttpHeaders headers = new HttpHeaders();
@@ -376,7 +376,7 @@ public class ControllerUtilities {
 	 * @return
 	 */
 	public void deleteProjectFiles(String projectName)  {
-		String urlWs = "http://localhost:8090/deleteProject";
+		String urlWs = "http://34.212.167.21:8090/deleteProject";
 		//String urlWs = "http://54.202.111.96:8090/getActualError";
 
 		HttpHeaders headers = new HttpHeaders();
@@ -387,10 +387,6 @@ public class ControllerUtilities {
 		RestTemplate restTemplate = new RestTemplate();
 		String temp = builder.build().encode().toUri().toString();
 	}
-    
-    
-    
-    
-    
+
 }
 

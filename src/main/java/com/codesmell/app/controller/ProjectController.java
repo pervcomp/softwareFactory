@@ -356,7 +356,6 @@ class ProjectController {
 	public String removeProject(Model model, @ModelAttribute Project projectToSend, HttpServletRequest req,
 			HttpServletResponse resp) 
 	{
-		
 		removeProjectData(this.projectDao.findByprojectName(projectToSend.getProjectName()));
         ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
         commitErrorDao);
@@ -387,7 +386,6 @@ class ProjectController {
 			HttpServletResponse resp) 
 	{
 		model.addAttribute("project", project);
-		
 		return "editProject";
 	}
 }

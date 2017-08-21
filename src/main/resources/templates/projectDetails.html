@@ -194,11 +194,15 @@
 				<td><p th:text="${#dates.format(commit.creationDate,'dd-MM-yyyy HH:mm')}"></p></td>
 				<td>
 					<!-- if FAILURE, display button needed to open the stacktrace details -->
-					<p th:if="${commit.status == 'FAILURE'}" class="scheduleOp" hidden>
+					<form id="${commit.ssa}" th:action="@{/failureDetail}"
+						th:object="${commit}" method="POST">
+					  <input type="hidden" id="commit"  name="commit" th:value="${commit.ssa}"/>
+					  <button th:if="${commit.status == 'FAILURE'}" type="submit" class="btn btn-danger">
+				      FAILURE </button>
+				    </form>
 				
-					<!-- else, display the SUCCESS status -->
-					<p th:if="${commit.status == 'SUCCESS'}" class="scheduleOp" hidden>
-					<p th:text="${commit.status}"></p>
+				
+					<p  th:if="${commit.status == 'SUCCESS'}" th:text="${commit.status}"></p>
 					</p>
 					
 				</td>

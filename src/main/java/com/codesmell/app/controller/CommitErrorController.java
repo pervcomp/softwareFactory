@@ -25,9 +25,10 @@ public class CommitErrorController {
 	@Autowired private CommitErrorDao commitErrorDao;
 	
 	@PostMapping("/failureDetail")
-	public String login(@ModelAttribute Commit commit) 
+	public String login(@ModelAttribute Commit commit,Model model, HttpServletRequest req, HttpServletResponse resp) 
 	{
 		CommitError commitError= this.commitErrorDao.findByShaCommit(commit.getSsa());
-		return "commitError";
+	    model.addAttribute("commitError", commitError);
+		return "stacktraceDetails";
 	}
 }
