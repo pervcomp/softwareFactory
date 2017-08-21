@@ -214,7 +214,6 @@ public class ControllerUtilities {
         try {
             FileUtils.deleteDirectory(new File("directory"));
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
         File d = new File("directory");
@@ -316,8 +315,6 @@ public class ControllerUtilities {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            
-            
         }	
     }
     /**
@@ -329,18 +326,18 @@ public class ControllerUtilities {
      * @return
      */
 	public String restAnalysis(String projectName,String sha, String analysisId, String url)  {
-		//String urlWs = "http://54.202.111.96:8090/analyseRevision";
 		String urlWs = "http://54.201.103.160:8090/analyseRevision";
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-  		String st="";
+		String st="";
+		if (!new File(projectName + ".properties").exists()){	
 		try {
 			st = new String(Base64.encode(Files.readAllBytes(Paths.get(projectName + ".properties"))),"UTF-8");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}}
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs)
 		        .queryParam("projectName", projectName)
 		        .queryParam("sha", sha)
@@ -360,8 +357,6 @@ public class ControllerUtilities {
 	 */
 	public String restGetActualError()  {
 		String urlWs = "http://54.201.103.160:8090/getActualError";
-		//String urlWs = "http://54.202.111.96:8090/getActualError";
-
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs);
@@ -377,8 +372,6 @@ public class ControllerUtilities {
 	 */
 	public void deleteProjectFiles(String projectName)  {
 		String urlWs = "http://54.201.103.160:8090/deleteProject";
-		//String urlWs = "http://54.202.111.96:8090/getActualError";
-
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).
