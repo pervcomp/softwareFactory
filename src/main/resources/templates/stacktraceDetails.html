@@ -54,7 +54,7 @@
 			<tr>
 				<strong>Stacktrace details: </strong>
 				<!-- insert stacktrace, color red, scrollable/wrapped -->
-				<p class="stacktrace" th:text="${commitError.errorMessage}"></p>				
+				<p class="stacktrace" th:utext="${commitError.errorMessage}"></p>				
 			</tr>
 		</tbody>
 	</table>

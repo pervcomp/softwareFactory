@@ -78,8 +78,8 @@ public class MailUtilities implements org.quartz.Job {
 		    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyy HH:mm");
 		    message +=" <strong>Project: </strong>"+ce.getProjectName()+"<br>"   +
 				      " <strong>Analysis: </strong>"+ ce.getAnalysisId() + "<br>"+
-				      " <strong>Date: </strong> "+ format.format(ce.getDate()) + "<br>" + 
-				      " <strong>Commit: </strong>"+ce.getIdCommit()+"<br>";
+				      " <strong>Date: </strong> "+ format.format(ce.getErrorDate()) + "<br>" + 
+				      " <strong>Commit: </strong>"+ce.getShaCommit()+"<br>";
             message += " <details>";
             String errMessage = ce.getErrorMessage();
             errMessage = errMessage.replace("\n", "<br>");

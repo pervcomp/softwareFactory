@@ -22,14 +22,18 @@ public class CommitError extends BaseEntity{
 		this.errorMessage="";
 	}
 
-	public String getIdCommit() {
+	public String getShaCommit() {
 		return shaCommit;
 	}
 
-	public void setIdCommit(String shaCommit) {
+	public void setShaCommit(String shaCommit) {
 		this.shaCommit = shaCommit;
 	}
 
+	public void setErrorDate(Date errorDate) {
+		this.errorDate = errorDate;
+	}
+	
 	public String getErrorMessage() {
 		return errorMessage;
 	}
@@ -62,7 +66,7 @@ public class CommitError extends BaseEntity{
 		this.email = email;
 	}
 	
-	public Date getDate() {
+	public Date getErrorDate() {
 		return this.errorDate;
 	}
 	

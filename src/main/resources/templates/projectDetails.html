@@ -195,8 +195,8 @@
 				<td>
 					<!-- if FAILURE, display button needed to open the stacktrace details -->
 					<form id="${commit.ssa}" th:action="@{/failureDetail}"
-						th:object="${commit}" method="POST">
-					  <input type="hidden" id="commit"  name="commit" th:value="${commit.ssa}"/>
+						th:object="${commitDao}" method="POST">
+					  <input type="hidden" id="ssa"  name="ssa" th:value="${commit.ssa}"/>
 					  <button th:if="${commit.status == 'FAILURE'}" type="submit" class="btn btn-danger">
 				      FAILURE </button>
 				    </form>
