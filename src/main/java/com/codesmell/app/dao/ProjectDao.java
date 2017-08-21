@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.Project;
 
 
@@ -18,4 +19,7 @@ public interface ProjectDao extends MongoRepository<Project, String>
 	public Project findByprojectName(String  projectName);
 	
 	public List<Project> findByemail(String  email);
+	
+	public Project findByPortNr(String portNr);
+
 }

@@ -97,6 +97,10 @@ class ProjectController {
 		model.addAttribute("email", emailSt);
 		project.setEmail(emailSt);
 		if (projectDao.findByprojectName(project.getProjectName()) == null) {
+			String port      = cu.getAvailablePortNumber();
+			String container = cu.createContainerRest(port);
+			project.setContainer(container);
+			project.setPortNr(port);
 			projectDao.save(project);
 			writeConfigFile(project);
 			if (project.getAnalysePast()) {
@@ -110,6 +114,7 @@ class ProjectController {
 			schedule(project, schedule);
 		else
 			scheduleWithInterval(project, project.getInterval());
+
 		cu.configureModelLandingPage(model, emailSt);
 		return "landingPage";
 	}

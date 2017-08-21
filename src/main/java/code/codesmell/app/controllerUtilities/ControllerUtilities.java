@@ -2,6 +2,11 @@ package code.codesmell.app.controllerUtilities;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.MalformedURLException;
+import java.net.Socket;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
@@ -10,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.TimeZone;
 
 import org.apache.commons.io.FileUtils;
@@ -325,9 +331,15 @@ public class ControllerUtilities {
      * @param url
      * @return
      */
-	public String restAnalysis(String projectName,String sha, String analysisId, String url)  {
-		String urlWs = "http://54.201.103.160:8090/analyseRevision";
-
+	public String restAnalysis(String projectName,String sha, String analysisId, String url, String port)  {
+		String urlWs = "http://54.201.103.160:"+port+"/analyseRevision";
+		while(!pingHost(Integer.parseInt(port))){
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}}
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		String st="";
@@ -350,6 +362,30 @@ public class ControllerUtilities {
 		String temp = builder.build().encode().toUri().toString();
 		return  restTemplate.getForEntity(temp, String.class).getBody();
 	}
+	
+	private static boolean pingHost(int port) {
+	  
+	        String address = "http://54.201.103.160:"+port+"/getActualError";
+	        try {
+	        	  final URL url = new URL(address);
+	        	  final HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+	        	  urlConn.setConnectTimeout(1000 * 1); // mTimeout is in seconds
+	        	  final long startTime = System.currentTimeMillis();
+	        	  urlConn.connect();
+	        	  final long endTime = System.currentTimeMillis();
+	        	  if (urlConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+	        	   System.out.println("Time (ms) : " + (endTime - startTime));
+	        	   System.out.println("Ping to "+address +" was success");
+	        	   return true;
+	        	  }
+	        	 } catch (final MalformedURLException e1) {
+	        	  return false;
+	        	 } catch (final IOException e) {
+	        		 return false;
+	        	 }
+	        	 return false;
+	        	}
+	
     
 	/**
 	 * It gets Actual Error using REST web Service
@@ -395,7 +431,36 @@ public class ControllerUtilities {
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 		RestTemplate restTemplate = new RestTemplate();
 		String temp = builder.build().encode().toUri().toString();
-		return temp;
+		String result = restTemplate.getForEntity(temp, String.class).getBody();
+		return result.substring(0,12);
+	}
+	
+	/**
+	 * It creates a new Docker Container at the specified port
+	 * @param portNr
+	 * @return
+	 */
+	public String deleteContainerRest(String portNr){
+		String urlWs = "http://54.201.103.160:8080/deleteMicroservice/";
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).
+				queryParam("port", portNr);
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+		RestTemplate restTemplate = new RestTemplate();
+		String temp = builder.build().encode().toUri().toString();
+		return restTemplate.getForEntity(temp, String.class).getBody();
+	}
+	
+	
+	public String getAvailablePortNumber(){
+		Random r = new Random();
+		int low = 8000;
+		int high = 9000;
+		int result = r.nextInt(high-low) + low;
+		while (projectDao.findByPortNr(result+"") != null)
+			result=r.nextInt(high-low) + low;
+		return result +"";
 	}
 
 }

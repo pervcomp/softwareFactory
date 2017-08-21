@@ -128,7 +128,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 					flag = false;
 				count++;
 				if (commitDao.findBySsa(revCommit.getName()) == null && flag) {
-					String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(),revCommit.getName(),  analysis.getIdSerial()+"",url);
+					String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(),revCommit.getName(),  analysis.getIdSerial()+"",url,project.getPortNr());
 					addCommit(commitStr,analysis.getIdSerial());
 				}
 			}

@@ -79,7 +79,6 @@ public class SonarAnalysis extends Thread {
 
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
-		String args[] = { "--git", url, "--properties", conf };
 
 		File theDir = new File(project.getProjectName() + "_" + analysis.getIdSerial());
 		try {
@@ -116,7 +115,7 @@ public class SonarAnalysis extends Thread {
 					flag = false;
 				count++;
 				if (commitDao.findBySsa(revCommit.getName()) == null && flag) {
-					String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(),revCommit.getName(),  analysis.getIdSerial()+"",url);
+					String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(),revCommit.getName(),  analysis.getIdSerial()+"",url,project.getPortNr());
 					addCommit(commitStr,analysis.getIdSerial());
 				}
 				if (justLatest)
