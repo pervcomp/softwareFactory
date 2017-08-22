@@ -66,6 +66,7 @@ public class ControllerUtilities {
     private UserDao userDao;
     private ScheduleDao scheduleDao;
     private CommitErrorDao commitErrorDao;
+    private String url = "http://54.149.55.95";
     
     /**
      * This class contains helpers methods that required from the controllers.
@@ -363,9 +364,9 @@ public class ControllerUtilities {
 		return  restTemplate.getForEntity(temp, String.class).getBody();
 	}
 	
-	private static boolean pingHost(int port) {
+	private  boolean pingHost(int port) {
 	  
-	        String address = "http://54.201.103.160:"+port+"/getActualError";
+	        String address = url+port+"/getActualError";
 	        try {
 	        	  final URL url = new URL(address);
 	        	  final HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
@@ -392,7 +393,7 @@ public class ControllerUtilities {
 	 * @return
 	 */
 	public String restGetActualError(String port)  {
-		String urlWs = "http://54.201.103.160:"+port+"/getActualError";
+		String urlWs = url+port+"/getActualError";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs);
@@ -407,7 +408,7 @@ public class ControllerUtilities {
 	 * @return
 	 */
 	public void deleteProjectFiles(String projectName, String port)  {
-		String urlWs = "http://54.201.103.160:"+port+"/deleteProject";
+		String urlWs = url+":"+port+"/deleteProject";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).
@@ -423,7 +424,7 @@ public class ControllerUtilities {
 	 * @return
 	 */
 	public String createContainerRest(String portNr){
-		String urlWs = "http://54.201.103.160:8080/createMicroservice/";
+		String urlWs = url+":8080/createMicroservice/";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).
@@ -441,7 +442,7 @@ public class ControllerUtilities {
 	 * @return
 	 */
 	public String deleteContainerRest(String container){
-		String urlWs = "http://54.201.103.160:8080/deleteMicroservice/";
+		String urlWs = url+":8080/deleteMicroservice/";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).
