@@ -78,7 +78,8 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 		this.commitAnalysisDao = (CommitAnalysisDao)context.get("commitAnalysisDao");
 		this.commitDao = (CommitDao)context.get("commitDao");
 		this.commitErrorDao = (CommitErrorDao)context.get("commitErrorDao");
-        this.lastCommit = commitDao.findByProjectNameOrderByCreationDateDesc(project.getProjectName()).get(0);
+		if (commitDao.findByProjectNameOrderByCreationDateDesc(project.getProjectName()).get(0) != null)
+			this.lastCommit = commitDao.findByProjectNameOrderByCreationDateDesc(project.getProjectName()).get(0);
 		// Analysis status is updated
 		analysis.setStatus("Processing");
 		analysis.setStartDate(new Date());

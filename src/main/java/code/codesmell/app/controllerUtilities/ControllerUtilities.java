@@ -66,7 +66,7 @@ public class ControllerUtilities {
     private UserDao userDao;
     private ScheduleDao scheduleDao;
     private CommitErrorDao commitErrorDao;
-    private String url = "http://54.149.55.95";
+    private String urlWsVar = "http://54.149.55.95";
     
     /**
      * This class contains helpers methods that required from the controllers.
@@ -333,7 +333,7 @@ public class ControllerUtilities {
      * @return
      */
 	public String restAnalysis(String projectName,String sha, String analysisId, String url, String port)  {
-		String urlWs = "http://54.201.103.160:"+port+"/analyseRevision";
+		String urlWs = urlWsVar+":"+port+"/analyseRevision";
 		while(!pingHost(Integer.parseInt(port))){
 		try {
 			Thread.sleep(1000);
@@ -366,7 +366,7 @@ public class ControllerUtilities {
 	
 	private  boolean pingHost(int port) {
 	  
-	        String address = url+port+"/getActualError";
+	        String address = urlWsVar+":"+port+"/getActualError";
 	        try {
 	        	  final URL url = new URL(address);
 	        	  final HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
@@ -393,7 +393,7 @@ public class ControllerUtilities {
 	 * @return
 	 */
 	public String restGetActualError(String port)  {
-		String urlWs = url+port+"/getActualError";
+		String urlWs = urlWsVar+":"+port+"/getActualError";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs);
@@ -408,7 +408,7 @@ public class ControllerUtilities {
 	 * @return
 	 */
 	public void deleteProjectFiles(String projectName, String port)  {
-		String urlWs = url+":"+port+"/deleteProject";
+		String urlWs = urlWsVar+":"+port+"/deleteProject";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).
@@ -424,7 +424,7 @@ public class ControllerUtilities {
 	 * @return
 	 */
 	public String createContainerRest(String portNr){
-		String urlWs = url+":8080/createMicroservice/";
+		String urlWs = urlWsVar+":8080/createMicroservice/";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).
@@ -442,7 +442,7 @@ public class ControllerUtilities {
 	 * @return
 	 */
 	public String deleteContainerRest(String container){
-		String urlWs = url+":8080/deleteMicroservice/";
+		String urlWs = urlWsVar+":8080/deleteMicroservice/";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).
