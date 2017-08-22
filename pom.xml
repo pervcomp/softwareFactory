@@ -334,13 +334,6 @@
             <artifactId>bootstrap</artifactId>
             <version>${webjars-bootstrap.version}</version>
           </dependency>
-          
-            <dependency>
-         <groupId>javax</groupId>
-         <artifactId>javaee-web-api</artifactId>
-         <version>7.0</version>
-         <scope>provided</scope>
-      </dependency>
         </dependencies>
       </plugin>
     </plugins>
