@@ -108,7 +108,8 @@ class ProjectController {
 				cu.performHistoryAnalysis(projectName);
 			}
 			String projectName = project.getProjectName();
-			cu.performAnalysisLatestsCommit(projectName);
+			if (!project.getAnalysePast()) 
+			    cu.performAnalysisLatestsCommit(projectName);
 		}
 		if (project.getScheduleProject())
 			schedule(project, schedule);
@@ -361,11 +362,13 @@ class ProjectController {
 	public String removeProject(Model model, @ModelAttribute Project projectToSend, HttpServletRequest req,
 			HttpServletResponse resp) 
 	{
+		projectToSend = this.projectDao.findByprojectName(projectToSend.getProjectName());
 		removeProjectData(this.projectDao.findByprojectName(projectToSend.getProjectName()));
         ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
         commitErrorDao);
  		cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
-		cu.deleteProjectFiles(projectToSend.getProjectName());
+		cu.deleteProjectFiles(projectToSend.getProjectName(),projectToSend.getContainer());
+		cu.deleteContainerRest(projectToSend.getContainer());
  		return "landingPage";
 	}
 
@@ -403,4 +406,17 @@ class ProjectController {
 		model.addAttribute("project", project);
 		return "editProject";
 	}
+	
+   @PostMapping("/stopAnalysis")
+   public String stopAnalysis(Model model, @ModelAttribute Project project, HttpServletRequest req,
+			HttpServletResponse resp) {
+	   CommitAnalysis ca  = commitAnalysisDao.findByIdProjectOrderByStartDateDesc(project.getProjectName());
+	   commitAnalysisDao.delete(ca);
+	   ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
+		        commitErrorDao);
+	   cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
+	   return "landingPage";
+   } 	
+	
+	
 }

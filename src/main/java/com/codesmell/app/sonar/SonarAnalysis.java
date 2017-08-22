@@ -116,7 +116,7 @@ public class SonarAnalysis extends Thread {
 				count++;
 				if (commitDao.findBySsa(revCommit.getName()) == null && flag) {
 					String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(),revCommit.getName(),  analysis.getIdSerial()+"",url,project.getPortNr());
-					addCommit(commitStr,analysis.getIdSerial());
+					addCommit(commitStr,analysis.getIdSerial(), project.getPortNr());
 				}
 				if (justLatest)
 					break;
@@ -133,7 +133,7 @@ public class SonarAnalysis extends Thread {
 	}
 
 	// Add commit to the db
-	public void addCommit(String str, int analysisId) {
+	public void addCommit(String str, int analysisId, String port) {
 		String[] commitArray = str.split(" ");
 		System.out.println(str);
 			Commit commit = new Commit();
@@ -142,7 +142,7 @@ public class SonarAnalysis extends Thread {
 			commit.setSsa(commitArray[3]);
 			commit.setIdCommitAnalysis(analysisId);
 			commit.setStatus(commitArray[13].replace(" ", "").replace(",", ""));
-			String error = new ControllerUtilities().restGetActualError();
+			String error = new ControllerUtilities().restGetActualError(project.getPortNr());
 			
 			//writing the commit error in the database
 			writeCommitError(commit.getStatus(),commit.getSsa(),error,project.getProjectName(),analysisId);
@@ -154,7 +154,8 @@ public class SonarAnalysis extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			commitDao.save(commit);
+			if (commitDao.findBySsa(commitArray[3]) == null)
+				commitDao.save(commit);
 		}
 	
 

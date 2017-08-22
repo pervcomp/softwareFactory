@@ -1,6 +1,9 @@
 @CHARSET "UTF-8";
 
-
+p{
+	
+	vertical-align: middle;
+}
 
 body {
     margin: 100 !important;
@@ -33,10 +36,20 @@ body {
  .red {
     color: red;
 }
+ .white {
+    color: white;
+}
+
+.btn-success{
+	
+	
+}
 
 .glyphicon-ok-circle {
     font-size: 30px;
 }
+
+
   
 
 .glyphicon-remove-circle {
@@ -46,6 +59,11 @@ body {
 
 .glyphicon-warning-sign {
     font-size: 30px;
+}
+
+.glyphicon glyphicon-play{
+	font-size: 30px;
+	
 }
 
 .table-striped.test{

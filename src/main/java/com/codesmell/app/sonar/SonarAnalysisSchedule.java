@@ -158,7 +158,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 			commit.setSsa(commitArray[3]);
 			commit.setIdCommitAnalysis(analysisId);
 			commit.setStatus(commitArray[13].replace(" ", "").replace(",", ""));
-			String error = new ControllerUtilities().restGetActualError();
+			String error = new ControllerUtilities().restGetActualError(project.getPortNr());
 			
 			//writing the commit error in the database
 			writeCommitError(commit.getStatus(),commit.getSsa(),error,project.getProjectName(),analysisId);

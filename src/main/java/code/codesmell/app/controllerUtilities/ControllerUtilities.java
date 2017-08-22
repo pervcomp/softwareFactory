@@ -391,8 +391,8 @@ public class ControllerUtilities {
 	 * It gets Actual Error using REST web Service
 	 * @return
 	 */
-	public String restGetActualError()  {
-		String urlWs = "http://54.201.103.160:8090/getActualError";
+	public String restGetActualError(String port)  {
+		String urlWs = "http://54.201.103.160:"+port+"/getActualError";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs);
@@ -406,8 +406,8 @@ public class ControllerUtilities {
 	 * Deletes temp file of a deleted project
 	 * @return
 	 */
-	public void deleteProjectFiles(String projectName)  {
-		String urlWs = "http://54.201.103.160:8090/deleteProject";
+	public void deleteProjectFiles(String projectName, String port)  {
+		String urlWs = "http://54.201.103.160:"+port+"/deleteProject";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).
@@ -440,12 +440,12 @@ public class ControllerUtilities {
 	 * @param portNr
 	 * @return
 	 */
-	public String deleteContainerRest(String portNr){
+	public String deleteContainerRest(String container){
 		String urlWs = "http://54.201.103.160:8080/deleteMicroservice/";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).
-				queryParam("port", portNr);
+				queryParam("container", container);
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 		RestTemplate restTemplate = new RestTemplate();
 		String temp = builder.build().encode().toUri().toString();
