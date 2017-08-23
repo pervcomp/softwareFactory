@@ -111,16 +111,16 @@
 		<tr th:if="${project.nextAnalysis == null}">
 			<form id="${project.projectName}" th:action="@{/reSchedule}"
 				th:object="${project}" method="POST">
-				<input type="hidden" id="projectName" name="projectName"
-					th:value="${project.projectName}" />
-				<td><input type="Radio" Name="scheduleProject" class="schedule"
+				<input  id="projectName" name="projectName"
+					th:value="${project.projectName}" hidden/>
+				<td><input type="Radio"  Name="scheduleProject" class="schedule"
 					id="scheduleProject" value="1" th:checked="*{scheduleProject}">
-					Scheduled <br> <input type="Radio" Name="scheduleProject"
+					Scheduled <br> 
+					<input type="Radio" Name="scheduleProject"
 					class="scheduleInt" value="0"
 					th:checked="*{scheduleProject} == false"> Commits Interval
 					(Do an analysis each # new commits) <br></td>
 
-				<td>
 				<td>
 					<button class="btn btn-custom" data-toggle="modal"
 						data-target="#myModal">
@@ -159,9 +159,9 @@
 				name="repetitionDay">
 			</td>
 		</tr>
-		<tr th:if="${project.nextAnalysis == null}" class="scheduleIntOp">
-			<td>  <label>Analysis every (2-100) commits:</label><br> <input
-				type="number" min="2" max="100"
+		<tr th:if="${project.nextAnalysis == null}" class="scheduleIntOp" hidden>
+			<td>  <label>Analysis every (2-2000) commits:</label><br> <input
+				type="number" min="2" max="2000"
 				name="Analysis every (2-100) commits:" value="# Commits"
 				th:value="${interval}"> <br>
 
@@ -226,7 +226,10 @@
 </div>
 
 <script>
+
 	$(document).ready(function() {
+		
+		$(".scheduleOp").toggle(true);
 
 		$('input[type=radio]').change(function() {
 			var isChecked = $(this).prop('checked');

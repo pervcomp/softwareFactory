@@ -16,3 +16,17 @@ form {
     
 }
 
+.main input:not([type=Radio]):not([type=Checkbox])
+  {
+	width:30%
+}
+
+ input([type=number])
+  {
+	width:30%
+}
+
+.table {
+	width:30%;
+}
+

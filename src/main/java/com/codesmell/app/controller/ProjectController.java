@@ -144,6 +144,7 @@ class ProjectController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		scheduleDao.deleteByProjectName(project.getProjectName());
 		cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
 		return "landingPage";
 	}
@@ -158,6 +159,7 @@ class ProjectController {
 		try {
 			Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 			scheduler.deleteJob(new JobKey(project.getProjectName(), project.getProjectName()));
+			scheduleDao.deleteByProjectName(project.getProjectName());
 		} catch (SchedulerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -210,6 +212,15 @@ class ProjectController {
 			scheduler.getContext().put("interval", interval);
 			scheduler.scheduleJob(job, runOnceTrigger);
 			scheduler.start();
+			Schedule schedule = new Schedule();
+			schedule.setProjectName(p.getProjectName());
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+			sdf.setTimeZone(TimeZone.getTimeZone("Europe/Rome"));
+			schedule.setStartingDate(sdf.format(startDate));
+			schedule.setRepetitionDay(0);
+			schedule.setRepetitionHours(0);
+			schedule.setRepetitionMinutes(totalMinutes);
+			scheduleDao.save(schedule);
 		} catch (SchedulerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -231,16 +242,13 @@ class ProjectController {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 			sdf.setTimeZone(TimeZone.getTimeZone("Europe/Rome"));
 			Date startDate = new Date();
-				if (s.getStartingTime() != null)
-					startDate = sdf.parse(s.getStartingDate() + " " + s.getStartingTime());
-				else
-					startDate = sdf.parse(s.getStartingDate());
+		    startDate = sdf.parse(s.getStartingDate());
 			
-			    Trigger runOnceTrigger = TriggerBuilder.newTrigger().startAt(startDate)
+			Trigger runOnceTrigger = TriggerBuilder.newTrigger().startAt(startDate)
 					.withSchedule(SimpleScheduleBuilder.repeatMinutelyForever(totalMinutes))
 					.build();
 					
-					CommitAnalysis ca = new CommitAnalysis();
+			CommitAnalysis ca = new CommitAnalysis();
 			ca.setIdProject(p.getProjectName());
 			ca.setConfigurationFile(p.getProjectName() + ".properties");
 			commitAnalysisDao.insert(ca);
@@ -253,6 +261,11 @@ class ProjectController {
 			scheduler.getContext().put("interval", 1);
 			scheduler.scheduleJob(job, runOnceTrigger);
 			scheduler.start();
+			s.setRepetitionDay(0);
+			s.setRepetitionHours(0);
+			s.setRepetitionMinutes(totalMinutes);
+			s.setProjectName(p.getProjectName());
+			scheduleDao.save(s);
 		} catch (SchedulerException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -345,8 +358,6 @@ class ProjectController {
 			writer.println("sonar.host.url=http://sonar.inf.unibz.it/");
 			writer.println("# Comma-separated paths to directories with sources (required)");
 			writer.println("sonar.sources=.");
-			writer.println("# Language");
-			writer.println("sonar.language=java");
 			writer.println("# Encoding of the source files");
 			writer.println("sonar.sourceEncoding=UTF-8");
 			writer.println("gitRepo=" + project.getUrl());

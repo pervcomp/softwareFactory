@@ -3,11 +3,10 @@ package com.codesmell.app.model;
 import java.util.Date;
 
 public class Schedule extends BaseEntity{
-	private int repetitionDay;
-	private int repetitionHours;
-	private int repetitionMinutes;
+	private int repetitionDay = 0;
+	private int repetitionHours = 0;
+	private int repetitionMinutes = 0;
 	private String startingDate;
-	private String startingTime;
 	private String userEmail;
 	private String projectName;
 	
@@ -34,13 +33,6 @@ public class Schedule extends BaseEntity{
 		this.startingDate = startingDate;
 	}
 	
-	public String getStartingTime() {
-		return startingTime;
-	}
-
-	public void setStartingTime(String startingTime) {
-		this.startingTime = startingTime;
-	}
 
 	public String getUserEmail() {
 		return userEmail;

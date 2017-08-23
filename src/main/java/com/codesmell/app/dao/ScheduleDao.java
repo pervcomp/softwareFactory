@@ -8,4 +8,5 @@ import com.codesmell.app.model.Schedule;;
 public interface ScheduleDao extends MongoRepository<Schedule, String>  {
 	
 	public  Schedule findByProjectName (String  projectName);
+	public  void deleteByProjectName (String  projectName);
 }
