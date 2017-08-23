@@ -66,7 +66,7 @@ public class ControllerUtilities {
     private UserDao userDao;
     private ScheduleDao scheduleDao;
     private CommitErrorDao commitErrorDao;
-    private String urlWsVar = "http://54.149.55.95";
+    private String urlWsVar = "http://34.209.142.69";
     
     /**
      * This class contains helpers methods that required from the controllers.
