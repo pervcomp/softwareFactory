@@ -80,14 +80,18 @@ public class SonarAnalysis extends Thread {
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
 
-		File theDir = new File(project.getProjectName() + "_" + analysis.getIdSerial());
-		try {
-			FileUtils.deleteDirectory(theDir);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Folder does not exists");
+		for (File f : new File(".").listFiles()) {
+		    if (f.getName().startsWith(project.getProjectName() + "_") && f.isDirectory()) {
+				try {
+					FileUtils.deleteDirectory(f);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
 		}
 		
+		File theDir = new File(project.getProjectName() + "_" + analysis.getIdSerial());
 		Git git = null;
 		try {
 			git = Git.cloneRepository()

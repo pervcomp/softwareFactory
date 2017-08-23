@@ -88,14 +88,20 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
 		String args[] = { "--git", url, "--properties", conf };
+		
+		for (File f : new File(".").listFiles()) {
+		    if (f.getName().startsWith(project.getProjectName() + "_") && f.isDirectory()) {
+				try {
+					FileUtils.deleteDirectory(f);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
+		}
 
 		File theDir = new File(project.getProjectName() + "_" + analysis.getIdSerial());
-		try {
-			FileUtils.deleteDirectory(theDir);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Folder does not exists");
-		}
+
 		Git git = null;
 		try {
 			git = Git.cloneRepository()
@@ -124,7 +130,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 			
 			for (RevCommit revCommit : commitsList) {
 				if (count % interval == 0)
-					flag = true;
+					flag = true;   
 				else
 					flag = false;
 				count++;
@@ -171,13 +177,13 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			commitDao.save(commit);
+			commitDao.insert(commit);
 		}
 	
 
 	/**
 	 *  Set finish a processing analsis
-	 * @param analysis
+	 * @param analysis    
 	 */
 	public void closeAnalysis(String analysis) {
 		CommitAnalysis ca = commitAnalysisDao.findBy_id(analysis);

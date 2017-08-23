@@ -242,7 +242,7 @@ class ProjectController {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 			sdf.setTimeZone(TimeZone.getTimeZone("Europe/Rome"));
 			Date startDate = new Date();
-		    startDate = sdf.parse(s.getStartingDate());
+		    startDate = sdf.parse(s.getStartingDate());   
 			
 			Trigger runOnceTrigger = TriggerBuilder.newTrigger().startAt(startDate)
 					.withSchedule(SimpleScheduleBuilder.repeatMinutelyForever(totalMinutes))
@@ -290,19 +290,13 @@ class ProjectController {
 		model.addAttribute("email", emailSt);
 		project.setEmail(emailSt);
 		String projectName = project.getProjectName();
-	    cu.performAnalysisLatestsCommit(projectName);
+	 //   cu.performAnalysisLatestsCommit(projectName);
 		if (project.getScheduleProject()){
 		    project = projectDao.findByprojectName(project.getProjectName());
 			schedule(project, schedule);}
 		else{
 		    project = projectDao.findByprojectName(project.getProjectName());
 			scheduleWithInterval(project, project.getInterval());}
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		cu.getUpdateProject(project);
 		cu.configureModelDetailsPage(model,(String)req.getSession().getAttribute("email"),project);
 		return "projectDetails";
