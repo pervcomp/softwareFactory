@@ -247,17 +247,10 @@ class ProjectController {
 			Trigger runOnceTrigger = TriggerBuilder.newTrigger().startAt(startDate)
 					.withSchedule(SimpleScheduleBuilder.repeatMinutelyForever(totalMinutes))
 					.build();
-					
-			CommitAnalysis ca = new CommitAnalysis();
-			ca.setIdProject(p.getProjectName());
-			ca.setConfigurationFile(p.getProjectName() + ".properties");
-			commitAnalysisDao.insert(ca);
-			ca.setIdSerial(commitAnalysisDao.findByIdProject(p.getProjectName()).size() + 1);
 			scheduler.getContext().put("commitAnalysisDao", commitAnalysisDao);
 			scheduler.getContext().put("commitErrorDao", commitErrorDao);
 			scheduler.getContext().put("commitDao", commitDao);
 			scheduler.getContext().put("project", p);
-			scheduler.getContext().put("analysis", ca);
 			scheduler.getContext().put("interval", 1);
 			scheduler.scheduleJob(job, runOnceTrigger);
 			scheduler.start();

@@ -39,7 +39,6 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 	private Project project;
 	private Date startDate;
 	private Commit lastCommit;
-	private CommitAnalysis analysis;
 	private int interval = 1;
 	@Autowired
 	private CommitAnalysisDao commitAnalysisDao;
@@ -54,9 +53,6 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 		this.project = project;
 	}
 
-	public void setAnalysis(CommitAnalysis analysis) {
-		this.analysis = analysis;
-	}
 	
 	public void setInterval (int interval){
 		this.interval = interval;
@@ -72,7 +68,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		this.analysis = (CommitAnalysis)context.get("analysis");
+		
 		this.project  = (Project)context.get("project");
 		this.interval  = (int)context.get("interval");
 		this.commitAnalysisDao = (CommitAnalysisDao)context.get("commitAnalysisDao");
@@ -81,12 +77,17 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 		if (commitDao.findByProjectNameOrderByCreationDateDesc(project.getProjectName()).get(0) != null)
 			this.lastCommit = commitDao.findByProjectNameOrderByCreationDateDesc(project.getProjectName()).get(0);
 		// Analysis status is updated
-		analysis.setStatus("Processing");
-		analysis.setStartDate(new Date());
-		commitAnalysisDao.save(analysis);
+		CommitAnalysis ca = new CommitAnalysis();
+		ca.setIdProject(project.getProjectName());
+		ca.setConfigurationFile(project.getProjectName() + ".properties");
+		commitAnalysisDao.insert(ca);
+		ca.setIdSerial(commitAnalysisDao.findByIdProject(project.getProjectName()).size() + 1);
+		ca.setStatus("Processing");
+		ca.setStartDate(new Date());
+		commitAnalysisDao.save(ca);
 
 		String url = project.getUrl();
-		String conf = analysis.getConfigurationFile();
+		String conf = ca.getConfigurationFile();
 		String args[] = { "--git", url, "--properties", conf };
 		
 		for (File f : new File(".").listFiles()) {
@@ -100,7 +101,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 		    }
 		}
 
-		File theDir = new File(project.getProjectName() + "_" + analysis.getIdSerial());
+		File theDir = new File(project.getProjectName() + "_" + ca.getIdSerial());
 
 		Git git = null;
 		try {
@@ -135,11 +136,11 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 					flag = false;
 				count++;
 				if (commitDao.findBySsa(revCommit.getName()) == null && flag) {
-					String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(),revCommit.getName(),  analysis.getIdSerial()+"",url,project.getPortNr());
-					addCommit(commitStr,analysis.getIdSerial());
+					String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(),revCommit.getName(),  ca.getIdSerial()+"",url,project.getPortNr());
+					addCommit(commitStr,ca.getIdSerial());
 				}
 			}
-			closeAnalysis(analysis.get_id());
+			closeAnalysis(ca.get_id());
 			FileUtils.deleteDirectory(theDir);
 		} catch (GitAPIException e1) {
 			// TODO Auto-generated catch block
