@@ -80,7 +80,7 @@
                   </form>
                </td>
                <td>
-               <form id="${project.projectName}" th:action="@{/modifyProject}"
+               <form id="${project.projectName}" th:action="@{/editProject}"
 						th:object="${projectToSend}" method="POST">
 							<button type="submit" class="btn btn-primary btn-xs"
 								data-title="Edit" data-toggle="modal" data-target="#edit">
