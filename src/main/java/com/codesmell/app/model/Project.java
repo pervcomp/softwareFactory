@@ -27,8 +27,8 @@ public class Project extends BaseEntity
 	private int countSuccessCommits;
 	private Date nextAnalysis;
 	private String lastWeekReport;
-	private String portNr;
-	private String container;
+	//private String portNr;
+	//private String container;
 	
 	public Project() 
 	{
@@ -219,7 +219,7 @@ public class Project extends BaseEntity
 	public Date getNextAnalysis(){
 		return this.nextAnalysis;
 	}
-	
+	/* 
 	public String getPortNr(){
 		return this.portNr;
 	}
@@ -234,7 +234,7 @@ public class Project extends BaseEntity
 	
 	public void setContainer(String container){
 		this.container = container;
-	}
+	}*/
 	
 	
 }

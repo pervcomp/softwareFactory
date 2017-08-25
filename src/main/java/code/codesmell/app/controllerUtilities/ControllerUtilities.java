@@ -66,7 +66,8 @@ public class ControllerUtilities {
 	private UserDao userDao;
 	private ScheduleDao scheduleDao;
 	private CommitErrorDao commitErrorDao;
-	private String urlWsVar = "http://34.209.91.16";
+	private String urlWsVar = "http://54.214.227.88:8080";
+	
 
 	/**
 	 * This class contains helpers methods that required from the controllers.
@@ -309,6 +310,11 @@ public class ControllerUtilities {
 		return count;
 	}
 
+	/**
+	 * Next schedule from Quartz scheduler
+	 * @param projectName
+	 * @return
+	 */
 	private Date getNextFire(String projectName) {
 		Date date = null;
 		try {
@@ -359,6 +365,11 @@ public class ControllerUtilities {
 		}
 	}
 
+	/**
+	 * Schedules email with error to be sent at midnight
+	 * @param usr
+	 * @param mailSender
+	 */
 	public void scheduleDailyReport(User usr, JavaMailSender mailSender) {
 		if (getNextFire(usr.getEmail1()) != null)
 			return;
@@ -387,7 +398,7 @@ public class ControllerUtilities {
 	}
 
 	/**
-	 * Run an analysis invoking a REST WEB SERVICE
+	 * Run an analysis invoking a REST WEB SERVICE. Port parameter for Microservice version
 	 * 
 	 * @param projectName
 	 * @param sha
@@ -395,16 +406,20 @@ public class ControllerUtilities {
 	 * @param url
 	 * @return
 	 */
-	public String restAnalysis(String projectName, String sha, String analysisId, String url, String port) {
-		String urlWs = urlWsVar + ":" + port + "/analyseRevision";
-		while (!pingHost(Integer.parseInt(port))) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	public String restAnalysis(String projectName, String sha, String analysisId, String url) {
+		String urlWs = urlWsVar + "/analyseRevision";
+		/*if (port != null) {
+		    urlWs = urlWsVar + ":" + port + "/analyseRevision";
+			while (!pingHost(Integer.parseInt(port))) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-		}
+		}*/
+		
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		String st = "";
@@ -426,9 +441,14 @@ public class ControllerUtilities {
 		return restTemplate.getForEntity(temp, String.class).getBody();
 	}
 
-	private boolean pingHost(int port) {
+	/**
+	 * It checks wheter the webservice for the analysis is available
+	 * @param port
+	 * @return
+	 */
+	private boolean pingHost() {
 
-		String address = urlWsVar + ":" + port + "/getActualError";
+		String address = urlWsVar;
 		try {
 			final URL url = new URL(address);
 			final HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
@@ -454,8 +474,8 @@ public class ControllerUtilities {
 	 * 
 	 * @return
 	 */
-	public String restGetActualError(String port) {
-		String urlWs = urlWsVar + ":" + port + "/getActualError";
+	public String restGetActualError() {
+		String urlWs = urlWsVar + "/getActualError";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs);
@@ -470,8 +490,8 @@ public class ControllerUtilities {
 	 * 
 	 * @return
 	 */
-	public void deleteProjectFiles(String projectName, String port) {
-		String urlWs = urlWsVar + ":" + port + "/deleteProject";
+	public void deleteProjectFiles(String projectName) {
+		String urlWs = urlWsVar + "/deleteProject";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).queryParam("projectName", projectName);
@@ -481,8 +501,9 @@ public class ControllerUtilities {
 	}
 
 	/**
+	 * NOT USED IN THE CURRENT VERSION
 	 * It creates a new Docker Container at the specified port
-	 * 
+	 * for the microservice version
 	 * @param portNr
 	 * @return
 	 */
@@ -499,6 +520,7 @@ public class ControllerUtilities {
 	}
 
 	/**
+	 * NOT USED IN THE CURRENT VERSION
 	 * It creates a new Docker Container at the specified port
 	 * 
 	 * @param portNr
@@ -515,6 +537,10 @@ public class ControllerUtilities {
 		return restTemplate.getForEntity(temp, String.class).getBody();
 	}
 
+	/**
+	 * Used for the microservice version
+	 * @return
+	 */
 	public String getAvailablePortNumber() {
 		Random r = new Random();
 		int low = 8000;

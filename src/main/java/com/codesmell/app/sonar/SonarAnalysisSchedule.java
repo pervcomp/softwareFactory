@@ -37,7 +37,6 @@ import code.codesmell.app.controllerUtilities.ControllerUtilities;
 @Component
 public class SonarAnalysisSchedule implements org.quartz.Job {
 	private Project project;
-	private Date startDate;
 	private Commit lastCommit;
 	private int interval = 1;
 	@Autowired
@@ -136,7 +135,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 					flag = false;
 				count++;
 				if (commitDao.findBySsa(revCommit.getName()) == null && flag) {
-					String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(),revCommit.getName(),  ca.getIdSerial()+"",url,project.getPortNr());
+					String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(),revCommit.getName(),  ca.getIdSerial()+"",url);
 					addCommit(commitStr,ca.getIdSerial());
 				}
 			}
@@ -166,7 +165,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 			commit.setSsa(commitArray[3]);
 			commit.setIdCommitAnalysis(analysisId);
 			commit.setStatus(commitArray[13].replace(" ", "").replace(",", ""));
-			String error = new ControllerUtilities().restGetActualError(project.getPortNr());
+			String error = new ControllerUtilities().restGetActualError();
 			
 			//writing the commit error in the database
 			writeCommitError(commit.getStatus(),commit.getSsa(),error,project.getProjectName(),analysisId);

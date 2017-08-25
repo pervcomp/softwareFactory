@@ -13,15 +13,6 @@ import java.util.TimeZone;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.FileUtils;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidRemoteException;
-import org.eclipse.jgit.api.errors.TransportException;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.quartz.CronScheduleBuilder;
-import org.quartz.CronTrigger;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.JobKey;
@@ -50,11 +41,9 @@ import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.CommitError;
 import com.codesmell.app.model.Project;
-import com.codesmell.app.model.ProjetcAnalysisDetails;
 import com.codesmell.app.model.Schedule;
-import com.codesmell.app.model.User;
-import com.codesmell.app.sonar.SonarAnalysis;
 import com.codesmell.app.sonar.SonarAnalysisSchedule;
+
 import code.codesmell.app.controllerUtilities.ControllerUtilities;
 
 @EnableScheduling
@@ -96,11 +85,8 @@ class ProjectController {
 		String emailSt = (String) req.getSession().getAttribute("email");
 		model.addAttribute("email", emailSt);
 		project.setEmail(emailSt);
+		//Project name must be unique
 		if (projectDao.findByprojectName(project.getProjectName()) == null) {
-			String port      = cu.getAvailablePortNumber();
-			String container = cu.createContainerRest(port);
-			project.setContainer(container);
-			project.setPortNr(port);
 			projectDao.save(project);
 			writeConfigFile(project);
 			if (project.getAnalysePast()) {
@@ -122,7 +108,7 @@ class ProjectController {
 	
 	
 	/**
-	 * It deletes a schedule.
+	 * It deletes a schedule from Quartz and from the db.
 	 * 
 	 * @param model
 	 * @param project
@@ -166,6 +152,7 @@ class ProjectController {
 		}
 	    project = projectDao.findByprojectName(project.getProjectName());
 		cu.getUpdateProject(project);
+		scheduleDao.deleteByProjectName(project.getProjectName());
 		cu.configureModelDetailsPage(model,(String)req.getSession().getAttribute("email"),project);
 		return "projectDetails";
 	}
@@ -283,7 +270,6 @@ class ProjectController {
 		model.addAttribute("email", emailSt);
 		project.setEmail(emailSt);
 		String projectName = project.getProjectName();
-	 //   cu.performAnalysisLatestsCommit(projectName);
 		if (project.getScheduleProject()){
 		    project = projectDao.findByprojectName(project.getProjectName());
 			schedule(project, schedule);}
@@ -355,7 +341,14 @@ class ProjectController {
 
 	}
 	
-	// to remove the project
+	/**
+	 * It removes a project and everything linked with it
+	 * @param model
+	 * @param projectToSend
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
 	@PostMapping("/removeProject")
 	public String removeProject(Model model, @ModelAttribute Project projectToSend, HttpServletRequest req,
 			HttpServletResponse resp) 
@@ -365,8 +358,7 @@ class ProjectController {
         ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
         commitErrorDao);
  		cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
-		cu.deleteProjectFiles(projectToSend.getProjectName(),projectToSend.getContainer());
-		cu.deleteContainerRest(projectToSend.getContainer());
+		cu.deleteProjectFiles(projectToSend.getProjectName());
  		return "landingPage";
 	}
 
