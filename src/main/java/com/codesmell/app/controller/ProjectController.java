@@ -393,7 +393,10 @@ class ProjectController {
 	public String editProject(Model model, @ModelAttribute Project project, HttpServletRequest req,
 			HttpServletResponse resp) 
 	{
+		project = this.projectDao.findByprojectName(project.getProjectName());
+		model.addAttribute("email",(String) req.getSession().getAttribute("email"));
 		model.addAttribute("project", project);
+		
 		return "editProject";
 	}
 	

@@ -5,7 +5,7 @@
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-<title>Insert New Project</title>
+<title>Edit Project Detailst</title>
 <head lang="en" th:include="fragments/header">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,6 +14,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<link type="text/css" href="css/newproject.css" rel="stylesheet" />
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -29,26 +30,25 @@
 			<h3 class="panel-title">Insert new project</h3>
 		</div>
 		<div class="panel-body">
-			<form th:action="@{/createNewProject}" th:object="${project}" method="post">
+			<form th:action="@{/editProject}" th:object="${project}" method="post">
 				<div class="col-md-12 col-sm-12">
 					<div class="form-group col-md-12 col-sm-12">
 						<label>Project name:</label><br> 
-						<input type="text"  th:object="${projectName}"  name="projectName" required="required" placeholder="Name">
+						<input type="text"  th:object="${projectName}"  name="projectName" required="required" th:value="${project.projectName}">
 					</div>
 					<div class="form-group col-md-12 col-sm-12">
-						<label>Repository's type:</label><br><select class="custom-select"
-							name="repType"  th:object="${versionType}" required="required">
-							<option value="git">Git</option>
-							<option value="svn">Svn</option>
+						<label>Repository's type:</label><select class="custom-select"
+							name="repType"  th:object="${versionType}">
+							<option th:value="${project.versionType}" readonly>Git</option>
 						</select>
 					</div>
 					<div class="form-group col-md-12 col-sm-12">
 						<label>Repository's URL:</label><br> 
-						<input required="required" type="url"  th:object="${url}"  name="url" placeholder="URL to your repository"><br></br>
+						<input required="required" type="url"  th:object="${url}"  name="url" th:value="${project.url}" readonly><br></br>
 						<label>Sonar ProjectKey:</label><br> 
-						<input required="required" type="text" th:object="${sonarKey}"  name="sonarKey" placeholder="ProjectKey for SonarScanner"><br></br>
+						<input required="required" type="text" th:object="${sonarKey}"  name="sonarKey" th:value="${project.sonarKey}"><br></br>
 						<label>Sonar ProjectVersion:</label><br> 
-						<input required="required" type="number" th:object="${sonarVersion}"  name="sonarVersion" placeholder="ProjectVersion for SonarScanner"><br></br>
+						<input required="required" type="number" th:object="${sonarVersion}"  name="sonarVersion" th:value="${project.sonarVersion}"><br></br>
 						<label>Type of analysis:</label><p>
 							<input type="checkbox" id="pastAnalysis"  th:field="*{analysePast}" th:checked="checked"> Analyze commits in the past  (Optional)
 							<br>
@@ -58,35 +58,11 @@
 								<br><br>
 								<input type="Radio" Name="analyseAll" id="analyseAll" value="0" th:checked="*{analyseAll} == false">  Commits Interval (Do an analysis each # commits)
 								<br></br>
-								<input  required="required" type="number" th:object="${interval}"  value ='1' name="interval"  max='20' placeholder="interval "><br></br>
+								<input  required="required" type="number" th:object="${interval}"  value ='1' name="interval"  max='20' th:value="${project.interval}"><br></br>
 							</div>
 							<br></br><br>
 							<div  class="form-group col-md-12 col-sm-12 desc" id="analysisType3">
-							<fieldset>
-								<legend>Schedule analysis in the future</legend>
-								<input type="Radio" Name="scheduleProject" value="0" th:checked="*{scheduleProject} == false"  > Commits Interval (Do an analysis each # new commits)
-							    <br><br>
-								<div class="form-group 12 col-sm-12 desc1" id="scheduleProject5">
-									<label>Analysis every (2-100) commits:</label><br>
-									<input type="number" min="2" max="100" name="Analysis every (2-100) commits:" value="# Commits" th:value="${interval}"><br>
-								</div>
-							    <input type="Radio" Name="scheduleProject" id="scheduleProject"   value="1"  th:checked="*{scheduleProject}"> Scheduled <br> 
-								<br><br>
-
-								<div  class="form-group 12 col-sm-12 desc1" id="scheduleProject6">
-									<p>Starting date: <input type="text" id="datepicker" th:value="${schedule.startingDate}" name="startingDate"></p>
-									<p>Starting time: <input type="text" id="timepicker" th:value="${schedule.startingTime}" name="startingTime"  ></p>
-								    <label>Every:  </label> 
-									<br>
-								<div  class="form-group 12 col-sm-12 desc2" id="scheduleProject7">
-								    <p>Hours (0-23): <input  value = "5" type = "number" max='23' min = '0' required="required" th:value="${schedule.repetitionHours}" name="repetitionHours"></p> 
-									<p>Minutes (0-59): <input  value = "30"  type = "number"  max='59' min = '0' required="required"  th:value="${schedule.repetitionMinutes}" name="repetitionMinutes"></p>
-								    <p>Days (0-20): <input  value = "7" type = "number"  max='20' min = '0' required="required"  th:value="${schedule.repetitionDay}" name="repetitionDay"></p>
-									</div>
-								
-								
-								</div>
-							</fieldset>
+							
 
 						<input type="submit" value="Save">
 						<button type="button">Cancel</button>
