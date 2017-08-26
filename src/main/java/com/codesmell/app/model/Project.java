@@ -27,8 +27,6 @@ public class Project extends BaseEntity
 	private int countSuccessCommits;
 	private Date nextAnalysis;
 	private String lastWeekReport;
-	//private String portNr;
-	//private String container;
 	
 	public Project() 
 	{

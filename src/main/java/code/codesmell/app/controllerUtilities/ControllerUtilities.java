@@ -541,14 +541,14 @@ public class ControllerUtilities {
 	 * Used for the microservice version
 	 * @return
 	 */
-	public String getAvailablePortNumber() {
-		Random r = new Random();
+	/*public String getAvailablePortNumber() {
+		/*Random r = new Random();
 		int low = 8000;
 		int high = 9000;
 		int result = r.nextInt(high - low) + low;
 		while (projectDao.findByPortNr(result + "") != null)
 			result = r.nextInt(high - low) + low;
 		return result + "";
-	}
+	}*/
 
 }
