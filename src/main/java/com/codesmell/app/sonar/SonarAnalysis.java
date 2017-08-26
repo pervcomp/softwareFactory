@@ -6,14 +6,26 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import com.codesmell.app.dao.CommitAnalysisDao;
@@ -35,6 +47,7 @@ public class SonarAnalysis extends Thread {
 	private CommitErrorDao commitErrorDao;
 	private int interval = 1;
 	private boolean justLatest = false;
+	private Commit lastCommit;
 
 	public SonarAnalysis(CommitAnalysisDao commitAnalysisDao, CommitDao commitDao,CommitErrorDao commitErrorDao) {
 		this.commitAnalysisDao = commitAnalysisDao;
@@ -57,6 +70,10 @@ public class SonarAnalysis extends Thread {
 	public void setJustLatest(boolean justLatest) {
 		this.justLatest = justLatest;
 	}
+	
+	public void setLastCommit (Commit lastCommit){
+		this.lastCommit = lastCommit;
+	}
 
 	@Override
 	public void run() {
@@ -67,61 +84,73 @@ public class SonarAnalysis extends Thread {
 
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
-
-		for (File f : new File(".").listFiles()) {
-		    if (f.getName().startsWith(project.getProjectName() + "_") && f.isDirectory()) {
-				try {
-					FileUtils.deleteDirectory(f);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		    }
-		}
+		String[] splits = url.split("/");
+		List<String>  shas = new LinkedList<String>();
 		
-		File theDir = new File(project.getProjectName() + "_" + analysis.getIdSerial());
-		Git git = null;
-		try {
-			git = Git.cloneRepository()
-					  .setURI(url)
-					  .setDirectory(theDir).call();
-		} catch (InvalidRemoteException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		} catch (TransportException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		} catch (GitAPIException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
+		int i = 1;
+		while (true) {
+			try {
+				String urlTemp = "https://api.github.com/repos/" + splits[3] + "/" + splits[4].replace(".git", "")
+						+ "/commits?page=" + i + "&per_page=100";
+				HttpClient httpClient = new DefaultHttpClient();
+				HttpGet httpGet = new HttpGet(urlTemp);
+				httpGet.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("luca9294", "Aa30011992"),
+						"UTF-8", false));
+				HttpResponse httpResponse = httpClient.execute(httpGet);
+				JSONArray json = new JSONArray(EntityUtils.toString(httpResponse.getEntity()));
+				
+				boolean found = false;
+			
+				if (this.justLatest){
+					JSONObject o = (JSONObject) json.get(0);
+					shas.add((String)o.get("sha"));
+					found =  true;
+				}
+				
+				if (found)
+					break;
+				
+				for (int z = 0; z<json.length(); z++){
+					JSONObject o = (JSONObject) json.get(z);
+					if (!((String)o.get("sha")).equals(lastCommit.getSsa()))
+						shas.add((String)o.get("sha"));
+					else{
+						found = true;
+						break;
+					}
+					}
+						
+				if (found)
+					break;
+				
+				if (json.length() == 0)
+					break;
+			i++;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		int count = 0;
 		boolean flag = false;
-		Iterable<RevCommit> commits;
-		try {
-			commits = git.log().call();
-			for (RevCommit revCommit : commits) {
+			for (String sha : shas) {
 				if (count % interval == 0)
 					flag = true;
 				else
 					flag = false;
 				count++;
-				if (commitDao.findBySsa(revCommit.getName()) == null && flag) {
-					String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(),revCommit.getName(),  analysis.getIdSerial()+"",url);
+				if (commitDao.findBySsa(sha) == null && flag) {
+					String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(),sha,  analysis.getIdSerial()+"",url);
 					addCommit(commitStr,analysis.getIdSerial());
 				}
 				if (justLatest)
 					break;
 			}
 			closeAnalysis(analysis.get_id());
-			FileUtils.deleteDirectory(theDir);
-		} catch (GitAPIException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 
 	// Add commit to the db

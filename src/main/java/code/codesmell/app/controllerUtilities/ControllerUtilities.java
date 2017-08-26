@@ -1,12 +1,17 @@
 package code.codesmell.app.controllerUtilities;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
@@ -19,12 +24,22 @@ import java.util.Random;
 import java.util.TimeZone;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.JobKey;
@@ -66,8 +81,7 @@ public class ControllerUtilities {
 	private UserDao userDao;
 	private ScheduleDao scheduleDao;
 	private CommitErrorDao commitErrorDao;
-	private String urlWsVar = "http://34.211.54.69:8089";
-	
+	private String urlWsVar = "http://34.211.54.69:8090";
 
 	/**
 	 * This class contains helpers methods that required from the controllers.
@@ -242,7 +256,7 @@ public class ControllerUtilities {
 				ca.setConfigurationFile(project.getProjectName() + ".properties");
 				commitAnalysisDao.insert(ca);
 				ca.setIdSerial(commitAnalysisDao.findByIdProject(project.getProjectName()).size() + 1);
-			
+
 				try {
 					Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 					scheduler.getContext().put("commitAnalysisDao", commitAnalysisDao);
@@ -256,7 +270,7 @@ public class ControllerUtilities {
 					Date next = getNextFire(project.getProjectName());
 					project.setNextAnalysis(next);
 					scheduleDao.save(schedule);
-					
+
 				} catch (SchedulerException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -276,42 +290,65 @@ public class ControllerUtilities {
 	 * @return
 	 */
 	private int getCommitsCount(String url, Project project) {
+		String[] splits = url.split("/");
 		int count = 0;
-		try {
-			FileUtils.deleteDirectory(new File("directory"));
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		int i = 1;
+
+		while (true) {
+			try {
+				String urlTemp = "https://api.github.com/repos/" + splits[3] + "/" + splits[4].replace(".git", "")
+						+ "/commits?page=" + i + "&per_page=100";
+				HttpClient httpClient = new DefaultHttpClient();
+				HttpGet httpGet = new HttpGet(urlTemp);
+				httpGet.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("luca9294", "Aa30011992"),
+						"UTF-8", false));
+				HttpResponse httpResponse = httpClient.execute(httpGet);
+				JSONArray json = new JSONArray(EntityUtils.toString(httpResponse.getEntity()));
+				count += json.length();
+				if (json.length() == 0)
+					break;
+				i++;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
-		File d = new File("directory");
-		d.deleteOnExit();
-		Git git;
-		try {
-			git = Git.cloneRepository().setURI(url).setDirectory(d).call();
-			Iterable<RevCommit> commits = git.log().call();
-			for (RevCommit commit : commits)
-				count++;
-			FileUtils.deleteDirectory(d);
-		} catch (InvalidRemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransportException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (GitAPIException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		project.setTotalCommits(count);
-		project.setLastRequest(new Date());
-		this.projectDao.save(project);
+
+		/*
+		 * 
+		 * int count = 0; try { FileUtils.deleteDirectory(new
+		 * File("directory")); } catch (IOException e1) { e1.printStackTrace();
+		 * } File d = new File("directory"); d.deleteOnExit(); Git git; try {
+		 * git = Git.cloneRepository().setURI(url).setDirectory(d).call();
+		 * Iterable<RevCommit> commits = git.log().call(); for (RevCommit commit
+		 * : commits) count++; FileUtils.deleteDirectory(d); } catch
+		 * (InvalidRemoteException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); } catch (TransportException e) { // TODO
+		 * Auto-generated catch block e.printStackTrace(); } catch
+		 * (GitAPIException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); } catch (IOException e) { // TODO Auto-generated
+		 * catch block e.printStackTrace(); } project.setTotalCommits(count);
+		 * project.setLastRequest(new Date()); this.projectDao.save(project);
+		 */
 		return count;
+	}
+
+	private static String readAll(Reader rd) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		int cp;
+		while ((cp = rd.read()) != -1) {
+			sb.append((char) cp);
+		}
+		return sb.toString();
 	}
 
 	/**
 	 * Next schedule from Quartz scheduler
+	 * 
 	 * @param projectName
 	 * @return
 	 */
@@ -367,6 +404,7 @@ public class ControllerUtilities {
 
 	/**
 	 * Schedules email with error to be sent at midnight
+	 * 
 	 * @param usr
 	 * @param mailSender
 	 */
@@ -398,7 +436,8 @@ public class ControllerUtilities {
 	}
 
 	/**
-	 * Run an analysis invoking a REST WEB SERVICE. Port parameter for Microservice version
+	 * Run an analysis invoking a REST WEB SERVICE. Port parameter for
+	 * Microservice version
 	 * 
 	 * @param projectName
 	 * @param sha
@@ -408,18 +447,13 @@ public class ControllerUtilities {
 	 */
 	public String restAnalysis(String projectName, String sha, String analysisId, String url) {
 		String urlWs = urlWsVar + "/analyseRevision";
-		/*if (port != null) {
-		    urlWs = urlWsVar + ":" + port + "/analyseRevision";
-			while (!pingHost(Integer.parseInt(port))) {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}*/
-		
+		/*
+		 * if (port != null) { urlWs = urlWsVar + ":" + port +
+		 * "/analyseRevision"; while (!pingHost(Integer.parseInt(port))) { try {
+		 * Thread.sleep(1000); } catch (InterruptedException e) { // TODO
+		 * Auto-generated catch block e.printStackTrace(); } } }
+		 */
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		String st = "";
@@ -443,6 +477,7 @@ public class ControllerUtilities {
 
 	/**
 	 * It checks wheter the webservice for the analysis is available
+	 * 
 	 * @param port
 	 * @return
 	 */
@@ -501,9 +536,9 @@ public class ControllerUtilities {
 	}
 
 	/**
-	 * NOT USED IN THE CURRENT VERSION
-	 * It creates a new Docker Container at the specified port
-	 * for the microservice version
+	 * NOT USED IN THE CURRENT VERSION It creates a new Docker Container at the
+	 * specified port for the microservice version
+	 * 
 	 * @param portNr
 	 * @return
 	 */
@@ -520,8 +555,8 @@ public class ControllerUtilities {
 	}
 
 	/**
-	 * NOT USED IN THE CURRENT VERSION
-	 * It creates a new Docker Container at the specified port
+	 * NOT USED IN THE CURRENT VERSION It creates a new Docker Container at the
+	 * specified port
 	 * 
 	 * @param portNr
 	 * @return
@@ -539,16 +574,14 @@ public class ControllerUtilities {
 
 	/**
 	 * Used for the microservice version
+	 * 
 	 * @return
 	 */
-	/*public String getAvailablePortNumber() {
-		/*Random r = new Random();
-		int low = 8000;
-		int high = 9000;
-		int result = r.nextInt(high - low) + low;
-		while (projectDao.findByPortNr(result + "") != null)
-			result = r.nextInt(high - low) + low;
-		return result + "";
-	}*/
+	/*
+	 * public String getAvailablePortNumber() { /*Random r = new Random(); int
+	 * low = 8000; int high = 9000; int result = r.nextInt(high - low) + low;
+	 * while (projectDao.findByPortNr(result + "") != null) result =
+	 * r.nextInt(high - low) + low; return result + ""; }
+	 */
 
 }

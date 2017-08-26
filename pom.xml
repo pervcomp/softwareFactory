@@ -38,6 +38,14 @@
         <artifactId>spring-security-web</artifactId>
         <version>5.0.0.M2</version>
     </dependency>
+    
+    <!-- https://mvnrepository.com/artifact/org.json/json -->
+<dependency>
+    <groupId>org.json</groupId>
+    <artifactId>json</artifactId>
+    <version>20090211</version>
+</dependency>
+    
 
     <!-- Spring and Spring Boot dependencies -->
     <dependency>
