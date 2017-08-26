@@ -66,7 +66,7 @@ public class ControllerUtilities {
 	private UserDao userDao;
 	private ScheduleDao scheduleDao;
 	private CommitErrorDao commitErrorDao;
-	private String urlWsVar = "http://54.214.227.88:8080";
+	private String urlWsVar = "http://34.211.54.69:8080";
 	
 
 	/**
