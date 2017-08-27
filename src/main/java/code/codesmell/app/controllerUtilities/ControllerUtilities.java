@@ -290,50 +290,37 @@ public class ControllerUtilities {
 	 * @return
 	 */
 	private int getCommitsCount(String url, Project project) {
-		String[] splits = url.split("/");
 		int count = 0;
-		int i = 1;
-
-		while (true) {
-			try {
-				String urlTemp = "https://api.github.com/repos/" + splits[3] + "/" + splits[4].replace(".git", "")
-						+ "/commits?page=" + i + "&per_page=100";
-				HttpClient httpClient = new DefaultHttpClient();
-				HttpGet httpGet = new HttpGet(urlTemp);
-				httpGet.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("luca9294", "Aa30011992"),
-						"UTF-8", false));
-				HttpResponse httpResponse = httpClient.execute(httpGet);
-				JSONArray json = new JSONArray(EntityUtils.toString(httpResponse.getEntity()));
-				count += json.length();
-				if (json.length() == 0)
-					break;
-				i++;
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+		try {
+			FileUtils.deleteDirectory(new File("directory"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
-
-		/*
-		 * 
-		 * int count = 0; try { FileUtils.deleteDirectory(new
-		 * File("directory")); } catch (IOException e1) { e1.printStackTrace();
-		 * } File d = new File("directory"); d.deleteOnExit(); Git git; try {
-		 * git = Git.cloneRepository().setURI(url).setDirectory(d).call();
-		 * Iterable<RevCommit> commits = git.log().call(); for (RevCommit commit
-		 * : commits) count++; FileUtils.deleteDirectory(d); } catch
-		 * (InvalidRemoteException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } catch (TransportException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); } catch
-		 * (GitAPIException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } catch (IOException e) { // TODO Auto-generated
-		 * catch block e.printStackTrace(); } project.setTotalCommits(count);
-		 * project.setLastRequest(new Date()); this.projectDao.save(project);
-		 */
+		File d = new File("directory");
+		d.deleteOnExit();
+		Git git;
+		try {
+			git = Git.cloneRepository().setURI(url).setDirectory(d).call();
+			Iterable<RevCommit> commits = git.log().call();
+			for (RevCommit commit : commits)
+				count++;
+			FileUtils.deleteDirectory(d);
+		} catch (InvalidRemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransportException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (GitAPIException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		project.setTotalCommits(count);
+		project.setLastRequest(new Date());
+		this.projectDao.save(project);
 		return count;
 	}
 

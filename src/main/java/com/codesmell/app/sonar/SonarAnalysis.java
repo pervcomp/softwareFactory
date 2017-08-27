@@ -47,9 +47,10 @@ public class SonarAnalysis extends Thread {
 	private CommitErrorDao commitErrorDao;
 	private int interval = 1;
 	private boolean justLatest = false;
+	private boolean past = true;
 	private Commit lastCommit;
 
-	public SonarAnalysis(CommitAnalysisDao commitAnalysisDao, CommitDao commitDao,CommitErrorDao commitErrorDao) {
+	public SonarAnalysis(CommitAnalysisDao commitAnalysisDao, CommitDao commitDao, CommitErrorDao commitErrorDao) {
 		this.commitAnalysisDao = commitAnalysisDao;
 		this.commitDao = commitDao;
 		this.commitErrorDao = commitErrorDao;
@@ -67,11 +68,15 @@ public class SonarAnalysis extends Thread {
 		this.interval = interval;
 	}
 
+	public void setPast(boolean past) {
+		this.past = past;
+	}
+
 	public void setJustLatest(boolean justLatest) {
 		this.justLatest = justLatest;
 	}
-	
-	public void setLastCommit (Commit lastCommit){
+
+	public void setLastCommit(Commit lastCommit) {
 		this.lastCommit = lastCommit;
 	}
 
@@ -85,8 +90,8 @@ public class SonarAnalysis extends Thread {
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
 		String[] splits = url.split("/");
-		List<String>  shas = new LinkedList<String>();
-		
+		List<String> shas = new LinkedList<String>();
+
 		int i = 1;
 		while (true) {
 			try {
@@ -98,34 +103,42 @@ public class SonarAnalysis extends Thread {
 						"UTF-8", false));
 				HttpResponse httpResponse = httpClient.execute(httpGet);
 				JSONArray json = new JSONArray(EntityUtils.toString(httpResponse.getEntity()));
-				
+
 				boolean found = false;
-			
-				if (this.justLatest){
+
+				if (this.justLatest) {
 					JSONObject o = (JSONObject) json.get(0);
-					shas.add((String)o.get("sha"));
-					found =  true;
+					shas.add((String) o.get("sha"));
+					found = true;
 				}
-				
+
 				if (found)
 					break;
-				
-				for (int z = 0; z<json.length(); z++){
-					JSONObject o = (JSONObject) json.get(z);
-					if (!((String)o.get("sha")).equals(lastCommit.getSsa()))
-						shas.add((String)o.get("sha"));
-					else{
-						found = true;
-						break;
+				if (!past) {
+					for (int z = 0; z < json.length(); z++) {
+						JSONObject o = (JSONObject) json.get(z);
+						if (!((String) o.get("sha")).equals(lastCommit.getSsa()))
+							shas.add((String) o.get("sha"));
+						else {
+							found = true;
+							break;
+						}
 					}
+				}
+
+				else {
+					for (int z = 0; z < json.length(); z++) {
+						JSONObject o = (JSONObject) json.get(z);
+						shas.add((String) o.get("sha"));
 					}
-						
+				}
+
 				if (found)
 					break;
-				
+
 				if (json.length() == 0)
 					break;
-			i++;
+				i++;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -136,51 +149,52 @@ public class SonarAnalysis extends Thread {
 		}
 		int count = 0;
 		boolean flag = false;
-			for (String sha : shas) {
-				if (count % interval == 0)
-					flag = true;
-				else
-					flag = false;
-				count++;
-				if (commitDao.findBySsa(sha) == null && flag) {
-					String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(),sha,  analysis.getIdSerial()+"",url);
-					addCommit(commitStr,analysis.getIdSerial());
-				}
-				if (justLatest)
-					break;
+		for (String sha : shas) {
+			if (count % interval == 0)
+				flag = true;
+			else
+				flag = false;
+			count++;
+			if (commitDao.findBySsa(sha) == null && flag) {
+				String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(), sha,
+						analysis.getIdSerial() + "", url);
+				addCommit(commitStr, analysis.getIdSerial());
 			}
-			closeAnalysis(analysis.get_id());
-		
+			if (justLatest)
+				break;
+		}
+		closeAnalysis(analysis.get_id());
+
 	}
 
 	// Add commit to the db
 	public void addCommit(String str, int analysisId) {
 		String[] commitArray = str.split(" ");
-			Commit commit = new Commit();
-			commit.setAnalysisDate(new Date());
-			commit.setProjectName(project.getProjectName());
-			commit.setSsa(commitArray[3]);
-			commit.setIdCommitAnalysis(analysisId);
-			commit.setStatus(commitArray[13].replace(" ", "").replace(",", ""));
-			String error = new ControllerUtilities().restGetActualError();
-			
-			//writing the commit error in the database
-			writeCommitError(commit.getStatus(),commit.getSsa(),error,project.getProjectName(),analysisId);
-			
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ITALIAN);
-			try {
-				commit.setCreationDate(df.parse(commitArray[2].replace("T", " ")));
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if (commitDao.findBySsa(commitArray[3]) == null)
-				commitDao.save(commit);
+		Commit commit = new Commit();
+		commit.setAnalysisDate(new Date());
+		commit.setProjectName(project.getProjectName());
+		commit.setSsa(commitArray[3]);
+		commit.setIdCommitAnalysis(analysisId);
+		commit.setStatus(commitArray[13].replace(" ", "").replace(",", ""));
+		String error = new ControllerUtilities().restGetActualError();
+
+		// writing the commit error in the database
+		writeCommitError(commit.getStatus(), commit.getSsa(), error, project.getProjectName(), analysisId);
+
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ITALIAN);
+		try {
+			commit.setCreationDate(df.parse(commitArray[2].replace("T", " ")));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-	
+		if (commitDao.findBySsa(commitArray[3]) == null)
+			commitDao.save(commit);
+	}
 
 	/**
 	 * It closes the opened analysis
+	 * 
 	 * @param analysis
 	 */
 	public void closeAnalysis(String analysis) {
@@ -190,30 +204,22 @@ public class SonarAnalysis extends Thread {
 		commitAnalysisDao.save(ca);
 
 	}
-	
+
 	/**
 	 * Writes the StackTrace on the db
+	 * 
 	 * @param status
 	 * @param idCommit
 	 * @param message
 	 */
-	private void writeCommitError(String status,String idCommit,String message, String projectName, int analysisId)
-	{
-		if(status.equalsIgnoreCase("failure"))
-		{
-			CommitError commitError= new CommitError(idCommit, message);
+	private void writeCommitError(String status, String idCommit, String message, String projectName, int analysisId) {
+		if (status.equalsIgnoreCase("failure")) {
+			CommitError commitError = new CommitError(idCommit, message);
 			commitError.setAnalysisId(analysisId);
 			commitError.setProjectName(projectName);
 			commitError.setEmail(project.getEmail());
 			commitErrorDao.insert(commitError);
 		}
 	}
-	
-
-	
-	
-	
-	
-	
 
 }
