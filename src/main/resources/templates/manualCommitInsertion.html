@@ -31,7 +31,7 @@
 		</div>
 		<div class="panel-body">
 		
-			<form th:action="@{/editProject}" th:object="${project}" method="post">
+			<form th:action="@{/runManualCommitAnalysis}" th:object="${project}" method="post">
 				<div class="col-md-12 col-sm-12">
 					<div class="form-group col-md-12 col-sm-12">
 						<label>Project name: </label><br> 
@@ -41,8 +41,9 @@
 					<div>
 						<textarea class="form-control" rows="12" 
 						    style="margin-top: 10px;"  placeholder="Please enter the commit analysis"
-						    id="manualCommitSSH"  name="Manual CommitSSHe" th:text="${project.manualCommitSSH}" >	
-					</textarea>
+						    id="manualCommitSSH"  name="Manual CommitSSHe" th:field="${project.manualCommitSSH}" >	
+						</textarea>
+						
 				<input type="hidden" />	
 					
 				</div>	

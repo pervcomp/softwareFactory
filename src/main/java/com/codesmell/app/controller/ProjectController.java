@@ -436,5 +436,23 @@ class ProjectController {
 		return "manualCommitInsertion";
 	}
 	
+
+	@PostMapping("/runManualCommitAnalysis")
+	public String runManualCommitAnalysis(Model model, @ModelAttribute Project project, HttpServletRequest req,
+			HttpServletResponse resp) 
+	{
+		String[] commitToAnalyze= project.getManualCommitSSH().split("\\r?\\n");
+		Project recivedProject= project;
+		String a ;
+//		
+//		
+//		projectToSend = this.projectDao.findByprojectName(projectToSend.getProjectName());
+//		removeProjectData(this.projectDao.findByprojectName(projectToSend.getProjectName()));
+//       ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
+//       commitErrorDao);
+//		cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
+//		cu.deleteProjectFiles(projectToSend.getProjectName());
+		return "manualCommitInsertion";
+	}
 	
 }
