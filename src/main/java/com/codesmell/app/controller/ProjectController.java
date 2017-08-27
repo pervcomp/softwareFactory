@@ -411,5 +411,30 @@ class ProjectController {
 	   return "landingPage";
    } 	
 	
+	/**
+	 * It removes a project and everything linked with it
+	 * @param model
+	 * @param projectToSend
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
+	@PostMapping("/manualCommitInseration")
+	public String manualCommitInseration(Model model, @ModelAttribute Project projectToSend, HttpServletRequest req,
+			HttpServletResponse resp) 
+	{
+		
+		
+//		
+//		
+//		projectToSend = this.projectDao.findByprojectName(projectToSend.getProjectName());
+//		removeProjectData(this.projectDao.findByprojectName(projectToSend.getProjectName()));
+//       ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
+//       commitErrorDao);
+//		cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
+//		cu.deleteProjectFiles(projectToSend.getProjectName());
+		return "manualCommitInsertion";
+	}
+	
 	
 }

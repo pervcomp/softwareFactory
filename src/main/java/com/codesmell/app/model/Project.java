@@ -27,6 +27,8 @@ public class Project extends BaseEntity
 	private int countSuccessCommits;
 	private Date nextAnalysis;
 	private String lastWeekReport;
+	private String manualCommitSSH;
+	
 	
 	public Project() 
 	{
@@ -38,7 +40,7 @@ public class Project extends BaseEntity
 		this.anaysisRepetition="";		
 		this.creationTime= new Date();
 		this.url="";
-		
+		this.manualCommitSSH="";
 		
 	}
 	
@@ -217,6 +219,16 @@ public class Project extends BaseEntity
 	public Date getNextAnalysis(){
 		return this.nextAnalysis;
 	}
+
+	public String getManualCommitSSH() {
+		return manualCommitSSH;
+	}
+
+	public void setManualCommitSSH(String manualCommitSSH) {
+		this.manualCommitSSH = manualCommitSSH;
+	}
+	
+	
 	/* 
 	public String getPortNr(){
 		return this.portNr;
