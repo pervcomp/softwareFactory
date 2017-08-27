@@ -1,135 +1,172 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns:th="http://www.thymeleaf.org">
-   <script src="http://mymaplist.com/js/vendor/TweenLite.min.js"></script>
-   <head lang="en" th:include="fragments/header">
-      <title>Dashboard</title>
-      <link href="https://code.fancygrid.com/fancy.min.css" rel="stylesheet">
-      <script src="https://code.fancygrid.com/fancy.min.js"></script>
-   </head>
-   <body>
-      <link type="text/css" href="css/landingpage.css" rel="stylesheet" />
-      <h1>Dashboard of your projects</h1>
-      <br>
-      <a href="/landingPage">
-      <button class="btn btn-custom"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
-      </a>
-      <br></br>
-      <table class="table table-striped">
-         <thead>
-            <tr>
-               <th>
-<a class='my-tool-tip' data-html="true" data-toggle="tooltip" data-placement="left" title="GREEN: more than 70% of the Analysis of this week are successfull
-YELLOW: at least 30% of the Analysis of this week are successfull
-RED: less of 30% of the Analysis of this week are successfull  ">
-<span class="glyphicon glyphicon-info-sign"></span>
-</a>
-</th>
-               <th>ProjectName</th>
-               <th>Status</th>
-               <th>Created on</th>
-               <th>Completation</th>
-               <th>Last Analysis</th>
-               <th>Next Analysis</th>
-               <th>Run/Stop</th>
-            </tr>
-         </thead>
-         <tbody>
-            <tr th:each="project : ${projects}">
-               <td th:if="${project.lastWeekReport == 'RED'}">
-                  <span class="glyphicon glyphicon-remove-circle red"></span>
-               </td>
-               <td th:if="${project.lastWeekReport == 'YELLOW'}">
-                  <span class="glyphicon glyphicon-warning-sign yellow"></span>
-               </td>
-               <td th:if="${project.lastWeekReport == 'GREEN'}">
-                  <p><span class="glyphicon glyphicon-ok-circle green"></span></p>
-               </td>
-               <td>
-                  <form id="${project.projectName}" th:action="@{/projectDet}" th:object="${projectToSend}" method="POST">
-                     <input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>
-                     <input type="submit"   class="btn btn-secondary"   th:value="${project.projectName}">   
-                  </form>
-               </td>
-               <td>
-                  <p th:text="${project.status}">
-               </td>
-               <td>
-                  <p th:text= "${#dates.format(project.creationTime,'dd-MM-yyyy HH:mm')}"></p>
-               </td>
-               <td>
-                  <p th:text= "|${project.analysedCommits}  /  ${project.totalCommits}|"></p>
-               </td>
-               <td>
-                  <p th:text= "${#dates.format(project.lastAnalysis,'dd-MM-yyyy HH:mm')}">
-               </td>
-               <td>
-                  <p th:text=  "${#dates.format(project.nextAnalysis,'dd-MM-yyyy HH:mm')}">
-               </td>
-               <td th:if="${project.status != 'Processing'}" >
-                  <form    th:action="@{/runAnalysis}" th:object="${projectToSend}" method="POST">
-                     <button type="submit" 
-                        data-title="Run Analysis" data-toggle="modal" data-target="#edit" class="btn btn-success btn-xs" >
-                     <span class="glyphicon glyphicon-play white"></span>
-                     </button>
-                     <input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>
-                  </form>
-                  <br>
-                  <form    th:action="@{/runScheduledNow}" th:object="${projectToSend}" method="POST">
-                     <button type="submit" 
-                        data-title="Run Analysis" data-toggle="modal" data-target="#edit" class="btn  btn-warning btn-xs" >
-                     <span class="glyphicon glyphicon-flash white"></span>
-                     </button>
-                     <input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>
-                  </form>
-               </td>
-               <td th:if="${project.status == 'Processing' or project.status == 'Queued'}" >
-                  <form    th:action="@{/stopAnalysis}" th:object="${projectToSend}" method="POST">
-                        <button type="submit" 
-                           data-title="Stop Analysis" data-toggle="modal" data-target="#edit" class="btn btn-danger btn-xs">
-                        <span class="glyphicon glyphicon-stop white"></span>
-                        </button>
-                        <input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>
-                  </form>
-               </td>
-               <td>
-               <form id="${project.projectName}" th:action="@{/editProject}"
+<script src="http://mymaplist.com/js/vendor/TweenLite.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<head lang="en" th:include="fragments/header">
+<title>Dashboard</title>
+<link href="https://code.fancygrid.com/fancy.min.css" rel="stylesheet">
+<script src="https://code.fancygrid.com/fancy.min.js"></script>
+</head>
+<body>
+	<link type="text/css" href="css/landingpage.css" rel="stylesheet" />
+	<h1>Dashboard of your projects</h1>
+	<br>
+	<a href="/landingPage">
+		<button class="btn btn-custom">
+			<span class="glyphicon glyphicon-refresh"></span> Refresh
+		</button>
+	</a>
+	<br></br>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th><a  data-html="true"
+					data-toggle="tooltip" 
+					title="GREEN: more than 70% of the Analysis of this week are successfull
+                    <br>YELLOW: at least 30% of the Analysis of this week are successfull
+                    <br>RED: less of 30% of the Analysis of this week are successfull  ">
+						<span class="glyphicon glyphicon-info-sign"></span>
+				</a></th>
+				<th>ProjectName</th>
+				<th>Status</th>
+				<th>Created on</th>
+				<th>Completation</th>
+				<th>Last Analysis</th>
+				<th>Next Analysis</th>
+				<th>Run/Stop</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="project : ${projects}">
+				<td th:if="${project.lastWeekReport == 'RED'}"><span
+					class="glyphicon glyphicon-remove-circle red"></span></td>
+				<td th:if="${project.lastWeekReport == 'YELLOW'}"><span
+					class="glyphicon glyphicon-warning-sign yellow"></span></td>
+				<td th:if="${project.lastWeekReport == 'GREEN'}">
+					<p>
+						<span class="glyphicon glyphicon-ok-circle green"></span>
+					</p>
+				</td>
+				<td>
+					<form id="${project.projectName}" th:action="@{/projectDet}"
 						th:object="${projectToSend}" method="POST">
-							<button type="submit" class="btn btn-primary btn-xs"
-								data-title="Edit" data-toggle="modal" data-target="#edit">
-								<span class="glyphicon glyphicon-pencil"></span> </button>
-								<input
-									type="hidden" id="projectName" name="projectName"
-									th:value="${project.projectName}" />
-							
-			  </form>  
-               </td>
-               <td>
-                  <form id="removeButtonForm" th:action="@{/removeProject}" th:object="${projectToSend}" method="POST" onsubmit="return confirm('Do you really want to delete this project?');">
-                     <input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>
-                     <button type="submit" class="btn btn-danger btn-xs"
-                        data-title="Edit" data-toggle="modal" data-target="#edit">
-                     <span class="glyphicon glyphicon-trash"></span>
-                     </button>
-                  </form>
-               </td>
-               
-               <!-- For the Manual insersation of the commit -->
-               <td>
-	               <form id="${project.projectName}" th:action="@{/manualCommitInseration}"
-							th:object="${projectToSend}" method="POST">
-								<button type="submit" class="btn btn-primary btn-xs"
-									data-title="Manual Commit Inseration" data-toggle="modal" data-target="#edit">
-									<span class="glyphicon glyphicon-th"></span> </button>
-									<input
-										type="hidden" id="projectName" name="projectName"
-										th:value="${project.projectName}" />
-				  </form> 
-                </td>
-            </tr>
-         </tbody>
-      </table>
-   </body>
+						<input type="hidden" id="projectName" name="projectName"
+							th:value="${project.projectName}" /> <input type="submit"
+							class="btn btn-secondary" th:value="${project.projectName}">
+					</form>
+				</td>
+				<td>
+					<p th:text="${project.status}">
+				</td>
+				<td>
+					<p
+						th:text="${#dates.format(project.creationTime,'dd-MM-yyyy HH:mm')}"></p>
+				</td>
+				<td>
+					<p
+						th:text="|${project.analysedCommits}  /  ${project.totalCommits}|"></p>
+				</td>
+				<td>
+					<p
+						th:text="${#dates.format(project.lastAnalysis,'dd-MM-yyyy HH:mm')}">
+				</td>
+				<td>
+					<p
+						th:text="${#dates.format(project.nextAnalysis,'dd-MM-yyyy HH:mm')}">
+				</td>
+				<td th:if="${project.status != 'Processing'}">
+					<form th:action="@{/runAnalysis}" th:object="${projectToSend}"
+						method="POST">
+						<a href="#" data-toggle="tooltip" title="Analyse just latest commit">
+						<button type="submit" data-title="Run Analysis"
+							data-toggle="modal" data-target="#edit"
+							class="btn btn-success btn-xs">
+							<span class="glyphicon glyphicon-play white"></span>
+						</button></a>
+						<input type="hidden" id="projectName" name="projectName"
+							th:value="${project.projectName}" />
+					</form> <br>
+					<form th:action="@{/runScheduledNow}" th:object="${projectToSend}"
+						method="POST">
+
+						<a href="#" data-toggle="tooltip" title="Run Scheduled Analysis now">
+							<button type="submit" class="btn  btn-warning btn-xs">
+						 <span class="glyphicon glyphicon-flash white"></span>
+						</button>
+						</a>
+						<input type="hidden" id="projectName" name="projectName"
+							th:value="${project.projectName}" />
+					</form>
+				</td>
+				<td
+					th:if="${project.status == 'Processing' or project.status == 'Queued'}">
+					<form th:action="@{/stopAnalysis}" th:object="${projectToSend}"
+						method="POST">
+						<button type="submit" data-title="Stop Analysis"
+							data-toggle="modal" data-target="#edit"
+							class="btn btn-danger btn-xs">
+							<span class="glyphicon glyphicon-stop white"></span>
+						</button>
+						<input type="hidden" id="projectName" name="projectName"
+							th:value="${project.projectName}" />
+					</form>
+				</td>
+				<td>
+					<form id="${project.projectName}" th:action="@{/editProject}"
+						th:object="${projectToSend}" method="POST">
+						<a href="#" data-toggle="tooltip" title="Edit Project">
+						<button type="submit" class="btn btn-primary btn-xs"
+							data-title="Edit" data-toggle="modal" data-target="#edit">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button></a>
+						<input type="hidden" id="projectName" name="projectName"
+							th:value="${project.projectName}" />
+
+					</form>
+				</td>
+				<td>
+					<form id="removeButtonForm" th:action="@{/removeProject}"
+						th:object="${projectToSend}" method="POST"
+						onsubmit="return confirm('Do you really want to delete this project?');">
+						<input type="hidden" id="projectName" name="projectName"
+							th:value="${project.projectName}" />
+						<a href="#" data-toggle="tooltip" title="Remove Project">
+						<button type="submit" class="btn btn-danger btn-xs"
+							data-title="Edit" data-toggle="modal" data-target="#edit">
+							<span class="glyphicon glyphicon-trash"></span>
+						</button>
+						</a>
+					</form>
+				</td>
+
+				<!-- For the Manual insersation of the commit -->
+				<td>
+					<form id="${project.projectName}"
+						th:action="@{/manualCommitInseration}"
+						th:object="${projectToSend}" method="POST">
+						<a href="#" data-toggle="tooltip" title="Manual Commit Inseration">				
+						<button type="submit" class="btn btn-primary btn-xs"
+							data-title="Manual Commit Inseration" data-toggle="modal"
+							data-target="#edit">
+							<span class="glyphicon glyphicon-th"></span>
+						</button></a>
+						<input type="hidden" id="projectName" name="projectName"
+							th:value="${project.projectName}" />
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+
+<script>
+   $(document).ready(function(){
+	    $('[data-toggle="tooltip"]').tooltip();   
+	});
+   </script>
 </html>
 

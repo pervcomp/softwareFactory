@@ -15,7 +15,6 @@ import java.util.TimeZone;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.assertj.core.util.Arrays;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.JobKey;
@@ -428,6 +427,7 @@ class ProjectController {
 	public String manualCommitInseration(Model model, @ModelAttribute Project projectToSend, HttpServletRequest req,
 			HttpServletResponse resp) 
 	{
+		model.addAttribute("email",(String) req.getSession().getAttribute("email"));
 		return "manualCommitInsertion";
 	}
 	
