@@ -300,7 +300,6 @@ public class ControllerUtilities {
 			e1.printStackTrace();
 		}
 		File d = new File("directory");
-		d.deleteOnExit();
 		Git git;
 		try {
 			git = Git.cloneRepository().setURI(url).setDirectory(d).call();
