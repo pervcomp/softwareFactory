@@ -19,7 +19,13 @@
       <table class="table table-striped">
          <thead>
             <tr>
-               <th>#</th>
+               <th>
+<a class='my-tool-tip' data-html="true" data-toggle="tooltip" data-placement="left" title="GREEN: more than 70% of the Analysis of this week are successfull
+YELLOW: at least 30% of the Analysis of this week are successfull
+RED: less of 30% of the Analysis of this week are successfull  ">
+<span class="glyphicon glyphicon-info-sign"></span>
+</a>
+</th>
                <th>ProjectName</th>
                <th>Status</th>
                <th>Created on</th>
@@ -69,8 +75,16 @@
                      </button>
                      <input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>
                   </form>
+                  <br>
+                  <form    th:action="@{/runScheduledNow}" th:object="${projectToSend}" method="POST">
+                     <button type="submit" 
+                        data-title="Run Analysis" data-toggle="modal" data-target="#edit" class="btn  btn-warning btn-xs" >
+                     <span class="glyphicon glyphicon-flash white"></span>
+                     </button>
+                     <input type="hidden" id="projectName"  name="projectName" th:value="${project.projectName}"/>
+                  </form>
                </td>
-               <td th:if="${project.status == 'Processing'}" >
+               <td th:if="${project.status == 'Processing' or project.status == 'Queued'}" >
                   <form    th:action="@{/stopAnalysis}" th:object="${projectToSend}" method="POST">
                         <button type="submit" 
                            data-title="Stop Analysis" data-toggle="modal" data-target="#edit" class="btn btn-danger btn-xs">

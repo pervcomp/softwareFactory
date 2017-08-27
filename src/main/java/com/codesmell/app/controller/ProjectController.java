@@ -6,13 +6,16 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.assertj.core.util.Arrays;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.JobKey;
@@ -42,6 +45,8 @@ import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.CommitError;
 import com.codesmell.app.model.Project;
 import com.codesmell.app.model.Schedule;
+import com.codesmell.app.sonar.SonarAnalysis;
+import com.codesmell.app.sonar.SonarAnalysisManual;
 import com.codesmell.app.sonar.SonarAnalysisSchedule;
 
 import code.codesmell.app.controllerUtilities.ControllerUtilities;
@@ -95,7 +100,7 @@ class ProjectController {
 			}
 			String projectName = project.getProjectName();
 			if (!project.getAnalysePast()) 
-			    cu.performAnalysisLatestsCommit(projectName);
+			    cu.performAnalysisLatestsCommit(projectName,true);
 		}
 		if (project.getScheduleProject())
 			schedule(project, schedule);
@@ -302,7 +307,7 @@ class ProjectController {
 			if (commitAnalysisDao.findByIdProjectAndStatus(projectToSend.getProjectName(), "Processing") == null) {
 				String projectName = projectToSend.getProjectName();
 				Project p = projectDao.findByprojectName(projectName);
-				cu.performAnalysisLatestsCommit(projectName);
+				cu.performAnalysisLatestsCommit(projectName,true);
 			}
 		}
 		cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
@@ -432,9 +437,40 @@ class ProjectController {
 			HttpServletResponse resp) 
 	{
 		String[] commitToAnalyze= project.getManualCommitSSH().split("\\r?\\n");
-		Project recivedProject= project;
-		String a ;
-		return "manualCommitInsertion";
+		project =  this.projectDao.findByprojectName(project.getProjectName());
+		CommitAnalysis ca = new CommitAnalysis();
+		ca.setIdProject(project.getProjectName());
+		ca.setConfigurationFile(project.getProjectName() + ".properties");
+		ca.setIdSerial(commitAnalysisDao.findByIdProject(project.getProjectName()).size() + 1);
+		commitAnalysisDao.save(ca);
+		SonarAnalysisManual so = new SonarAnalysisManual(commitAnalysisDao, commitDao, commitErrorDao);
+		so.setAnalysis(ca);
+		so.setProject(project);
+		List<String> list = new LinkedList<String>();
+		Collections.addAll(list, commitToAnalyze);
+		so.setShas(list);
+		so.start();
+		ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
+		        commitErrorDao);
+		cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
+		return "landingPage";
 	}
+	
+	@PostMapping("/runScheduledNow")
+ public String runScheduledNow(Model model, @ModelAttribute Project projectToSend, @ModelAttribute Schedule schedule,
+                               HttpServletRequest req, HttpServletResponse resp) {
+     ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
+                                                      commitErrorDao);
+     if (projectToSend != null) {
+         if (commitAnalysisDao.findByIdProjectAndStatus(projectToSend.getProjectName(), "Processing") == null) {
+             String projectName = projectToSend.getProjectName();
+             Project p = projectDao.findByprojectName(projectName);
+             cu.performAnalysisLatestsCommit(projectName,false);
+         }
+     }
+     cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
+     
+     return "landingPage";
+ }
 	
 }

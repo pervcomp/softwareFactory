@@ -130,7 +130,7 @@ public class ControllerUtilities {
 	 * 
 	 * @param projectName
 	 */
-	public void performAnalysisLatestsCommit(String projectName) {
+	public void performAnalysisLatestsCommit(String projectName,boolean justLatest) {
 		Project project = projectDao.findByprojectName(projectName);
 		CommitAnalysis ca = new CommitAnalysis();
 		ca.setIdProject(projectName);
@@ -141,7 +141,10 @@ public class ControllerUtilities {
 		so.setAnalysis(ca);
 		so.setInterval(project.getInterval());
 		so.setProject(project);
-		so.setJustLatest(true);
+		so.setPast(false);
+		so.setJustLatest(justLatest);
+		if (!justLatest)
+			so.setLastCommit(commitDao.findByProjectNameOrderByCreationDateDesc(projectName).get(0));
 		so.start();
 	}
 

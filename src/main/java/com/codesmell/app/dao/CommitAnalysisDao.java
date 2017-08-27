@@ -12,4 +12,5 @@ public interface CommitAnalysisDao extends MongoRepository<CommitAnalysis, Strin
 	public List<CommitAnalysis> findByIdProject(String  idProject);
 	public CommitAnalysis findByIdProjectOrderByStartDateDesc(String  idProject);
 	public CommitAnalysis findBy_id(String analysis);
+	public List<CommitAnalysis> findByStatus(String status);
 }
