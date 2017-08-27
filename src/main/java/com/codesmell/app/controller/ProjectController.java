@@ -427,17 +427,20 @@ class ProjectController {
 	public String manualCommitInseration(Model model, @ModelAttribute Project projectToSend, HttpServletRequest req,
 			HttpServletResponse resp) 
 	{
+		model.addAttribute("project",projectToSend);
+		model.addAttribute("project2",new Project());
+
 		model.addAttribute("email",(String) req.getSession().getAttribute("email"));
 		return "manualCommitInsertion";
 	}
 	
 
 	@PostMapping("/runManualCommitAnalysis")
-	public String runManualCommitAnalysis(Model model, @ModelAttribute Project project, HttpServletRequest req,
+	public String runManualCommitAnalysis(Model model, @ModelAttribute Project project2, HttpServletRequest req,
 			HttpServletResponse resp) 
 	{
-		String[] commitToAnalyze= project.getManualCommitSSH().split("\\r?\\n");
-		project =  this.projectDao.findByprojectName(project.getProjectName());
+		String[] commitToAnalyze= project2.getManualCommitSSH().split("\\r?\\n");
+		Project project =  this.projectDao.findByprojectName(project2.getProjectName());
 		CommitAnalysis ca = new CommitAnalysis();
 		ca.setIdProject(project.getProjectName());
 		ca.setConfigurationFile(project.getProjectName() + ".properties");

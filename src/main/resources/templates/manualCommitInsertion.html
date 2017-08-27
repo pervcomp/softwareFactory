@@ -24,10 +24,12 @@
 			<h3 class="panel-title">Please insert the shas of the commits to analyse</h3>
 		</div>
 		<div class="panel-body">		
-			<form th:action="@{/runManualCommitAnalysis}" th:object="${project}" method="post">
+			<form th:action="@{/runManualCommitAnalysis}" th:object="${project2}" method="post">
 				<div class="col-md-12 col-sm-12">
 					<div class="form-group col-md-12 col-sm-12">
 					     <h1><p th:text="${project.projectName}"></p></h1>
+			 			<input type="hidden" id="projectName" name="projectName"
+							th:value="${project.projectName}" />
 					</div>
 						
 					<div>
@@ -36,7 +38,7 @@
 						    id="manualCommitSSH"  name="Manual CommitSSHe" th:field="${project.manualCommitSSH}" >	
 						</textarea>
 						
-				<input type="hidden" />	
+				
 					
 				</div>	
 							<br></br><br>
