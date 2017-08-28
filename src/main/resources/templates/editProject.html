@@ -55,101 +55,13 @@
 						<input required="required" type="text" th:object="${sonarKey}"  name="sonarKey" th:value="${project.sonarKey}"><br></br>
 						<label>Sonar ProjectVersion:</label><br> 
 						<input required="required" type="number" th:object="${sonarVersion}"  name="sonarVersion" th:value="${project.sonarVersion}"><br></br>
-						<label>Type of analysis:</label><p>
-							<input type="checkbox" id="pastAnalysis"  th:field="*{analysePast}" th:checked="checked"> Analyze commits in the past  (Optional)
-							<br>
-						    <div hidden class="form-group 12 col-sm-12 desc" id="analysisType2">
-								<legend >Which Commits in the past?</legend>
-								<input type="Radio" Name="analyseAll"   id="analyseAll" value="1" th:checked="*{analyseAll}"> All commits in the history until now 
-								<br><br>
-								<input type="Radio" Name="analyseAll" id="analyseAll" value="0" th:checked="*{analyseAll} == false">  Commits Interval (Do an analysis each # commits)
-								<br></br>
-								<input  required="required" type="number" th:object="${interval}"  value ='1' name="interval"  max='20' th:value="${project.interval}"><br></br>
-							</div>
-							<br></br><br>
-							<div  class="form-group col-md-12 col-sm-12 desc" id="analysisType3">
-							
+					
 
 						<input type="submit" value="Save">
 						<button type="button">Cancel</button>
 						</div>
 			</form>
 </body>
-
-<script type="text/javascript">
-var d = new Date();
-var datestring = ("0" + d.getDate()).slice(-2) + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" +
-d.getFullYear();
-document.getElementById("datepicker").value = datestring;
-
-
-
-
-$(document).ready(function() {
-    $("input[name$='analysisType']").click(function() {
-        var test = $(this).val();
-
-        $("div.desc").hide();
-        $("#analysisType" + test).show();
-    });
-});
-
-
-$(document).ready(function() {
-    $("input[name$='time']").click(function() {
-        var test2 = $(this).val();
-        $("div.desc2").hide();
-        $("#commitTime" + test2).show();
-    });
-});
-
-
-
-$( function() {
-    $( "#datepicker" ).datepicker({
-    	setDate : new Date(),
-    	minDate: 0,
-    	dateFormat: "dd-mm-yy", 
-    	defaultDate: new Date()
-    });
-  } );
-
-$(document).ready(function() {
-	    $("input[name$='schedule']").click(function() {
-	        var test1 = $(this).val();
-	        $("div.desc1").hide();
-	        $("#schedule" + test1).show();
-	    });
-	});
-
-  
-
-$(function() {
-    	$("#timepicker").timepicker({
-    	    timeFormat: 'HH:mm',
-    	    interval: 30,
-        use24hours: true,
-    	    defaultTime: '7',
-    	    startTime: '10:00',
-    	    dynamic: false,
-    	    dropdown: true,
-    	    scrollbar: true
-    	});})
-    	
-    	
- $(function () {
-        $("#pastAnalysis").click(function () {        	
-            if ($(this).is(":checked")) {
-                $("#analysisType2").show();
-            } else {
-                $("#analysisType2").hide();
-            }
-        });
-    });
-    	
-
-    	
-</script>
 
 
 

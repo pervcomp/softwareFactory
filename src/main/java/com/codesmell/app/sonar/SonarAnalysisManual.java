@@ -57,9 +57,10 @@ public class SonarAnalysisManual extends Thread {
 			if (commitDao.findBySsa(sha) == null) {
 				String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(), sha,
 						analysis.getIdSerial() + "", url);
-				if (commitStr!=null)
+				if (commitStr!=null){
 					if (!commitStr.isEmpty())
-					addCommit(commitStr, analysis.getIdSerial());
+						addCommit(commitStr, analysis.getIdSerial());
+					}
 			}
 		}
 		closeAnalysis(analysis.get_id());
