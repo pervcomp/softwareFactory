@@ -10,7 +10,7 @@ public class Project extends BaseEntity
 	private String versionType;
 	private Date analysisStartDate;
 	private String anaysisRepetition;
-	private String idUser;
+	private String tempProjectId;
 	private String email;
 	private String sonarKey;
 	private String sonarVersion;
@@ -89,12 +89,12 @@ public class Project extends BaseEntity
 		this.anaysisRepetition = anaysisRepetition;
 	}
 
-	public String getIdUser() {
-		return idUser;
+	public String getTempProjectId() {
+		return tempProjectId;
 	}
 
-	public void setIdUser(String idUser) {
-		this.idUser = idUser;
+	public void setTempProjectId(String tempProjectId) {
+		this.tempProjectId = tempProjectId;
 	}
 	
 	public String getEmail() {
@@ -228,6 +228,9 @@ public class Project extends BaseEntity
 		this.manualCommitSSH = manualCommitSSH;
 	}
 	
+	public void set_id(String _id) {
+		this._id = _id;
+	}
 	
 	/* 
 	public String getPortNr(){

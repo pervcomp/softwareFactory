@@ -401,8 +401,79 @@ class ProjectController {
 		model.addAttribute("email",(String) req.getSession().getAttribute("email"));
 		model.addAttribute("project", project);
 		
+		ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
+		        commitErrorDao);
+		cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
+		model.addAttribute("id","");
+		
+		this.projectDao.save(project);
+		
+		
 		return "editProject";
 	}
+	
+	// to update the project in the ediProject.html
+		@PostMapping("/updateProject")
+		public String updateProject(Model model, @ModelAttribute Project project,
+				HttpServletRequest req, HttpServletResponse resp) {
+			ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
+					commitErrorDao);
+			String emailSt = (String) req.getSession().getAttribute("email");
+			model.addAttribute("email", emailSt);
+			project.setEmail(emailSt);
+			
+			//evitare clash di nomi
+			/*
+			 * se getProjectName() == il nuovo name
+			 * 	ERROR: "Project with that name already exists!"
+			 * 
+			 * TODO: same control on the Project key uniqueness
+			 *
+			*/
+			
+			//Project name must be unique
+			if (projectDao.findByprojectName(project.getProjectName()) == null) {
+				
+				Project projectToBeSaved = projectDao.findBy_id(project.getTempProjectId());
+				String oldProjectName = projectToBeSaved.getProjectName();
+				
+				projectToBeSaved.setProjectName(project.getProjectName());
+				projectToBeSaved.setVersionType(project.getVersionType());
+				projectToBeSaved.setUrl(project.getUrl());
+				projectToBeSaved.setSonarKey(project.getSonarKey());
+				projectToBeSaved.setSonarVersion(project.getSonarVersion());
+				projectToBeSaved.setAnalysePast(project.getAnalysePast());
+				
+				List<Commit> oldCommits = this.commitDao.findByProjectNameOrderByCreationDateDesc(oldProjectName);
+				for(Commit c : oldCommits){
+					c.setProjectName(project.getProjectName());
+					this.commitDao.save(c);
+				}
+				
+				List<CommitAnalysis> oldCommitsAnalysis = this.commitAnalysisDao.findByIdProject(oldProjectName);
+				for(CommitAnalysis c : oldCommitsAnalysis){
+					c.setIdProject(project.getProjectName());
+					this.commitAnalysisDao.save(c);
+				}
+				
+				Schedule oldSchedule = this.scheduleDao.findByProjectName(oldProjectName);
+				if(oldSchedule != null){
+					oldSchedule.setProjectName(project.getProjectName());
+				}				
+				
+				
+				projectDao.save(projectToBeSaved);
+				
+				cu.configureModelLandingPage(model, emailSt);
+				return "landingPage";
+			}
+			else {
+				model.addAttribute("errorProjectNameExists", "Project with that name already exists!");
+				cu.configureModelLandingPage(model, emailSt);
+				return "editProject";
+			}
+			
+		}
 	
    @PostMapping("/stopAnalysis")
    public String stopAnalysis(Model model, @ModelAttribute Project project, HttpServletRequest req,

@@ -30,3 +30,7 @@ form {
 	width:30%;
 }
 
+.error-projectDuplicate {
+	color: red;
+}
+
