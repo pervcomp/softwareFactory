@@ -48,6 +48,7 @@ import code.codesmell.app.controllerUtilities.ControllerUtilities;
 public class SonarAnalysisSchedule implements org.quartz.Job {
 	private Project project;
 	private Commit lastCommit;
+	private CommitAnalysis analysis;
 	private int interval = 1;
 	@Autowired
 	private CommitAnalysisDao commitAnalysisDao;
@@ -70,6 +71,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
 	    SchedulerContext context = null;
+	    checkAvailability();
 
 		try {
 			context = arg0.getScheduler().getContext();
@@ -86,17 +88,17 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 		if (commitDao.findByProjectNameOrderByCreationDateDesc(project.getProjectName()).get(0) != null)
 			this.lastCommit = commitDao.findByProjectNameOrderByCreationDateDesc(project.getProjectName()).get(0);
 		// Analysis status is updated
-		CommitAnalysis ca = new CommitAnalysis();
-		ca.setIdProject(project.getProjectName());
-		ca.setConfigurationFile(project.getProjectName() + ".properties");
-		commitAnalysisDao.insert(ca);
-		ca.setIdSerial(commitAnalysisDao.findByIdProject(project.getProjectName()).size() + 1);
-		ca.setStatus("Processing");
-		ca.setStartDate(new Date());
-		commitAnalysisDao.save(ca);
+		analysis = new CommitAnalysis();
+		analysis.setIdProject(project.getProjectName());
+		analysis.setConfigurationFile(project.getProjectName() + ".properties");
+		commitAnalysisDao.insert(analysis);
+		analysis.setIdSerial(commitAnalysisDao.findByIdProject(project.getProjectName()).size() + 1);
+		analysis.setStatus("Processing");
+		analysis.setStartDate(new Date());
+		commitAnalysisDao.save(analysis);
 
 		String url = project.getUrl();
-		String conf = ca.getConfigurationFile();
+		String conf = analysis.getConfigurationFile();
 		
 
 		String[] splits = url.split("/");
@@ -155,11 +157,11 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 					flag = false;
 				count++;
 				if (commitDao.findBySsa(sha) == null && flag) {
-					String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(),sha,  ca.getIdSerial()+"",url);
-					addCommit(commitStr,ca.getIdSerial());
+					String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(),sha,  analysis.getIdSerial()+"",url);
+					addCommit(commitStr,analysis.getIdSerial());
 				}
 			}
-			closeAnalysis(ca.get_id());
+			closeAnalysis(analysis.get_id());
 	
 	}
 
@@ -223,4 +225,27 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 			commitErrorDao.insert(commitError);
 		}
 	}
+	
+	/**
+	 * If there is an analysis Processing, the analysis is queued
+	 */
+	private void checkAvailability(){
+		while(this.commitAnalysisDao.findByStatus("Processing").size() > 0){
+			// Analysis status is updated
+			analysis.setStatus("Queued");
+			analysis.setStartDate(new Date());
+			commitAnalysisDao.save(analysis);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		// Analysis status is updated
+			analysis.setStatus("Processing");
+			analysis.setStartDate(new Date());
+			commitAnalysisDao.save(analysis);
+	}
+
 	}

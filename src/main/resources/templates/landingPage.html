@@ -103,7 +103,21 @@
 					</form>
 				</td>
 				<td
-					th:if="${project.status == 'Processing' or project.status == 'Queued'}">
+					th:if="${project.status == 'Processing'">
+					<form th:action="@{/stopAnalysis}" th:object="${projectToSend}"
+						method="POST">
+						<button type="submit" data-title="Stop Analysis"
+							data-toggle="modal" data-target="#edit"
+							class="btn btn-danger btn-xs">
+							<span class="glyphicon glyphicon-stop white"></span>
+						</button>
+						<input type="hidden" id="projectName" name="projectName"
+							th:value="${project.projectName}" />
+					</form>
+				</td>
+				
+						<td
+					th:if="${project.status == 'Queued'">
 					<form th:action="@{/stopAnalysis}" th:object="${projectToSend}"
 						method="POST">
 						<button type="submit" data-title="Stop Analysis"

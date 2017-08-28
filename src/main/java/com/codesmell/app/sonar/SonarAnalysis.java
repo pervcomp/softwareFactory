@@ -86,6 +86,8 @@ public class SonarAnalysis extends Thread {
 		analysis.setStatus("Processing");
 		analysis.setStartDate(new Date());
 		commitAnalysisDao.save(analysis);
+		
+		this.checkAvailability();
 
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
@@ -220,6 +222,28 @@ public class SonarAnalysis extends Thread {
 			commitError.setEmail(project.getEmail());
 			commitErrorDao.insert(commitError);
 		}
+	}
+	
+	/**
+	 * If there is an analysis Processing, the analysis is queued
+	 */
+	private void checkAvailability(){
+		while(this.commitAnalysisDao.findByStatus("Processing").size() > 0){
+			// Analysis status is updated
+			analysis.setStatus("Queued");
+			analysis.setStartDate(new Date());
+			commitAnalysisDao.save(analysis);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		// Analysis status is updated
+			analysis.setStatus("Processing");
+			analysis.setStartDate(new Date());
+			commitAnalysisDao.save(analysis);
 	}
 
 }
