@@ -26,9 +26,9 @@
 			<tr>
 				<th><a  data-html="true"
 					data-toggle="tooltip" 
-					title="GREEN: more than 70% of the Analysis of this week are successfull
-                    <br>YELLOW: at least 30% of the Analysis of this week are successfull
-                    <br>RED: less of 30% of the Analysis of this week are successfull  ">
+					title="GREEN: more than 70% of this week's analyses are successfull
+                    <br>YELLOW: at least 30% of this week's analyses are successfull
+                    <br>RED: less than 30% of this week's analyses are successfull  ">
 						<span class="glyphicon glyphicon-info-sign"></span>
 				</a></th>
 				<th>ProjectName</th>
@@ -56,7 +56,8 @@
 						th:object="${projectToSend}" method="POST">
 						<input type="hidden" id="projectName" name="projectName"
 							th:value="${project.projectName}" /> <input type="submit"
-							class="btn btn-secondary" th:value="${project.projectName}">
+							class="btn btn-secondary" th:value="${project.projectName}" data-toggle="tooltip" title="View Analyses/Project Details">
+							
 					</form>
 				</td>
 				<td>
@@ -131,7 +132,7 @@
 				<td>
 					<form id="${project.projectName}" th:action="@{/editProject}"
 						th:object="${projectToSend}" method="POST">
-						<a href="#" data-toggle="tooltip" title="Edit Project">
+						<a href="#" data-toggle="tooltip" title="Edit Project Information">
 						<button type="submit" class="btn btn-primary btn-xs"
 							data-title="Edit" data-toggle="modal" data-target="#edit">
 							<span class="glyphicon glyphicon-pencil"></span>

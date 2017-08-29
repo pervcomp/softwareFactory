@@ -421,16 +421,7 @@ class ProjectController {
 			String emailSt = (String) req.getSession().getAttribute("email");
 			model.addAttribute("email", emailSt);
 			project.setEmail(emailSt);
-			
-			//evitare clash di nomi
-			/*
-			 * se getProjectName() == il nuovo name
-			 * 	ERROR: "Project with that name already exists!"
-			 * 
-			 * TODO: same control on the Project key uniqueness
-			 *
-			*/
-			
+		
 			//Project name must be unique
 			if (projectDao.findByprojectName(project.getProjectName()) == null) {
 				
@@ -467,6 +458,7 @@ class ProjectController {
 				cu.configureModelLandingPage(model, emailSt);
 				return "landingPage";
 			}
+			//else, project with that name already in DB
 			else {
 				model.addAttribute("errorProjectNameExists", "Project with that name already exists!");
 				cu.configureModelLandingPage(model, emailSt);

@@ -127,6 +127,7 @@
 						<span class="glyphicon glyphicon-refresh"></span> Schedule a new
 						analysis
 					</button>
+					<button type="button" class="btn btn-custom" onclick="window.history.go(-1); return false;">Cancel</button>
 				</td>
 		</tr>
 		<tr th:if="${project.nextAnalysis == null}">
