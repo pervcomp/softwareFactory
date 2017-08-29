@@ -34,3 +34,14 @@ form {
 	color: red;
 }
 
+input[readonly] {
+	background-color: #D3D3D3;
+}
+
+option[readonly] {
+	background-color: #D3D3D3;
+}
+
+select[readonly] {
+	background-color: #D3D3D3;
+}
