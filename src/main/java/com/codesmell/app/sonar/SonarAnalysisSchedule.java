@@ -71,8 +71,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
 	    SchedulerContext context = null;
-	    checkAvailability();
-
+	   
 		try {
 			context = arg0.getScheduler().getContext();
 		} catch (SchedulerException e1) {
@@ -96,6 +95,9 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 		analysis.setStatus("Processing");
 		analysis.setStartDate(new Date());
 		commitAnalysisDao.save(analysis);
+		
+		checkAvailability();
+
 
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
