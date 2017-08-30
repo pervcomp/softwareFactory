@@ -243,6 +243,7 @@ public class ControllerUtilities {
 			if (schedule != null) {
 				JobDetail job = JobBuilder.newJob(SonarAnalysisSchedule.class)
 						.withIdentity(project.getProjectName(), project.getProjectName()).build();
+				job.getJobDataMap().put("project", project);
 				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 				sdf.setTimeZone(TimeZone.getTimeZone("Europe/Rome"));
 				Trigger runOnceTrigger = null;
@@ -266,6 +267,7 @@ public class ControllerUtilities {
 					scheduler.getContext().put("commitDao", commitDao);
 					scheduler.getContext().put("commitErrorDao", commitErrorDao);
 					scheduler.getContext().put("project", project);
+	
 					scheduler.getContext().put("analysis", ca);
 					scheduler.getContext().put("interval", project.getInterval());
 					scheduler.scheduleJob(job, runOnceTrigger);

@@ -229,6 +229,8 @@ class ProjectController {
 			Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 			JobDetail job = JobBuilder.newJob(SonarAnalysisSchedule.class)
 					.withIdentity(p.getProjectName(), p.getProjectName()).build();
+			job.getJobDataMap().put("project", p);
+			job.getJobDataMap().put("interval", 1);
 			int totalMinutes = s.getRepetitionDay() * 24 * 60 + s.getRepetitionHours() * 60 + s.getRepetitionMinutes();
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 			sdf.setTimeZone(TimeZone.getTimeZone("Europe/Rome"));
@@ -241,8 +243,8 @@ class ProjectController {
 			scheduler.getContext().put("commitAnalysisDao", commitAnalysisDao);
 			scheduler.getContext().put("commitErrorDao", commitErrorDao);
 			scheduler.getContext().put("commitDao", commitDao);
-			scheduler.getContext().put("project", p);
-			scheduler.getContext().put("interval", 1);
+			//scheduler.getContext().put("project", p);
+			//scheduler.getContext().put("interval", 1);
 			scheduler.scheduleJob(job, runOnceTrigger);
 			scheduler.start();
 			s.setRepetitionDay(0);

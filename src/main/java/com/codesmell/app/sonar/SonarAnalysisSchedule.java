@@ -26,6 +26,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.SchedulerContext;
@@ -78,9 +79,16 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		JobDataMap dataMap = arg0.getJobDetail().getJobDataMap();
+		//fetch parameters from JobDataMap
+		this.project  = (Project) dataMap.get("project");
+		this.interval  = (int)dataMap.get("interval");
 		
-		this.project  = (Project)context.get("project");
-		this.interval  = (int)context.get("interval");
+		
+		
+		
+		//this.project  = (Project)context.get("project");
+		
 		this.commitAnalysisDao = (CommitAnalysisDao)context.get("commitAnalysisDao");
 		this.commitDao = (CommitDao)context.get("commitDao");
 		this.commitErrorDao = (CommitErrorDao)context.get("commitErrorDao");
