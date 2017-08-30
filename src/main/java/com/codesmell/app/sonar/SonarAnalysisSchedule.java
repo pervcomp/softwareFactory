@@ -78,12 +78,13 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		this.project  = (Project)context.get("project");
-		this.interval  = (int)context.get("interval");
-		this.commitAnalysisDao = (CommitAnalysisDao)context.get("commitAnalysisDao");
-		this.commitDao = (CommitDao)context.get("commitDao");
-		this.commitErrorDao = (CommitErrorDao)context.get("commitErrorDao");
+		if (this.project == null){
+			this.project  = (Project)context.get("project");
+			this.interval  = (int)context.get("interval");
+			this.commitAnalysisDao = (CommitAnalysisDao)context.get("commitAnalysisDao");
+			this.commitDao = (CommitDao)context.get("commitDao");
+			this.commitErrorDao = (CommitErrorDao)context.get("commitErrorDao");
+		}
 		if (commitDao.findByProjectNameOrderByCreationDateDesc(project.getProjectName()).get(0) != null)
 			this.lastCommit = commitDao.findByProjectNameOrderByCreationDateDesc(project.getProjectName()).get(0);
 		// Analysis status is updated
