@@ -1,0 +1,79 @@
+pipeline {
+    
+    agent any
+    tools {
+        maven 'Maven'
+    }
+
+    stages {
+        stage ('Initialize') {
+            steps {
+                sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+                '''
+            }
+        }
+        
+          stage ('rm') {
+            steps {
+                sh 'rm -rf softwareFactory'
+        }}
+        
+        
+        stage ('git') {
+            steps {
+                sh 'git clone https://github.com/amitsolanki8189/softwareFactory.git' 
+            }
+        }
+        
+          stage ('cd') {
+            steps {
+                sh 'cd softwareFactory' 
+            }
+        }
+
+        stage ('Build') {
+            steps {
+                sh 'mvn install -f  softwareFactory/pom.xml' 
+            }
+        }
+        
+        stage('DockerRemove'){
+             steps{
+                sh 'docker stop softwarefactory'
+            }
+        }
+        
+           stage('DockerStop'){
+             steps{
+                sh 'docker rm softwarefactory'
+            }
+        }
+        
+        stage('DockerRemovei'){
+             steps{
+                sh 'docker rmi softwarefactory'
+            }
+        }
+        
+        stage('Docker'){
+             steps {
+                sh 'docker build -f softwareFactory/Dockerfile -t softwarefactory .' }
+        }
+        
+      
+        
+        stage('DockerRun'){
+             steps{
+                sh 'docker run -p 8080:8080 -d --name softwarefactory softwarefactory' 
+            }
+        }
+        
+    }
+
+        
+}
+    
+
+    
