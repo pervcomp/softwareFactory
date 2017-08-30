@@ -93,13 +93,13 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 		analysis.setConfigurationFile(project.getProjectName() + ".properties");
 		commitAnalysisDao.insert(analysis);
 		analysis.setIdSerial(commitAnalysisDao.findByIdProject(project.getProjectName()).size() + 1);
-		analysis.setStatus("Processing");
+		analysis.setStatus("Project :" project.getProjectName() );
 		analysis.setStartDate(new Date());
 		commitAnalysisDao.save(analysis);
 		
 		checkAvailability();
 
-
+try{Thread.sleep(20000);}catch(Exception e){}
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
 		
