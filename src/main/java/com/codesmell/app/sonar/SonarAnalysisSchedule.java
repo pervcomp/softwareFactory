@@ -37,6 +37,7 @@ import org.springframework.stereotype.Component;
 import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
 import com.codesmell.app.dao.CommitErrorDao;
+import com.codesmell.app.dao.ProjectDao;
 import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.CommitError;
@@ -56,6 +57,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 	@Autowired
 	private CommitDao commitDao;
 	private CommitErrorDao commitErrorDao;
+	private ProjectDao projectDao;
 
 	public SonarAnalysisSchedule() {
 	}
@@ -71,7 +73,11 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
-	    SchedulerContext context = null;
+		analysis = new CommitAnalysis();
+		
+		
+
+		SchedulerContext context = null;
 	   
 		try {
 			context = arg0.getScheduler().getContext();
@@ -81,21 +87,18 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 		}
 		JobDataMap dataMap = arg0.getJobDetail().getJobDataMap();
 		//fetch parameters from JobDataMap
-		this.project  = (Project) dataMap.get("project");
-		this.interval  = (int)dataMap.get("interval");
-		
-		
-		
-		
+			
 		//this.project  = (Project)context.get("project");
-		
+		this.projectDao = (ProjectDao)context.get("projectDao");
 		this.commitAnalysisDao = (CommitAnalysisDao)context.get("commitAnalysisDao");
 		this.commitDao = (CommitDao)context.get("commitDao");
+		this.interval = (int)context.get("interval");
+		this.project  = this.projectDao.findByprojectName(arg0.getTrigger().getJobKey().getName());
+
 		this.commitErrorDao = (CommitErrorDao)context.get("commitErrorDao");
 		if (commitDao.findByProjectNameOrderByCreationDateDesc(project.getProjectName()).get(0) != null)
 			this.lastCommit = commitDao.findByProjectNameOrderByCreationDateDesc(project.getProjectName()).get(0);
 		// Analysis status is updated
-		analysis = new CommitAnalysis();
 		analysis.setIdProject(project.getProjectName());
 		analysis.setConfigurationFile(project.getProjectName() + ".properties");
 		commitAnalysisDao.insert(analysis);
@@ -103,9 +106,8 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 		analysis.setStatus("Processing");
 		analysis.setStartDate(new Date());
 		commitAnalysisDao.save(analysis);
-		
 		checkAvailability();
-
+		
 
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
@@ -245,12 +247,6 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 			analysis.setStatus("Queued");
 			analysis.setStartDate(new Date());
 			commitAnalysisDao.save(analysis);
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		// Analysis status is updated
 			analysis.setStatus("Processing");

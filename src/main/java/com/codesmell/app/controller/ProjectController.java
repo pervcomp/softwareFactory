@@ -243,6 +243,7 @@ class ProjectController {
 			scheduler.getContext().put("commitAnalysisDao", commitAnalysisDao);
 			scheduler.getContext().put("commitErrorDao", commitErrorDao);
 			scheduler.getContext().put("commitDao", commitDao);
+			scheduler.getContext().put("projectDao", projectDao);
 			//scheduler.getContext().put("project", p);
 			//scheduler.getContext().put("interval", 1);
 			scheduler.scheduleJob(job, runOnceTrigger);
