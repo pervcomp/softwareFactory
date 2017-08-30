@@ -21,7 +21,7 @@
 <link type="text/css" href="css/newproject.css" rel="stylesheet" />
 	<div class="panel panel-primary" style="margin: 20px;">
 		<div class="panel-heading">
-			<h3 class="panel-title">Please insert the shas of the commits to analyse</h3>
+			<h3 class="panel-title">Please insert the list of commits (their SHAs) to be analysed</h3>
 		</div>
 		<div class="panel-body">		
 			<form th:action="@{/runManualCommitAnalysis}" th:object="${project2}" method="post">
@@ -46,6 +46,7 @@
 							
 
 						<input type="submit" value="Analyse commits">
+						<button type="button" onclick="window.history.go(-1); return false;">Cancel</button>
 				
 						</div>
 			</form>

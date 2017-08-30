@@ -33,7 +33,7 @@
 			<form th:action="@{/updateProject}" th:object="${project}" method="post">
 				<div class="col-md-12 col-sm-12">
 					<div class="hidden-id">
-					<input type="text" th:object="${tempProjectId}" id="tempProjectId"  name="tempProjectId" required="required" th:value="${project._id}">
+					<input type="text" th:object="${tempProjectId}" id="tempProjectId"  name="tempProjectId" required="required" th:value="${project._id}" hidden>
 					</div>
 					<div class="form-group col-md-12 col-sm-12">
 						<label>Project name:</label><br> 
@@ -43,13 +43,13 @@
 						</div>
 					</div>
 					<div class="form-group col-md-12 col-sm-12">
-						<label>Repository's type:</label><select class="custom-select"
-							name="repType"  th:object="${versionType}">
-							<option th:value="${project.versionType}" readonly>Git</option>
+						<label>Repository type: </label><select class="custom-select"
+							name="repType"  th:object="${versionType}" readonly>
+							<option th:value="${project.versionType}">Git</option>
 						</select>
 					</div>
 					<div class="form-group col-md-12 col-sm-12">
-						<label>Repository's URL:</label><br> 
+						<label>Repository URL:</label><br> 
 						<input required="required" type="url"  th:object="${url}"  name="url" th:value="${project.url}" readonly><br></br>
 						<label>Sonar ProjectKey:</label><br> 
 						<input required="required" type="text" th:object="${sonarKey}"  name="sonarKey" th:value="${project.sonarKey}"><br></br>
@@ -58,7 +58,7 @@
 					
 
 						<input type="submit" value="Save">
-						<button type="button">Cancel</button>
+						<button type="button" onclick="window.history.go(-1); return false;">Cancel</button>
 						</div>
 			</form>
 </body>
