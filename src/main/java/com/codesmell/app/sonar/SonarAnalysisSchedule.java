@@ -123,7 +123,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 						+ "/commits?page=" + i + "&per_page=100";
 				HttpClient httpClient = new DefaultHttpClient();
 				HttpGet httpGet = new HttpGet(urlTemp);
-				httpGet.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("luca9294", "Aa30011992"),
+				httpGet.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("smellsUnibz", "Aa30011992"),
 						"UTF-8", false));
 				HttpResponse httpResponse = httpClient.execute(httpGet);
 				JSONArray json = new JSONArray(EntityUtils.toString(httpResponse.getEntity()));
