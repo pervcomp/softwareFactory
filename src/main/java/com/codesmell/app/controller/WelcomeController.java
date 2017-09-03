@@ -89,14 +89,25 @@ class WelcomeController {
 	}
 
 	@RequestMapping("/landingPage")
-	public String landingPaget(Model model, HttpServletRequest req, HttpServletResponse resp) {
-		if (req.getSession().getAttribute("email") == null)
-			return "welcome";
-		else {
-		    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,commitErrorDao);
+	public String landingPaget(Model model, HttpServletRequest req, HttpServletResponse resp,@CookieValue(value = "email", defaultValue = "") String email) {
+	    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,commitErrorDao);
+		if (req.getSession().getAttribute("email") != null) {
 			String emailSession = (String) req.getSession().getAttribute("email");
 			cu.configureModelLandingPage(model, emailSession);
 			cu.scheduleDailyReport(userDao.findByEmail1((String)req.getSession().getAttribute("email")), mailSender);
+			return "landingPage";
+		} else if (!email.isEmpty()) {
+			req.getSession().setAttribute("email", email);
+			cu.configureModelLandingPage(model, email);
+			cu.scheduleDailyReport(userDao.findByEmail1((String)req.getSession().getAttribute("email")), mailSender);
+			cu.configureModelLandingPage(model, email);
+			return "landingPage";
+		}
+		else {
+			String emailSession = (String) req.getSession().getAttribute("email");
+			cu.configureModelLandingPage(model, emailSession);
+			cu.scheduleDailyReport(userDao.findByEmail1((String)req.getSession().getAttribute("email")), mailSender);
+			cu.configureModelLandingPage(model, emailSession);
 			return "landingPage";
 		}
 	}
