@@ -412,14 +412,7 @@ class ProjectController {
 
 		this.projectDao.save(project);
 
-		try {
-			FileUtils.deleteDirectory(new File(project.getProjectName() + ".properties"));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		writeConfigFile(project);
-		cu.modifyConfFile(project.getProjectName());
+
 		return "editProject";
 	}
 	
@@ -445,6 +438,7 @@ class ProjectController {
 				projectToBeSaved.setSonarKey(project.getSonarKey());
 				projectToBeSaved.setSonarVersion(project.getSonarVersion());
 				projectToBeSaved.setAnalysePast(project.getAnalysePast());
+				projectToBeSaved.setSource(project.getSource());
 				
 				List<Commit> oldCommits = this.commitDao.findByProjectNameOrderByCreationDateDesc(oldProjectName);
 				for(Commit c : oldCommits){
@@ -465,6 +459,10 @@ class ProjectController {
 				
 				
 				projectDao.save(projectToBeSaved);
+				new File(projectToBeSaved.getProjectName() + ".properties").deleteOnExit();
+		
+				writeConfigFile(projectToBeSaved);
+				cu.modifyConfFile(project.getProjectName());
 				
 				cu.configureModelLandingPage(model, emailSt);
 				return "landingPage";
