@@ -20,5 +20,8 @@ public interface ProjectDao extends MongoRepository<Project, String>
 	
 	public List<Project> findByemail(String  email);
 	
+	public Project findByPortNr(String portNr);
+	
+	
 
 }

@@ -28,6 +28,8 @@ public class Project extends BaseEntity
 	private Date nextAnalysis;
 	private String lastWeekReport;
 	private String manualCommitSSH;
+	private String portNr;
+	private String container;
 	
 	
 	public Project() 
@@ -232,7 +234,7 @@ public class Project extends BaseEntity
 		this._id = _id;
 	}
 	
-	/* 
+	
 	public String getPortNr(){
 		return this.portNr;
 	}
@@ -247,7 +249,7 @@ public class Project extends BaseEntity
 	
 	public void setContainer(String container){
 		this.container = container;
-	}*/
+	}
 	
 	
 }

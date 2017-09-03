@@ -425,154 +425,151 @@ public class ControllerUtilities {
 			}
 		}
 	}
-
+	
 	/**
-	 * Run an analysis invoking a REST WEB SERVICE. Port parameter for
-	 * Microservice version
-	 * 
-	 * @param projectName
-	 * @param sha
-	 * @param analysisId
-	 * @param url
-	 * @return
-	 */
-	public String restAnalysis(String projectName, String sha, String analysisId, String url) {
-		String urlWs = urlWsVar + "/analyseRevision";
-		/*
-		 * if (port != null) { urlWs = urlWsVar + ":" + port +
-		 * "/analyseRevision"; while (!pingHost(Integer.parseInt(port))) { try {
-		 * Thread.sleep(1000); } catch (InterruptedException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); } } }
-		 */
-
+     * Run an analysis invoking a REST WEB SERVICE
+     * @param projectName
+     * @param sha
+     * @param analysisId
+     * @param url
+     * @return
+     */
+	public String restAnalysis(String projectName,String sha, String analysisId, String url, String port)  {
+		String urlWs = urlWsVar+":"+port+"/analyseRevision";
+		while(!pingHost(Integer.parseInt(port))){
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}}
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-		String st = "";
-		if (new File(projectName + ".properties").exists()) {
-			try {
-				st = new String(Base64.encode(Files.readAllBytes(Paths.get(projectName + ".properties"))), "UTF-8");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).queryParam("projectName", projectName)
-				.queryParam("sha", sha).queryParam("analysis", analysisId).queryParam("url", url)
-				.queryParam("conf", st);
+		String st="";
+		if (new File(projectName + ".properties").exists()){	
+		try {
+			st = new String(Base64.encode(Files.readAllBytes(Paths.get(projectName + ".properties"))),"UTF-8");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}}
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs)
+		        .queryParam("projectName", projectName)
+		        .queryParam("sha", sha)
+		        .queryParam("analysis", analysisId)
+		        .queryParam("url", url)
+		        .queryParam("conf", st);
 
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 		RestTemplate restTemplate = new RestTemplate();
 		String temp = builder.build().encode().toUri().toString();
-		return restTemplate.getForEntity(temp, String.class).getBody();
+		return  restTemplate.getForEntity(temp, String.class).getBody();
 	}
-
-	/**
-	 * It checks wheter the webservice for the analysis is available
-	 * 
-	 * @param port
-	 * @return
-	 */
-	private boolean pingHost() {
-
-		String address = urlWsVar;
-		try {
-			final URL url = new URL(address);
-			final HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
-			urlConn.setConnectTimeout(1000 * 1); // mTimeout is in seconds
-			final long startTime = System.currentTimeMillis();
-			urlConn.connect();
-			final long endTime = System.currentTimeMillis();
-			if (urlConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				System.out.println("Time (ms) : " + (endTime - startTime));
-				System.out.println("Ping to " + address + " was success");
-				return true;
-			}
-		} catch (final MalformedURLException e1) {
-			return false;
-		} catch (final IOException e) {
-			return false;
-		}
-		return false;
-	}
-
+	
+	private  boolean pingHost(int port) {
+	  
+	        String address = urlWsVar+":"+port+"/getActualError";
+	        try {
+	        	  final URL url = new URL(address);
+	        	  final HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+	        	  urlConn.setConnectTimeout(1000 * 1); // mTimeout is in seconds
+	        	  final long startTime = System.currentTimeMillis();
+	        	  urlConn.connect();
+	        	  final long endTime = System.currentTimeMillis();
+	        	  if (urlConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+	        	   System.out.println("Time (ms) : " + (endTime - startTime));
+	        	   System.out.println("Ping to "+address +" was success");
+	        	   return true;
+	        	  }
+	        	 } catch (final MalformedURLException e1) {
+	        	  return false;
+	        	 } catch (final IOException e) {
+	        		 return false;
+	        	 }
+	        	 return false;
+}
+	
+	
 	/**
 	 * It gets Actual Error using REST web Service
-	 * 
 	 * @return
 	 */
-	public String restGetActualError() {
-		String urlWs = urlWsVar + "/getActualError";
+	public String restGetActualError(String port)  {
+		String urlWs = urlWsVar+":"+port+"/getActualError";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs);
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 		RestTemplate restTemplate = new RestTemplate();
 		String temp = builder.build().encode().toUri().toString();
-		return restTemplate.getForEntity(temp, String.class).getBody();
+		return  restTemplate.getForEntity(temp, String.class).getBody();
 	}
-
+    
 	/**
 	 * Deletes temp file of a deleted project
-	 * 
 	 * @return
 	 */
-	public void deleteProjectFiles(String projectName) {
-		String urlWs = urlWsVar + "/deleteProject";
+	public void deleteProjectFiles(String projectName, String port)  {
+		String urlWs = urlWsVar+":"+port+"/deleteProject";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).queryParam("projectName", projectName);
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).
+				queryParam("projectName", projectName);
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 		RestTemplate restTemplate = new RestTemplate();
 		String temp = builder.build().encode().toUri().toString();
 	}
-
+	
 	/**
-	 * NOT USED IN THE CURRENT VERSION It creates a new Docker Container at the
-	 * specified port for the microservice version
-	 * 
+	 * It creates a new Docker Container at the specified port
 	 * @param portNr
 	 * @return
 	 */
-	public String createContainerRest(String portNr) {
-		String urlWs = urlWsVar + ":8080/createMicroservice/";
+	public String createContainerRest(String portNr){
+		String urlWs = urlWsVar+":8080/createMicroservice/";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).queryParam("port", portNr);
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).
+				queryParam("port", portNr);
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 		RestTemplate restTemplate = new RestTemplate();
 		String temp = builder.build().encode().toUri().toString();
 		String result = restTemplate.getForEntity(temp, String.class).getBody();
-		return result.substring(0, 12);
+		return result.substring(0,12);
 	}
-
+	
 	/**
-	 * NOT USED IN THE CURRENT VERSION It creates a new Docker Container at the
-	 * specified port
-	 * 
+	 * It creates a new Docker Container at the specified port
 	 * @param portNr
 	 * @return
 	 */
-	public String deleteContainerRest(String container) {
-		String urlWs = urlWsVar + ":8080/deleteMicroservice/";
+	public String deleteContainerRest(String container){
+		String urlWs = urlWsVar+":8080/deleteMicroservice/";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).queryParam("container", container);
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).
+				queryParam("container", container);
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 		RestTemplate restTemplate = new RestTemplate();
 		String temp = builder.build().encode().toUri().toString();
 		return restTemplate.getForEntity(temp, String.class).getBody();
 	}
+	
+	
 
 	/**
 	 * Used for the microservice version
 	 * 
 	 * @return
 	 */
-	/*
-	 * public String getAvailablePortNumber() { /*Random r = new Random(); int
-	 * low = 8000; int high = 9000; int result = r.nextInt(high - low) + low;
-	 * while (projectDao.findByPortNr(result + "") != null) result =
-	 * r.nextInt(high - low) + low; return result + ""; }
-	 */
+	public String getAvailablePortNumber() {
+		Random r = new Random();
+		int low = 8000;
+		int high = 9000;
+		int result = r.nextInt(high - low) + low;
+		while (projectDao.findByPortNr(result + "") != null)
+			result = r.nextInt(high - low) + low;
+		return result + "";
+	}
 
 }

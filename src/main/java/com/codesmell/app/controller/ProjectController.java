@@ -86,6 +86,10 @@ class ProjectController {
 			HttpServletRequest req, HttpServletResponse resp) {
 		ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
 				commitErrorDao);
+		String port      = cu.getAvailablePortNumber();
+		String container = cu.createContainerRest(port);
+		project.setContainer(container);
+		project.setPortNr(port);
 		String emailSt = (String) req.getSession().getAttribute("email");
 		model.addAttribute("email", emailSt);
 		project.setEmail(emailSt);
@@ -365,7 +369,7 @@ class ProjectController {
         ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
         commitErrorDao);
  		cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
-		cu.deleteProjectFiles(projectToSend.getProjectName());
+		cu.deleteProjectFiles(projectToSend.getProjectName(),projectToSend.getPortNr());
  		return "landingPage";
 	}
 
