@@ -425,10 +425,7 @@ class ProjectController {
 			String emailSt = (String) req.getSession().getAttribute("email");
 			model.addAttribute("email", emailSt);
 			project.setEmail(emailSt);
-		
-			//Project name must be unique
-			if (projectDao.findByprojectName(project.getProjectName()) == null) {
-				
+					
 				Project projectToBeSaved = projectDao.findBy_id(project.getTempProjectId());
 				String oldProjectName = projectToBeSaved.getProjectName();
 				
@@ -465,15 +462,7 @@ class ProjectController {
 				cu.modifyConfFile(project.getProjectName());
 				
 				cu.configureModelLandingPage(model, emailSt);
-				return "landingPage";
-			}
-			//else, project with that name already in DB
-			else {
-				model.addAttribute("errorProjectNameExists", "Project with that name already exists!");
-				cu.configureModelLandingPage(model, emailSt);
-				return "editProject";
-			}
-			
+				return "landingPage";	
 		}
 	
    @PostMapping("/stopAnalysis")
