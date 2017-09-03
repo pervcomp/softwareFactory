@@ -28,6 +28,7 @@ public class Project extends BaseEntity
 	private Date nextAnalysis;
 	private String lastWeekReport;
 	private String manualCommitSSH;
+	private String source = ".";
 	
 	
 	public Project() 
@@ -231,6 +232,15 @@ public class Project extends BaseEntity
 	public void set_id(String _id) {
 		this._id = _id;
 	}
+	
+	public void setSource(String source) {
+		this.source = source;
+	}
+	
+	public String getSource() {
+		return source;
+	}
+	
 	
 	/* 
 	public String getPortNr(){

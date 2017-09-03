@@ -15,6 +15,7 @@ import java.util.TimeZone;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.JobKey;
@@ -337,7 +338,7 @@ class ProjectController {
 			writer.println("sonar.projectVersion=" + project.getSonarVersion());
 			writer.println("sonar.host.url=http://sonar.inf.unibz.it/");
 			writer.println("# Comma-separated paths to directories with sources (required)");
-			writer.println("sonar.sources=.");
+			writer.println("sonar.sources="+project.getSource());
 			writer.println("# Encoding of the source files");
 			writer.println("sonar.sourceEncoding=UTF-8");
 			writer.println("gitRepo=" + project.getUrl());
@@ -401,17 +402,24 @@ class ProjectController {
 			HttpServletResponse resp) 
 	{
 		project = this.projectDao.findByprojectName(project.getProjectName());
-		model.addAttribute("email",(String) req.getSession().getAttribute("email"));
+		model.addAttribute("email", (String) req.getSession().getAttribute("email"));
 		model.addAttribute("project", project);
-		
+
 		ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
-		        commitErrorDao);
+				commitErrorDao);
 		cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
-		model.addAttribute("id","");
-		
+		model.addAttribute("id", "");
+
 		this.projectDao.save(project);
-		
-		
+
+		try {
+			FileUtils.deleteDirectory(new File(project.getProjectName() + ".properties"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		writeConfigFile(project);
+		cu.modifyConfFile(project.getProjectName());
 		return "editProject";
 	}
 	

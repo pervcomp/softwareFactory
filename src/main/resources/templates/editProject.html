@@ -55,8 +55,10 @@
 						<input required="required" type="text" th:object="${sonarKey}"  name="sonarKey" th:value="${project.sonarKey}"><br></br>
 						<label>Sonar ProjectVersion:</label><br> 
 						<input required="required" type="number" th:object="${sonarVersion}"  name="sonarVersion" th:value="${project.sonarVersion}"><br></br>
+                        <label>Sonar Sources:</label><br>
+                        <input required="required" value="." type="text" th:object="${source}" name="source"><br></br>
+                        <br>
 					
-
 						<input type="submit" value="Save">
 						<button type="button" onclick="window.history.go(-1); return false;">Cancel</button>
 						</div>

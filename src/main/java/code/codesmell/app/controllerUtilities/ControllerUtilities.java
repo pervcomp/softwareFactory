@@ -438,13 +438,6 @@ public class ControllerUtilities {
 	 */
 	public String restAnalysis(String projectName, String sha, String analysisId, String url) {
 		String urlWs = urlWsVar + "/analyseRevision";
-		/*
-		 * if (port != null) { urlWs = urlWsVar + ":" + port +
-		 * "/analyseRevision"; while (!pingHost(Integer.parseInt(port))) { try {
-		 * Thread.sleep(1000); } catch (InterruptedException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); } } }
-		 */
-
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 		String st = "";
@@ -525,54 +518,31 @@ public class ControllerUtilities {
 		RestTemplate restTemplate = new RestTemplate();
 		String temp = builder.build().encode().toUri().toString();
 	}
-
+	
+	
 	/**
-	 * NOT USED IN THE CURRENT VERSION It creates a new Docker Container at the
-	 * specified port for the microservice version
+	 * Modify Conf Files
 	 * 
-	 * @param portNr
 	 * @return
 	 */
-	public String createContainerRest(String portNr) {
-		String urlWs = urlWsVar + ":8080/createMicroservice/";
+	public String modifyConfFile(String projectName) {
+		String urlWs = urlWsVar + "/updateConfFile";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).queryParam("port", portNr);
-		HttpEntity<?> entity = new HttpEntity<>(headers);
-		RestTemplate restTemplate = new RestTemplate();
-		String temp = builder.build().encode().toUri().toString();
-		String result = restTemplate.getForEntity(temp, String.class).getBody();
-		return result.substring(0, 12);
-	}
-
-	/**
-	 * NOT USED IN THE CURRENT VERSION It creates a new Docker Container at the
-	 * specified port
-	 * 
-	 * @param portNr
-	 * @return
-	 */
-	public String deleteContainerRest(String container) {
-		String urlWs = urlWsVar + ":8080/deleteMicroservice/";
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).queryParam("container", container);
+		String st = "";
+		if (new File(projectName + ".properties").exists()) {
+			try {
+				st = new String(Base64.encode(Files.readAllBytes(Paths.get(projectName + ".properties"))), "UTF-8");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).queryParam("projectName", projectName)
+				.queryParam("conf", st);
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 		RestTemplate restTemplate = new RestTemplate();
 		String temp = builder.build().encode().toUri().toString();
 		return restTemplate.getForEntity(temp, String.class).getBody();
 	}
-
-	/**
-	 * Used for the microservice version
-	 * 
-	 * @return
-	 */
-	/*
-	 * public String getAvailablePortNumber() { /*Random r = new Random(); int
-	 * low = 8000; int high = 9000; int result = r.nextInt(high - low) + low;
-	 * while (projectDao.findByPortNr(result + "") != null) result =
-	 * r.nextInt(high - low) + low; return result + ""; }
-	 */
-
 }
