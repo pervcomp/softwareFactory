@@ -200,8 +200,10 @@ class ProjectController {
 			scheduler.getContext().put("commitDao", commitDao);
 			scheduler.getContext().put("commitErrorDao", commitErrorDao);
 			scheduler.getContext().put("project", p);
-			scheduler.getContext().put("analysis", ca);
-			scheduler.getContext().put("interval", interval);
+			//scheduler.getContext().put("analysis", ca);
+			job.getJobDataMap().put("project", p);
+			job.getJobDataMap().put("interval", 1);
+			//scheduler.getContext().put("interval", interval);
 			scheduler.scheduleJob(job, runOnceTrigger);
 			scheduler.start();
 			Schedule schedule = new Schedule();

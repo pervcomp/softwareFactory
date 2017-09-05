@@ -266,10 +266,12 @@ public class ControllerUtilities {
 					scheduler.getContext().put("commitAnalysisDao", commitAnalysisDao);
 					scheduler.getContext().put("commitDao", commitDao);
 					scheduler.getContext().put("commitErrorDao", commitErrorDao);
-					scheduler.getContext().put("project", project);
+					//scheduler.getContext().put("project", project);
+					job.getJobDataMap().put("project", project);
+					job.getJobDataMap().put("interval", 1);
 	
 					scheduler.getContext().put("analysis", ca);
-					scheduler.getContext().put("interval", project.getInterval());
+					//scheduler.getContext().put("interval", project.getInterval());
 					scheduler.scheduleJob(job, runOnceTrigger);
 					scheduler.start();
 					Date next = getNextFire(project.getProjectName());
