@@ -199,7 +199,7 @@ class ProjectController {
 			scheduler.getContext().put("commitAnalysisDao", commitAnalysisDao);
 			scheduler.getContext().put("commitDao", commitDao);
 			scheduler.getContext().put("commitErrorDao", commitErrorDao);
-			scheduler.getContext().put("project", p);
+			//scheduler.getContext().put("project", p);
 			//scheduler.getContext().put("analysis", ca);
 			job.getJobDataMap().put("project", p);
 			job.getJobDataMap().put("interval", 1);
