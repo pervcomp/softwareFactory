@@ -107,8 +107,8 @@
 								Name="analyseAll" id="analyseAll" value="0"
 								th:checked="*{analyseAll} == false">  Commits Interval
 							(Do an analysis each # commits) <br></br> <input
-								required="required" type="number" th:object="${interval}"
-								value='1' name="interval" max='10000' placeholder="interval "><br></br>
+								required="required" type="number" th:object="${pastInterval}"
+								value='1' name="pastInterval" max='10000' placeholder="interval "><br></br>
 						</div>
 					</div>
 				</div>
@@ -160,10 +160,9 @@
 							</td>
 						</tr>
 						<tr class="scheduleIntOp" hidden>
-							<td>  <label>Analysis every (2-100) commits:</label><br>
-								<input type="number" min="2" max="100"
-								name="Analysis every (2-100) commits:" value="# Commits"
-								th:value="${interval}"> <br>
+							<td>  <label>Analysis every (1-100) commits:</label><br>
+								<input type="number" min="1" max="100"
+								th:object="${interval}" value='1' name="interval" id="interval" required> <br>
 
 							</td>
 						</tr>
@@ -190,7 +189,7 @@
 
 	$(document).ready(function() {
 
-		$(".scheduleOp").toggle(true);
+		$(".scheduleIntOp").toggle(true);
 
 		$('input[type=radio]').change(function() {
 			var isChecked = $(this).prop('checked');

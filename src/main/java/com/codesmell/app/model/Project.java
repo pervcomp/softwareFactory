@@ -19,6 +19,7 @@ public class Project extends BaseEntity
 	private int totalCommits;
 	private int analysedCommits;
 	private int interval;
+	private int pastInterval;
 	private Date lastRequest;
 	private boolean analysePast;
 	private boolean analyseAll;
@@ -188,6 +189,13 @@ public class Project extends BaseEntity
 	}
 	public int getInterval(){
 		return interval;
+	}
+	
+	public void setPastInterval(int pastInterval){
+		this.pastInterval = pastInterval;
+	}
+	public int getPastInterval(){
+		return pastInterval;
 	}
 	
 	public void setScheduleProject(boolean scheduleProject){

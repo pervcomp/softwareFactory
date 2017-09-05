@@ -120,7 +120,7 @@ public class ControllerUtilities {
 		commitAnalysisDao.save(ca);
 		SonarAnalysis so = new SonarAnalysis(commitAnalysisDao, commitDao, commitErrorDao);
 		so.setAnalysis(ca);
-		so.setInterval(project.getInterval());
+		so.setInterval(project.getPastInterval());
 		so.setProject(project);
 		so.start();
 	}

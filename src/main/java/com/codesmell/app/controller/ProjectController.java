@@ -102,8 +102,11 @@ class ProjectController {
 			if (!project.getAnalysePast()) 
 			    cu.performAnalysisLatestsCommit(projectName,true);
 		}
-		if (project.getScheduleProject())
+		if (project.getScheduleProject()){
+			project.setInterval(1);
+			projectDao.save(project);
 			schedule(project, schedule);
+			}
 		else
 			scheduleWithInterval(project, project.getInterval());
 
