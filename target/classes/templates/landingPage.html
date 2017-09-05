@@ -79,7 +79,7 @@
 					<p
 						th:text="${#dates.format(project.nextAnalysis,'dd-MM-yyyy HH:mm')}">
 				</td>
-				<td th:if="${project.status != 'Processing'}">
+				<td th:if="${project.status != 'Processing' and project.status != 'Queued'}">
 					<form th:action="@{/runAnalysis}" th:object="${projectToSend}"
 						method="POST">
 						<a href="#" data-toggle="tooltip" title="Analyse just latest commit">
