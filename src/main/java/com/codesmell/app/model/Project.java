@@ -30,6 +30,7 @@ public class Project extends BaseEntity
 	private String lastWeekReport;
 	private String manualCommitSSH;
 	private String source = ".";
+	private String sonarHost;
 	
 	
 	public Project() 
@@ -43,9 +44,18 @@ public class Project extends BaseEntity
 		this.creationTime= new Date();
 		this.url="";
 		this.manualCommitSSH="";
+		this.sonarHost = "";
 		
 	}
 	
+	public String getSonarHost() {
+		return sonarHost;
+	}
+
+	public void setSonarHost(String sonarHost) {
+		this.sonarHost = sonarHost;
+	}
+
 	public String getProjectName() {
 		return projectName;
 	}
