@@ -19,6 +19,7 @@ import com.codesmell.app.model.CommitError;
 import com.codesmell.app.model.Project;
 
 import code.codesmell.app.controllerUtilities.ControllerUtilities;
+import code.codesmell.app.controllerUtilities.JSONHelper;
 
 @Component
 public class SonarAnalysisManual extends Thread {
@@ -51,18 +52,14 @@ public class SonarAnalysisManual extends Thread {
 	@Override
 	public void run() {
 		checkAvailability();
+		long date = 0;
+		this.checkAvailability();
+        JSONHelper j = new JSONHelper(project);
+        date = j.getLatestAnalysisDate();
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
-		for (String sha : shas) {
-			if (commitDao.findBySsa(sha) == null) {
-				String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(), sha,
-						analysis.getIdSerial() + "", url);
-				if (commitStr!=null){
-					if (!commitStr.isEmpty())
-						addCommit(commitStr, analysis.getIdSerial());
-					}
-			}
-		}
+				new ControllerUtilities().restAnalysis(project.getProjectName(),
+						analysis.getIdSerial() + "", url, date);
 		closeAnalysis(analysis.get_id());
 
 	}
@@ -83,7 +80,7 @@ public class SonarAnalysisManual extends Thread {
 
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ITALIAN);
 		try {
-			commit.setCreationDate(df.parse(commitArray[2].replace("T", " ")));
+			commit.setCreationDate(df.parse(commitArray[2].replace("T", " ")).getTime());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -94,13 +94,7 @@ class ProjectController {
 		if (projectDao.findByprojectName(project.getProjectName()) == null) {
 			projectDao.save(project);
 			writeConfigFile(project);
-			if (project.getAnalysePast()) {
-				String projectName = (project.getProjectName());
-				cu.performHistoryAnalysis(projectName);
-			}
-			String projectName = project.getProjectName();
-			if (!project.getAnalysePast()) 
-			    cu.performAnalysisLatestsCommit(projectName,true);
+			cu.restNewProject(project.getName(), project.getUrl());
 		}
 		if (project.getScheduleProject()){
 			project.setInterval(1);
@@ -315,7 +309,7 @@ class ProjectController {
 			if (commitAnalysisDao.findByIdProjectAndStatus(projectToSend.getProjectName(), "Processing") == null) {
 				String projectName = projectToSend.getProjectName();
 				Project p = projectDao.findByprojectName(projectName);
-				cu.performAnalysisLatestsCommit(projectName,true);
+				cu.performAnalysisLatestsCommit(projectName);
 			}
 		}
 		cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
@@ -534,7 +528,7 @@ class ProjectController {
          if (commitAnalysisDao.findByIdProjectAndStatus(projectToSend.getProjectName(), "Processing") == null) {
              String projectName = projectToSend.getProjectName();
              Project p = projectDao.findByprojectName(projectName);
-             cu.performAnalysisLatestsCommit(projectName,false);
+             cu.performAnalysisLatestsCommit(projectName);
          }
      }
      cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));

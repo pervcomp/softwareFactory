@@ -37,6 +37,7 @@ import com.codesmell.app.model.CommitError;
 import com.codesmell.app.model.Project;
 
 import code.codesmell.app.controllerUtilities.ControllerUtilities;
+import code.codesmell.app.controllerUtilities.JSONHelper;
 
 @Component
 public class SonarAnalysis extends Thread {
@@ -83,89 +84,14 @@ public class SonarAnalysis extends Thread {
 	@Override
 	public void run() {
 		// Analysis status is updated
-		analysis.setStatus("Processing");
 		analysis.setStartDate(new Date());
 		commitAnalysisDao.save(analysis);
-		
-		this.checkAvailability();
-
+		long date = 0; 
+        JSONHelper j = new JSONHelper(project);
+        date = j.getLatestAnalysisDate();
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
-		String[] splits = url.split("/");
-		List<String> shas = new LinkedList<String>();
-
-		int i = 1;
-		while (true) {
-			try {
-				String urlTemp = "https://api.github.com/repos/" + splits[3] + "/" + splits[4].replace(".git", "")
-						+ "/commits?page=" + i + "&per_page=100";
-				HttpClient httpClient = new DefaultHttpClient();
-				HttpGet httpGet = new HttpGet(urlTemp);
-				httpGet.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("smellsUnibz", "Aa30011992"),
-						"UTF-8", false));
-				HttpResponse httpResponse = httpClient.execute(httpGet);
-				JSONArray json = new JSONArray(EntityUtils.toString(httpResponse.getEntity()));
-
-				boolean found = false;
-
-				if (this.justLatest) {
-					JSONObject o = (JSONObject) json.get(0);
-					shas.add((String) o.get("sha"));
-					found = true;
-				}
-
-				if (found)
-					break;
-				if (!past) {
-					for (int z = 0; z < json.length(); z++) {
-						JSONObject o = (JSONObject) json.get(z);
-						if (!((String) o.get("sha")).equals(lastCommit.getSsa()))
-							shas.add((String) o.get("sha"));
-						else {
-							found = true;
-							break;
-						}
-					}
-				}
-
-				else {
-					for (int z = 0; z < json.length(); z++) {
-						JSONObject o = (JSONObject) json.get(z);
-						shas.add((String) o.get("sha"));
-					}
-				}
-
-				if (found)
-					break;
-
-				if (json.length() == 0)
-					break;
-				i++;
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		int count = 0;
-		boolean flag = false;
-		for (String sha : shas) {
-			if (count % interval == 0)
-				flag = true;
-			else
-				flag = false;
-			count++;
-			if (commitDao.findBySsa(sha) == null && flag) {
-				String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(), sha,
-						analysis.getIdSerial() + "", url);
-				addCommit(commitStr, analysis.getIdSerial());
-			}
-			if (justLatest)
-				break;
-		}
-		closeAnalysis(analysis.get_id());
+	    String r=  new ControllerUtilities().restAnalysis(project.getProjectName(),analysis.getIdSerial() + "", url,date);
 
 	}
 
@@ -185,7 +111,7 @@ public class SonarAnalysis extends Thread {
 
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ITALIAN);
 		try {
-			commit.setCreationDate(df.parse(commitArray[2].replace("T", " ")));
+			commit.setCreationDate(df.parse(commitArray[2].replace("T", " ")).getTime());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -228,7 +154,7 @@ public class SonarAnalysis extends Thread {
 	 * If there is an analysis Processing, the analysis is queued
 	 */
 	private void checkAvailability(){
-		while(this.commitAnalysisDao.findByStatus("Processing").size() > 0){
+	/*	while(this.commitAnalysisDao.findByStatus("Processing").size() > 0){
 			// Analysis status is updated
 			analysis.setStatus("Queued");
 			analysis.setStartDate(new Date());
@@ -239,7 +165,7 @@ public class SonarAnalysis extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		}*/
 		// Analysis status is updated
 			analysis.setStatus("Processing");
 			analysis.setStartDate(new Date());

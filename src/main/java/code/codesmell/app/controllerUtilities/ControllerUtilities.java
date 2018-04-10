@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.lang.ProcessBuilder.Redirect;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
@@ -22,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.TimeZone;
+import java.util.concurrent.CompletableFuture;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpResponse;
@@ -81,7 +84,7 @@ public class ControllerUtilities {
 	private UserDao userDao;
 	private ScheduleDao scheduleDao;
 	private CommitErrorDao commitErrorDao;
-	private String urlWsVar = "http://35.160.24.252:8090";
+	private String urlWsVar = "http://localhost:8090";
 
 	/**
 	 * This class contains helpers methods that required from the controllers.
@@ -130,7 +133,7 @@ public class ControllerUtilities {
 	 * 
 	 * @param projectName
 	 */
-	public void performAnalysisLatestsCommit(String projectName,boolean justLatest) {
+	public void performAnalysisLatestsCommit(String projectName) {
 		Project project = projectDao.findByprojectName(projectName);
 		CommitAnalysis ca = new CommitAnalysis();
 		ca.setIdProject(projectName);
@@ -142,9 +145,6 @@ public class ControllerUtilities {
 		so.setInterval(project.getInterval());
 		so.setProject(project);
 		so.setPast(false);
-		so.setJustLatest(justLatest);
-		if (!justLatest)
-			so.setLastCommit(commitDao.findByProjectNameOrderByCreationDateDesc(projectName).get(0));
 		so.start();
 	}
 
@@ -198,19 +198,15 @@ public class ControllerUtilities {
 	 * commits.....) @param project @throws
 	 */
 	public void getUpdateProject(Project project) {
+		System.out.println(project.getProjectName());
 		CommitAnalysis analysis = commitAnalysisDao.findByIdProjectOrderByStartDateDesc(project.getProjectName());
 		String url = project.getUrl();
-		if (project.getTotalCommits() == 0
-				|| (((new Date().getTime() - project.getLastRequest().getTime()) / 1000 / 3600) > 2)) {
-			Thread t = new Thread(new Runnable() {
-				@Override
-				public void run() {
-					getCommitsCount(url, project);
-				}
+		if (project.getTotalCommits() == 0) {
+		{
+			CompletableFuture.runAsync(() -> {
+				getCommitsCount(url, project);
 			});
-			t.start();
-
-		}
+		}}
 		if (analysis != null) {
 			Date analysisDate = new Date();
 			if (analysis.getStatus() == "Processing")
@@ -266,7 +262,7 @@ public class ControllerUtilities {
 					scheduler.getContext().put("commitAnalysisDao", commitAnalysisDao);
 					scheduler.getContext().put("commitDao", commitDao);
 					scheduler.getContext().put("commitErrorDao", commitErrorDao);
-					//scheduler.getContext().put("project", project);
+					scheduler.getContext().put("project", project);
 					job.getJobDataMap().put("project", project);
 					job.getJobDataMap().put("interval", 1);
 	
@@ -298,19 +294,12 @@ public class ControllerUtilities {
 	 */
 	private int getCommitsCount(String url, Project project) {
 		int count = 0;
-		try {
-			FileUtils.deleteDirectory(new File("directory"));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		File d = new File("directory");
-		Git git;
-		try {
-			git = Git.cloneRepository().setURI(url).setDirectory(d).call();
-			Iterable<RevCommit> commits = git.log().call();
-			for (RevCommit commit : commits)
-				count++;
-			FileUtils.deleteDirectory(d);
+	 	Git git = null;
+		String projectName = project.getProjectName();
+	 	if (!new File(projectName).exists()) {
+        try {
+        
+        	this.execute("git clone "+url + " " + projectName , FileSystems.getDefault().getPath(".").toFile());;
 		} catch (InvalidRemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -320,15 +309,40 @@ public class ControllerUtilities {
 		} catch (GitAPIException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		project.setTotalCommits(count);
-		project.setLastRequest(new Date());
-		this.projectDao.save(project);
-		return count;
-	}
+ 
+    	}
+	 	else{
+	 		File d = new File(projectName+"/.git");
+	 		try {
+				git = Git.open(d);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			git.pull();
+	 	}
+		
+			Iterable<RevCommit> commits;
+			try {
+				commits = git.log().call();
+				for (RevCommit commit : commits)
+					count++;
+			
+			project.setTotalCommits(count);
+			project.setLastRequest(new Date());
+			this.projectDao.save(project);
+			} catch (GitAPIException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		
+	
+	 	return count;}
 
 	private static String readAll(Reader rd) throws IOException {
 		StringBuilder sb = new StringBuilder();
@@ -337,6 +351,17 @@ public class ControllerUtilities {
 			sb.append((char) cp);
 		}
 		return sb.toString();
+	}
+	
+	private void execute(String command, File directory)
+			throws Exception {
+		System.out.println("$ " + command);
+		ProcessBuilder pb = new ProcessBuilder(command.split(" "));
+		pb.directory(directory);
+		pb.redirectErrorStream(true);
+        pb.redirectOutput(Redirect.INHERIT);
+        Process p = pb.start();
+        p.waitFor();
 	}
 
 	/**
@@ -438,7 +463,7 @@ public class ControllerUtilities {
 	 * @param url
 	 * @return
 	 */
-	public String restAnalysis(String projectName, String sha, String analysisId, String url) {
+	public String restAnalysis(String projectName, String analysisId, String url, long date) {
 		String urlWs = urlWsVar + "/analyseRevision";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
@@ -452,8 +477,32 @@ public class ControllerUtilities {
 			}
 		}
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).queryParam("projectName", projectName)
-				.queryParam("sha", sha).queryParam("analysis", analysisId).queryParam("url", url)
+				.queryParam("analysis", analysisId).queryParam("url", url).queryParam("date", date)
 				.queryParam("conf", st);
+
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+		RestTemplate restTemplate = new RestTemplate();
+		String temp = builder.build().encode().toUri().toString();
+		return restTemplate.getForEntity(temp, String.class).getBody();
+	}
+	
+	/**
+	 * Run an analysis invoking a REST WEB SERVICE. Port parameter for
+	 * Microservice version
+	 * 
+	 * @param projectName
+	 * @param sha
+	 * @param analysisId
+	 * @param url
+	 * @return
+	 */
+	public String restNewProject(String projectName, String url) {
+		String urlWs = urlWsVar + "/newProject";
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).queryParam("projectName", projectName)
+        .queryParam("url", url);
 
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 		RestTemplate restTemplate = new RestTemplate();

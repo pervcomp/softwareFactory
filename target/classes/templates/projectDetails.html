@@ -195,7 +195,7 @@
 				<td><p
 						th:text="${#dates.format(commit.analysisDate,'dd-MM-yyyy HH:mm')}"></p></td>
 				<td><p
-						th:text="${#dates.format(commit.creationDate,'dd-MM-yyyy HH:mm')}"></p></td>
+						th:text="${#dates.format(new java.util.Date(commit.creationDate *1000),'dd-MM-yyyy HH:mm')}"></p></td>
 				<td>
 					<!-- if FAILURE, display button needed to open the stacktrace details -->
 					<form id="${commit.ssa}" th:action="@{/failureDetail}"

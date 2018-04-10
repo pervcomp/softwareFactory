@@ -2,6 +2,8 @@ package com.codesmell.app.sonar;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,7 +34,13 @@ import org.quartz.JobExecutionException;
 import org.quartz.SchedulerContext;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
@@ -44,6 +52,7 @@ import com.codesmell.app.model.CommitError;
 import com.codesmell.app.model.Project;
 
 import code.codesmell.app.controllerUtilities.ControllerUtilities;
+import code.codesmell.app.controllerUtilities.JSONHelper;
 
 
 @Component
@@ -52,6 +61,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 	private Commit lastCommit;
 	private CommitAnalysis analysis;
 	private int interval = 1;
+	private String urlWsVar = "http://localhost:8090";
 	@Autowired
 	private CommitAnalysisDao commitAnalysisDao;
 	@Autowired
@@ -97,85 +107,40 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 		this.interval = project.getInterval();
 
 		this.commitErrorDao = (CommitErrorDao)context.get("commitErrorDao");
-		if (commitDao.findByProjectNameOrderByCreationDateDesc(project.getProjectName()).get(0) != null)
-			this.lastCommit = commitDao.findByProjectNameOrderByCreationDateDesc(project.getProjectName()).get(0);
+		
 		// Analysis status is updated
 		analysis.setIdProject(project.getProjectName());
 		analysis.setConfigurationFile(project.getProjectName() + ".properties");
 		commitAnalysisDao.insert(analysis);
 		analysis.setIdSerial(commitAnalysisDao.findByIdProject(project.getProjectName()).size() + 1);
-		analysis.setStatus("Processing");
 		analysis.setStartDate(new Date());
 		commitAnalysisDao.save(analysis);
-		checkAvailability();
-		
-
+		long date = 0; 
+        JSONHelper j = new JSONHelper(project);
+        date = j.getLatestAnalysisDate();
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
 		
-
-		String[] splits = url.split("/");
-		List<String>  shas = new LinkedList<String>();
-		
-		int i = 1;
-		while (true) {
+		String urlWs = urlWsVar + "/analyseRevision";
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		String st = "";
+		if (new File(project.getProjectName() + ".properties").exists()) {
 			try {
-				String urlTemp = "https://api.github.com/repos/" + splits[3] + "/" + splits[4].replace(".git", "")
-						+ "/commits?page=" + i + "&per_page=100";
-				HttpClient httpClient = new DefaultHttpClient();
-				HttpGet httpGet = new HttpGet(urlTemp);
-				httpGet.addHeader(BasicScheme.authenticate(new UsernamePasswordCredentials("smellsUnibz", "Aa30011992"),
-						"UTF-8", false));
-				HttpResponse httpResponse = httpClient.execute(httpGet);
-				JSONArray json = new JSONArray(EntityUtils.toString(httpResponse.getEntity()));
-				
-				boolean found = false;
-		
-				
-				if (found)
-					break;
-				
-				for (int z = 0; z<json.length(); z++){
-					JSONObject o = (JSONObject) json.get(z);
-					if (!((String)o.get("sha")).equals(lastCommit.getSsa()))
-						shas.add((String)o.get("sha"));
-					else{
-						found = true;
-						break;
-					}
-					}
-						
-				if (found)
-					break;
-				
-				if (json.length() == 0)
-					break;
-			i++;
+				st = new String(Base64.encode(Files.readAllBytes(Paths.get(project.getProjectName() + ".properties"))), "UTF-8");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
-		int count = 0;
-		boolean flag = false;
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).queryParam("projectName", project.getProjectName())
+				.queryParam("analysis", analysis.getIdAnalysis()).queryParam("url", url).queryParam("date", date)
+				.queryParam("conf", st);
 
-			for (String sha : shas) {
-				if (count % interval == 0)
-					flag = true;   
-				else
-					flag = false;
-				count++;
-				if (commitDao.findBySsa(sha) == null && flag) {
-					String commitStr = new ControllerUtilities().restAnalysis(project.getProjectName(),sha,  analysis.getIdSerial()+"",url);
-					addCommit(commitStr,analysis.getIdSerial());
-				}
-			}
-			closeAnalysis(analysis.get_id());
-	
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+		RestTemplate restTemplate = new RestTemplate();
+		String temp = builder.build().encode().toUri().toString();
+	    restTemplate.getForEntity(temp, String.class).getBody();
 	}
 
 	/**
@@ -200,7 +165,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 			
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ITALIAN);
 			try {
-				commit.setCreationDate(df.parse(commitArray[2].replace("T", " ")));
+				commit.setCreationDate(df.parse(commitArray[2].replace("T", " ")).getTime());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -250,7 +215,6 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 			commitAnalysisDao.save(analysis);
 		}
 		// Analysis status is updated
-			analysis.setStatus("Processing");
 			analysis.setStartDate(new Date());
 			commitAnalysisDao.save(analysis);
 	}

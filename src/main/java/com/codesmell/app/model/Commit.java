@@ -5,7 +5,7 @@ import java.util.Date;
 public class Commit extends BaseEntity{
 	private String ssa;
 	private int idCommitAnalysis;
-	private Date creationDate;
+	private long creationDate;
 	private Date analysisDate;
 	private String status;
 	private String projectName;
@@ -13,7 +13,7 @@ public class Commit extends BaseEntity{
 	public Commit() 
 	{
 		this.ssa="";
-		this.creationDate=new Date();
+		this.creationDate=0;
 		this.analysisDate=new Date();
 		this.status="";
 	}
@@ -27,11 +27,11 @@ public class Commit extends BaseEntity{
 	}
 
 
-	public Date getCreationDate() {
+	public long getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(Date creationDate) {
+	public void setCreationDate(long creationDate) {
 		this.creationDate = creationDate;
 	}
 
