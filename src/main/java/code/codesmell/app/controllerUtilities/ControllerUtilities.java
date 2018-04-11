@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.lang.ProcessBuilder.Redirect;
 import java.net.HttpURLConnection;
@@ -198,6 +199,7 @@ public class ControllerUtilities {
 	 * commits.....) @param project @throws
 	 */
 	public void getUpdateProject(Project project) {
+		writeConfigFile( project);
 		System.out.println(project.getProjectName());
 		CommitAnalysis analysis = commitAnalysisDao.findByIdProjectOrderByStartDateDesc(project.getProjectName());
 		String url = project.getUrl();
@@ -286,6 +288,28 @@ public class ControllerUtilities {
 		projectDao.save(project);
 	}
 
+	
+	private void writeConfigFile(Project project) {
+		try {
+			File file = new File((project.getProjectName() + ".properties"));
+			PrintWriter writer = new PrintWriter(file);
+			writer.println("# Required metadata");
+			writer.println("sonar.projectKey=" + project.getSonarKey());
+			writer.println("sonar.projectName=" + project.getProjectName());
+			writer.println("sonar.projectVersion=" + project.getSonarVersion());
+			writer.println("sonar.host.url=" + project.getSonarHost());
+			writer.println("# Comma-separated paths to directories with sources (required)");
+			writer.println("sonar.sources="+project.getSource());
+			writer.println("# Encoding of the source files");
+			writer.println("sonar.sourceEncoding=UTF-8");
+			writer.println("gitRepo=" + project.getUrl());
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 	/**
 	 * It gets total amount of commits of a git url
 	 * 
