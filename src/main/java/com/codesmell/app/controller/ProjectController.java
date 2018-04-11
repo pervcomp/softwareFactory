@@ -421,6 +421,7 @@ class ProjectController {
 				HttpServletRequest req, HttpServletResponse resp) {
 			ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
 					commitErrorDao);
+			writeConfigFile(project);
 			String emailSt = (String) req.getSession().getAttribute("email");
 			model.addAttribute("email", emailSt);
 			project.setEmail(emailSt);

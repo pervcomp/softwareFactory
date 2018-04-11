@@ -61,7 +61,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 	private Commit lastCommit;
 	private CommitAnalysis analysis;
 	private int interval = 1;
-	private String urlWsVar = "http://127.0.0.1:8090";
+	private String urlWsVar = "http://webservice:8090";
 	@Autowired
 	private CommitAnalysisDao commitAnalysisDao;
 	@Autowired
