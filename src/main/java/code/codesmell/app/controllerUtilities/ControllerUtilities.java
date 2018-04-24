@@ -203,12 +203,12 @@ public class ControllerUtilities {
 		System.out.println(project.getProjectName());
 		CommitAnalysis analysis = commitAnalysisDao.findByIdProjectOrderByStartDateDesc(project.getProjectName());
 		String url = project.getUrl();
-		if (project.getTotalCommits() == 0) {
+		/*if (project.getTotalCommits() == 0) {
 		{
 			CompletableFuture.runAsync(() -> {
 				getCommitsCount(url, project);
 			});
-		}}
+		}}*/
 		if (analysis != null) {
 			Date analysisDate = new Date();
 			if (analysis.getStatus() == "Processing")
