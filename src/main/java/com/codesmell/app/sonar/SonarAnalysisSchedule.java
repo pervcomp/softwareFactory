@@ -134,7 +134,7 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 			}
 		}
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).queryParam("projectName", project.getProjectName())
-				.queryParam("analysis", analysis.getIdAnalysis()).queryParam("url", url).queryParam("date", date)
+				.queryParam("analysis", analysis.getIdSerial()).queryParam("url", url).queryParam("date", date)
 				.queryParam("conf", st);
 
 		HttpEntity<?> entity = new HttpEntity<>(headers);
