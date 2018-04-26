@@ -5,6 +5,7 @@ import java.util.Date;
 public class Project extends BaseEntity
 {
 	private String projectName;
+	private String jiraUrl;
 	private Date creationTime;
 	private String url;
 	private String versionType;
@@ -45,8 +46,19 @@ public class Project extends BaseEntity
 		this.url="";
 		this.manualCommitSSH="";
 		this.sonarHost = "";
+		this.jiraUrl = "";
 		
 	}
+	
+	public String getJiraUrl() {
+		return jiraUrl;
+	}
+
+	public void setJiraUrl(String jiraUrl) {
+		this.jiraUrl = jiraUrl;
+	}
+
+	
 	
 	public String getSonarHost() {
 		return sonarHost;

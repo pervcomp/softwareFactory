@@ -303,6 +303,7 @@ public class ControllerUtilities {
 			writer.println("# Encoding of the source files");
 			writer.println("sonar.sourceEncoding=UTF-8");
 			writer.println("gitRepo=" + project.getUrl());
+			writer.println("sonar.jira.url="+project.getJiraUrl());
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();

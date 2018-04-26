@@ -94,32 +94,13 @@
 							type="text" th:object="${source}" name="source"><br></br> 
 							<br>
 					     <label>Sonar Host:</label><br>  
-						<input required="required" value="."
+						<input required="required" value="https://sonar.rd.tut.fi"
 							type="text" th:object="${sonarHost}" name="sonarHost"><br></br> 
 							<br>
-							<label>Type of analysis:</label>
-						<p> 
-							<input type="checkbox" id="pastAnalysis"
-								th:field="*{analysePast}" th:checked="checked"> Analyze
-							commits in the past  (Optional) <br>    
-						<div hidden class="form-group 12 col-sm-12 desc"
-							id="analysisType2">
-							<legend>Which Commits in the past?</legend>
-							<input type="Radio" Name="analyseAll" id="analyseAll" value="1"
-								th:checked="*{analyseAll}"> All commits in the history
-							until now  <br> <br> <input type="Radio"
-								Name="analyseAll" id="analyseAll" value="0"
-								th:checked="*{analyseAll} == false">  Commits Interval
-							(Do an analysis each # commits) <br></br> <input
-								required="required" type="number" th:object="${pastInterval}"
-								value='1' name="pastInterval" max='10000' placeholder="interval "><br></br>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-12 col-sm-12 main2">
-					<br>
-
+						<label>Jira URL:</label><br>  
+						<input required="required" value=""
+							type="text" th:object="${jiraUrl}" name="jiraUrl"><br></br> 
+						
 					<legend>Schedule analysis in the future</legend>
 					<table class="table table-bordered">
 						<tr>
