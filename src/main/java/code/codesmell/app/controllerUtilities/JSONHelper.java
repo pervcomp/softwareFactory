@@ -46,15 +46,16 @@ public class JSONHelper {
 		    return parser.parse(date).getTime();
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
-			 e.printStackTrace();
+			 return 0;
+	
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			 e.printStackTrace();
+			 return 0;
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
-			 e.printStackTrace();
+			 return 0;
 		}
-		return 0;	
+	
 		
 	}
 	
