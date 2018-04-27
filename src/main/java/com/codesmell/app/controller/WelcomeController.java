@@ -83,6 +83,9 @@ class WelcomeController {
 
 	@RequestMapping("/newproject")
 	public String newProject(Model model, HttpServletRequest req, HttpServletResponse resp) {
+		if (req.getSession().getAttribute("email") == null) {
+			return "welcome";
+			}
 		model.addAttribute("email", req.getSession().getAttribute("email"));
 		model.addAttribute("project", new Project());
 		model.addAttribute("schedule", new Schedule());
@@ -106,6 +109,9 @@ class WelcomeController {
 		}
 		else {
 			String emailSession = (String) req.getSession().getAttribute("email");
+			if (req.getSession().getAttribute("email") == null) {
+				return "welcome";
+				}
 			cu.configureModelLandingPage(model, emailSession);
 			cu.scheduleDailyReport(userDao.findByEmail1((String)req.getSession().getAttribute("email")), mailSender);
 			cu.configureModelLandingPage(model, emailSession);
@@ -123,7 +129,11 @@ class WelcomeController {
 	 */
 	@PostMapping("/projectDet")
 	public String projectDetails(Model model, @ModelAttribute Project projectToSend,HttpServletRequest req, HttpServletResponse resp) {
-	    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,commitErrorDao);
+		if (req.getSession().getAttribute("email") == null) {
+			return "welcome";
+			}
+		
+		ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,commitErrorDao);
 		String projectName = projectToSend.getProjectName();
 		Project p = projectDao.findByprojectName(projectName);
 		cu.getUpdateProject(p);		
@@ -148,6 +158,11 @@ class WelcomeController {
 	@PostMapping("/login")
 	public String login(Model model, @ModelAttribute User user, HttpServletRequest req, HttpServletResponse resp) {
 		try {
+			if (user ==  null)
+				return "welcome";
+			else if (user.getEmail1().isEmpty() || user.getPwd().isEmpty())
+				return "welcome";
+					
 			String emailSt = user.getEmail1();
 			String pwd = user.getPwd();
 			User usr = userDao.findByEmail1(emailSt);

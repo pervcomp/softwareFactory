@@ -85,6 +85,12 @@ class ProjectController {
 	@PostMapping("/createNewProject")
 	public String createNewProject(Model model, @ModelAttribute Project project, @ModelAttribute Schedule schedule,
 			HttpServletRequest req, HttpServletResponse resp) {
+		
+		if (req.getSession().getAttribute("email") == null) {
+			return "welcome";
+			}
+		
+		
 		ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
 				commitErrorDao);
 		String emailSt = (String) req.getSession().getAttribute("email");
@@ -120,6 +126,10 @@ class ProjectController {
 	 */
 	@PostMapping("/deleteSchedule")
 	public String deleteSchedule(Model model, @ModelAttribute Project project, HttpServletRequest req, HttpServletResponse resp) {
+		if (req.getSession().getAttribute("email") == null) {
+			return "welcome";
+			}
+		
 		ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
 				commitErrorDao);
 		String emailSt = (String) req.getSession().getAttribute("email");
@@ -139,6 +149,10 @@ class ProjectController {
 	
 	@PostMapping("/modifySchedule")
 	public String modifySchedule(Model model, @ModelAttribute Project project, HttpServletRequest req, HttpServletResponse resp) {
+		if (req.getSession().getAttribute("email") == null) {
+			return "welcome";
+			}
+		
 		ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
 				commitErrorDao);
 		String emailSt = (String) req.getSession().getAttribute("email");
@@ -269,6 +283,10 @@ class ProjectController {
 	@PostMapping("/reSchedule")
 	public String reScheduler(Model model, @ModelAttribute Project project, @ModelAttribute Schedule schedule,
 			HttpServletRequest req, HttpServletResponse resp) {
+		if (req.getSession().getAttribute("email") == null) {
+			return "welcome";
+			}
+		
 		ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
 				commitErrorDao);
 		String emailSt = (String) req.getSession().getAttribute("email");
@@ -301,6 +319,9 @@ class ProjectController {
 	@PostMapping("/runAnalysis")
 	public String runJustLatestAnalysis(Model model, @ModelAttribute Project projectToSend, HttpServletRequest req,
 			HttpServletResponse resp) {
+		if (req.getSession().getAttribute("email") == null) {
+			return "welcome";
+			}
 		ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
 				commitErrorDao);
 		if (projectToSend != null) {
@@ -317,6 +338,9 @@ class ProjectController {
 	@PostMapping("/stacktraceDetails")
 	public String getStackTraceDetails(Model model, @ModelAttribute Commit commitDao, HttpServletRequest req,
 			HttpServletResponse resp) {
+		if (req.getSession().getAttribute("email") == null) {
+			return "welcome";
+			}
 		
 		CommitError ce = this.commitErrorDao.findByShaCommit(commitDao.getSsa());
 		model.addAttribute("commitError",ce);
@@ -358,6 +382,9 @@ class ProjectController {
 	public String removeProject(Model model, @ModelAttribute Project projectToSend, HttpServletRequest req,
 			HttpServletResponse resp) 
 	{
+		if (req.getSession().getAttribute("email") == null) {
+			return "welcome";
+			}
 		projectToSend = this.projectDao.findByprojectName(projectToSend.getProjectName());
 		removeProjectData(this.projectDao.findByprojectName(projectToSend.getProjectName()));
         ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
@@ -398,6 +425,11 @@ class ProjectController {
 	public String editProject(Model model, @ModelAttribute Project project, HttpServletRequest req,
 			HttpServletResponse resp) 
 	{
+		if (req.getSession().getAttribute("email") == null) {
+			return "welcome";
+			}
+		
+		
 		project = this.projectDao.findByprojectName(project.getProjectName());
 		model.addAttribute("email", (String) req.getSession().getAttribute("email"));
 		model.addAttribute("project", project);
@@ -417,6 +449,10 @@ class ProjectController {
 		@PostMapping("/updateProject")
 		public String updateProject(Model model, @ModelAttribute Project project,
 				HttpServletRequest req, HttpServletResponse resp) {
+			if (req.getSession().getAttribute("email") == null) {
+				return "welcome";
+				}
+			
 			ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
 					commitErrorDao);
 		
@@ -466,6 +502,9 @@ class ProjectController {
    @PostMapping("/stopAnalysis")
    public String stopAnalysis(Model model, @ModelAttribute Project project, HttpServletRequest req,
 			HttpServletResponse resp) {
+		if (req.getSession().getAttribute("email") == null) {
+			return "welcome";
+			}
 	   CommitAnalysis ca  = commitAnalysisDao.findByIdProjectOrderByStartDateDesc(project.getProjectName());
 	   commitAnalysisDao.delete(ca);
 	   ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
@@ -486,6 +525,9 @@ class ProjectController {
 	public String manualCommitInseration(Model model, @ModelAttribute Project projectToSend, HttpServletRequest req,
 			HttpServletResponse resp) 
 	{
+		if (req.getSession().getAttribute("email") == null) {
+			return "welcome";
+			}
 		model.addAttribute("project",projectToSend);
 		model.addAttribute("project2",new Project());
 
@@ -498,6 +540,9 @@ class ProjectController {
 	public String runManualCommitAnalysis(Model model, @ModelAttribute Project project2, HttpServletRequest req,
 			HttpServletResponse resp) 
 	{
+		if (req.getSession().getAttribute("email") == null) {
+			return "welcome";
+			}
 		String[] commitToAnalyze= project2.getManualCommitSSH().split("\\r?\\n");
 		Project project =  this.projectDao.findByprojectName(project2.getProjectName());
 		CommitAnalysis ca = new CommitAnalysis();
@@ -521,6 +566,11 @@ class ProjectController {
 	@PostMapping("/runScheduledNow")
  public String runScheduledNow(Model model, @ModelAttribute Project projectToSend, @ModelAttribute Schedule schedule,
                                HttpServletRequest req, HttpServletResponse resp) {
+		
+		if (req.getSession().getAttribute("email") == null) {
+			return "welcome";
+			}
+		
      ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
                                                       commitErrorDao);
      if (projectToSend != null) {

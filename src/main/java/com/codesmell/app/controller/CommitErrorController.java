@@ -27,6 +27,9 @@ public class CommitErrorController {
 	@PostMapping("/failureDetail")
 	public String login(@ModelAttribute Commit commitDao, Model model, HttpServletRequest req, HttpServletResponse resp) 
 	{
+		if (req.getSession().getAttribute("email") == null) {
+			return "welcome";
+			}
 		
 		CommitError commitError= this.commitErrorDao.findByShaCommit(commitDao.getSsa());
 		String errMessage = "<html>"+commitError.getErrorMessage();
