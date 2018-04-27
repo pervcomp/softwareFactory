@@ -100,7 +100,7 @@ class ProjectController {
 		if (projectDao.findByprojectName(project.getProjectName()) == null) {
 			projectDao.save(project);
 			writeConfigFile(project);
-			cu.restNewProject(project.getName(), project.getUrl());
+			//cu.restNewProject(project.getName(), project.getUrl());
 		}
 		if (project.getScheduleProject()){
 			projectDao.save(project);
