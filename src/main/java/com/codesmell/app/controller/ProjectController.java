@@ -319,9 +319,7 @@ class ProjectController {
 	@PostMapping("/runAnalysis")
 	public String runJustLatestAnalysis(Model model, @ModelAttribute Project projectToSend, HttpServletRequest req,
 			HttpServletResponse resp) {
-		if (req.getSession().getAttribute("email") == null) {
-			return "welcome";
-			}
+
 		ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
 				commitErrorDao);
 		if (projectToSend != null) {
@@ -363,6 +361,7 @@ class ProjectController {
 			writer.println("# Encoding of the source files");
 			writer.println("sonar.sourceEncoding=UTF-8");
 			writer.println("gitRepo=" + project.getUrl());
+			writer.println("sonar.jira.url="+project.getJiraUrl());
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
