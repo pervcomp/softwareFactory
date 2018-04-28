@@ -505,8 +505,9 @@ class ProjectController {
 		if (req.getSession().getAttribute("email") == null) {
 			return "welcome";
 			}
-	   CommitAnalysis ca  = commitAnalysisDao.findByIdProjectOrderByStartDateDesc(project.getProjectName());
-	   commitAnalysisDao.delete(ca);
+	   List<CommitAnalysis> ca  = commitAnalysisDao.findByIdProjectAndStatus(project.getProjectName(),"Processing");
+	   for (CommitAnalysis c : ca)
+		   commitAnalysisDao.delete(c);
 	   ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
 		        commitErrorDao);
 	   cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
