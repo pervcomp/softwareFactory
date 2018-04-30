@@ -323,10 +323,11 @@ class ProjectController {
 		ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
 				commitErrorDao);
 		if (projectToSend != null) {
-			
+			if (commitAnalysisDao.findByIdProjectAndStatus(projectToSend.getProjectName(), "Processing").size() == 0){
 				String projectName = projectToSend.getProjectName();
 				Project p = projectDao.findByprojectName(projectName);
 				cu.performAnalysisLatestsCommit(projectName);
+			}
 			
 		}
 		cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));

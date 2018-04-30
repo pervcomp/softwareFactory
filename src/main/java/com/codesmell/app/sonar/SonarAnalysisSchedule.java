@@ -133,6 +133,8 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 				e.printStackTrace();
 			}
 		}
+		if (commitAnalysisDao.findByIdProjectAndStatus(project.getProjectName(), "Processing").size() == 0){
+		
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).queryParam("projectName", project.getProjectName())
 				.queryParam("analysis", analysis.getIdSerial()).queryParam("url", url).queryParam("date", date)
 				.queryParam("conf", st);
@@ -141,6 +143,8 @@ public class SonarAnalysisSchedule implements org.quartz.Job {
 		RestTemplate restTemplate = new RestTemplate();
 		String temp = builder.build().encode().toUri().toString();
 	    restTemplate.getForEntity(temp, String.class).getBody();
+	    }
+	
 	}
 
 	/**
