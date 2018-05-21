@@ -7,6 +7,10 @@ public class Project extends BaseEntity
 	private String projectName;
 	private String jiraUrl;
 	private Date creationTime;
+	private Date latestCommitDt;
+	private Date latestCommitAnalysedDt;
+
+
 	private String url;
 	private String versionType;
 	private Date analysisStartDate;
@@ -27,6 +31,15 @@ public class Project extends BaseEntity
 	private boolean scheduleProject;
 	private int countFailedCommits;
 	private int countSuccessCommits;
+	private int countCommitsLeft;
+	public int getCountCommitsLeft() {
+		return countCommitsLeft;
+	}
+
+	public void setCountCommitsLeft(int countCommitsLeft) {
+		this.countCommitsLeft = countCommitsLeft;
+	}
+
 	private Date nextAnalysis;
 	private String lastWeekReport;
 	private String manualCommitSSH;
@@ -42,12 +55,19 @@ public class Project extends BaseEntity
 		this.versionType="git";
 		this.analysisStartDate=new Date();
 		this.anaysisRepetition="";		
-		this.creationTime= new Date();
 		this.url="";
 		this.manualCommitSSH="";
 		this.sonarHost = "";
 		this.jiraUrl = "";
 		
+	}
+	
+	public Date getLatestCommitDt() {
+		return latestCommitDt;
+	}
+
+	public void setLatestCommitDt(Date latestCommitDt) {
+		this.latestCommitDt = latestCommitDt;
 	}
 	
 	public String getJiraUrl() {
@@ -99,6 +119,14 @@ public class Project extends BaseEntity
 	}
 	public void setVersionType(String versionType) {
 		this.versionType = versionType;
+	}
+	
+	public Date getLatestCommitAnalysedDt() {
+		return latestCommitAnalysedDt;
+	}
+
+	public void setLatestCommitAnalysedDt(Date latestCommitAnalysedDt) {
+		this.latestCommitAnalysedDt = latestCommitAnalysedDt;
 	}
 	public Date getAnalysisStartDate() {
 		return analysisStartDate;

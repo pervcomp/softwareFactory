@@ -77,6 +77,10 @@ import com.codesmell.app.model.Schedule;
 import com.codesmell.app.model.User;
 import com.codesmell.app.sonar.SonarAnalysis;
 import com.codesmell.app.sonar.SonarAnalysisSchedule;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class ControllerUtilities {
 	private ProjectDao projectDao;
@@ -203,12 +207,11 @@ public class ControllerUtilities {
 		System.out.println(project.getProjectName());
 		CommitAnalysis analysis = commitAnalysisDao.findByIdProjectOrderByStartDateDesc(project.getProjectName());
 		String url = project.getUrl();
-		/*if (project.getTotalCommits() == 0) {
-		{
-			CompletableFuture.runAsync(() -> {
+
+		CompletableFuture.runAsync(() -> {
 				getCommitsCount(url, project);
 			});
-		}}*/
+	
 		if (analysis != null) {
 			Date analysisDate = new Date();
 			if (analysis.getStatus() == "Processing")
@@ -324,7 +327,6 @@ public class ControllerUtilities {
 		String projectName = project.getProjectName();
 	 	if (!new File(projectName).exists()) {
         try {
-        
         	this.execute("git clone "+url + " " + projectName , FileSystems.getDefault().getPath(".").toFile());;
 		} catch (InvalidRemoteException e) {
 			// TODO Auto-generated catch block
@@ -355,11 +357,22 @@ public class ControllerUtilities {
 			Iterable<RevCommit> commits;
 			try {
 				commits = git.log().call();
-				for (RevCommit commit : commits)
+				long date = 0;
+				for (RevCommit commit : commits){
+					long temp = 0;
+					if (count==0){
+						temp = commit.getCommitTime();
+						project.setLatestCommitDt(new Date(temp*1000));
+						}
+					date = (commit.getCommitTime());
 					count++;
-			
+				}
+			project.setCreationTime(new Date((date*1000)));
 			project.setTotalCommits(count);
+			project.setCountCommitsLeft(count-getNumberAnalysedCommits(project));
 			project.setLastRequest(new Date());
+			date = commitDao.findByProjectNameOrderByCreationDateDesc(projectName).get(0).getCreationDate();
+			project.setLatestCommitAnalysedDt(new Date(date*1000));
 			this.projectDao.save(project);
 			} catch (GitAPIException e) {
 				// TODO Auto-generated catch block
@@ -369,6 +382,36 @@ public class ControllerUtilities {
 		
 	
 	 	return count;}
+	
+	
+	
+	public int getNumberAnalysedCommits(Project p){
+		String sURL = p.getSonarHost() + "/api/project_analyses/search?project=" + p.getSonarKey();
+		HttpURLConnection request = null;
+		URL url;
+		try {
+			url = new URL(sURL);
+			request = (HttpURLConnection) url.openConnection();
+		    request.connect();
+		    
+		    // Convert to a JSON object to print data
+		    JsonParser jp = new JsonParser(); //from gson
+		    JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
+		    JsonObject rootobj = root.getAsJsonObject(); //May be an array, may be an object. 
+		    JsonArray rootarr = rootobj.getAsJsonArray("analyses");
+		    return rootarr.size();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			 return 0;} 
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	
+	}
+	
+	
 
 	private static String readAll(Reader rd) throws IOException {
 		StringBuilder sb = new StringBuilder();
