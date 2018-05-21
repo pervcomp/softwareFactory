@@ -89,7 +89,7 @@ public class ControllerUtilities {
 	private UserDao userDao;
 	private ScheduleDao scheduleDao;
 	private CommitErrorDao commitErrorDao;
-	private String urlWsVar = "http://webservice:8090";
+	private String urlWsVar = "http://webservice1:8090";
 
 	/**
 	 * This class contains helpers methods that required from the controllers.
