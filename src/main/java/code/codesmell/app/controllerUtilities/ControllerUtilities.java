@@ -327,7 +327,11 @@ public class ControllerUtilities {
 		String projectName = project.getProjectName();
 	 	if (!new File(projectName).exists()) {
         try {
-        	this.execute("git clone "+url + " " + projectName , FileSystems.getDefault().getPath(".").toFile());;
+        	git = Git.cloneRepository()
+        			.setURI(url)
+        			.setDirectory(new File(project.getProjectName()))
+        			.setCloneAllBranches( true )
+        			.call();
 		} catch (InvalidRemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -398,8 +402,8 @@ public class ControllerUtilities {
 		    JsonParser jp = new JsonParser(); //from gson
 		    JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
 		    JsonObject rootobj = root.getAsJsonObject(); //May be an array, may be an object. 
-		    JsonArray rootarr = rootobj.getAsJsonArray("analyses");
-		    return rootarr.size();
+		    JsonObject obj = rootobj.getAsJsonObject("paging");
+		    return obj.get("total").getAsInt();
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			 return 0;} 
@@ -428,11 +432,24 @@ public class ControllerUtilities {
 		ProcessBuilder pb = new ProcessBuilder(command.split(" "));
 		pb.directory(directory);
 		pb.redirectErrorStream(true);
-        pb.redirectOutput(Redirect.INHERIT);
+        pb.redirectOutput(Redirect.PIPE);
         Process p = pb.start();
-        p.waitFor();
+        
+        BufferedReader reader = 
+                new BufferedReader(new InputStreamReader(p.getInputStream()));
+        StringBuilder builder = new StringBuilder();
+        String line = "";
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+        }
+String result = builder.toString();
+        int test = p.waitFor();
+        while (p.isAlive()){
+        System.out.println(p.waitFor());
+        System.out.println(p.exitValue());
+        Thread.sleep(10000);
+        }
 	}
-
 	/**
 	 * Next schedule from Quartz scheduler
 	 * 
