@@ -576,7 +576,9 @@ class ProjectController {
      ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
                                                       commitErrorDao);
      if (projectToSend != null) {
-         if (commitAnalysisDao.findByIdProjectAndStatus(projectToSend.getProjectName(), "Processing") == null) {
+    	 		CommitAnalysis ca = commitAnalysisDao.findByIdProjectOrderByStartDateDesc(projectToSend.getProjectName());
+    	
+         if (!ca.getStatus().equals( "Processing")) {
              String projectName = projectToSend.getProjectName();
              Project p = projectDao.findByprojectName(projectName);
              cu.performAnalysisLatestsCommit(projectName);
