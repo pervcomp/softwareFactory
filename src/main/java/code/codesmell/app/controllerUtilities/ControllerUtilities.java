@@ -16,7 +16,9 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -208,9 +210,35 @@ public class ControllerUtilities {
 		System.out.println(project.getProjectName());
 		CommitAnalysis analysis = commitAnalysisDao.findByIdProjectOrderByStartDateDesc(project.getProjectName());
 		String url = project.getUrl();
-
+		File f = new File (project.getProjectName() + "temp");
+		if (f.exists()){
+		BasicFileAttributes attr=null;
+		Path file = f.toPath();
+		try {
+			 attr = Files.readAttributes(file, BasicFileAttributes.class);
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		if ((new Date().getTime() - attr.creationTime().toMillis()) > 600000){
+			try {
+				Files.delete(file);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		}
+		
+		if (!f.exists())
 		CompletableFuture.runAsync(() -> {
 				getCommitsCount(url, project);
+				try {
+					f.createNewFile();
+				} catch (IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
 			});
 	
 		if (analysis != null) {
