@@ -40,6 +40,7 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.TransportException;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.json.JSONArray;
@@ -348,14 +349,17 @@ public class ControllerUtilities {
  
     	}
 	 	else{
-	 		File d = new File(projectName+"/.git");
-	 		try {
-				git = Git.open(d);
+	 		FileRepositoryBuilder builder = new FileRepositoryBuilder();
+	 		Repository repo;
+			try {
+				repo = builder.setGitDir(new File(projectName+"/.git")).setMustExist(true).build();
+				git = new Git(repo);
+				git.pull();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			git.pull();
+	 	
 	 	}
 		
 			Iterable<RevCommit> commits;
