@@ -114,7 +114,7 @@ class ProjectController {
 	}
 	
 	@PostMapping("/allProjects")
-	public String allProjects(Model model, HttpServletRequest req, HttpServletResponse resp){
+	public String allProjects(Model model ,HttpServletRequest req, HttpServletResponse resp){
 		if (req.getSession().getAttribute("email") == null)
 			return "welcome";
 		List<Project> listProject = projectDao.findAll();
