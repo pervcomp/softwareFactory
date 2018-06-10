@@ -689,6 +689,18 @@ String result = builder.toString();
 	}
 	
 	
+	public void deleteAnalysisFiles(String projectName) {
+		String urlWs = urlWsVar + "/stopAnalysis";
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).queryParam("projectName", projectName);
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+		RestTemplate restTemplate = new RestTemplate();
+		String temp = builder.build().encode().toUri().toString();
+	}
+	
+	
+	
 	/**
 	 * Modify Conf Files
 	 * 

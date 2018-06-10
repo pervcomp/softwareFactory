@@ -18,8 +18,15 @@
 	<a href="/landingPage">
 		<button class="btn btn-custom">
 			<span class="glyphicon glyphicon-refresh"></span> Refresh
+		</button>	
+	</a>
+	<a href="/allProjects">
+		<button class="btn btn-custom">
+			<span class="glyphicon glyphicon-flash"></span> Launch Analysis all projects
 		</button>
 	</a>
+	
+	
 	<br></br>
 	<table class="table table-striped">
 		<thead>
@@ -34,7 +41,11 @@
 				<th>ProjectName</th>
 				<th>Status</th>
 				<th>Created on</th>
-				<th>Completation</th>
+				<th>#Git Commits</th>
+				<th>Latest commit</th>
+				<th>Last analyzed commit</th>
+				<th>Time for analysis</th>
+				<th>#Remaining commits</th>
 				<th>Last Analysis</th>
 				<th>Next Analysis</th>
 				<th>Run/Stop</th>
@@ -65,16 +76,28 @@
 				</td>
 				<td>
 					<p
-						th:text="${#dates.format(project.creationTime,'dd-MM-yyyy HH:mm')}"></p>
+						th:text="${#dates.format(project.creationTime,'dd-MM-yyyy')}"></p>
 				</td>
 				<td>
 					<p
-						th:text="|${project.analysedCommits}  /  ${project.totalCommits}|"></p>
+						th:text="${project.totalCommits}"></p>
 				</td>
 				<td>
 					<p
-						th:text="${#dates.format(project.lastAnalysis,'dd-MM-yyyy HH:mm')}">
+						th:text="${#dates.format(project.latestCommitDt,'dd-MM-yyyy')}">
+
+				<td>
+					<p
+						th:text="${#dates.format(project.latestCommitAnalysedDt,'dd-MM-yyyy')}">
 				</td>
+				<td>
+					TODO
+				</td>
+				<td>
+					<p
+						th:text="${project.countCommitsLeft}"></p>
+				</td>
+		
 				<td>
 					<p
 						th:text="${#dates.format(project.nextAnalysis,'dd-MM-yyyy HH:mm')}">

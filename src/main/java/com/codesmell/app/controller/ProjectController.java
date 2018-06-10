@@ -113,6 +113,22 @@ class ProjectController {
 		return "landingPage";
 	}
 	
+	@PostMapping("/allProjects")
+	public String allProjects(Model model, HttpServletRequest req, HttpServletResponse resp){
+		if (req.getSession().getAttribute("email") == null)
+			return "welcome";
+		List<Project> listProject = projectDao.findAll();
+		ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao, commitErrorDao);
+;
+		for (Project project : listProject){
+				if (commitAnalysisDao.findByIdProjectAndStatus(project.getProjectName(), "Processing").size() == 0){
+					cu.performAnalysisLatestsCommit(project.getProjectName());
+				}
+			}
+        cu.configureModelLandingPage(model, (String)req.getSession().getAttribute("email"));
+		return "landingPage";
+	}
+	
 	
 	/**
 	 * It deletes a schedule from Quartz and from the db.
@@ -503,14 +519,17 @@ class ProjectController {
    @PostMapping("/stopAnalysis")
    public String stopAnalysis(Model model, @ModelAttribute Project project, HttpServletRequest req,
 			HttpServletResponse resp) {
+	   ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
+		        commitErrorDao);
 		if (req.getSession().getAttribute("email") == null) {
 			return "welcome";
 			}
 	   List<CommitAnalysis> ca  = commitAnalysisDao.findByIdProjectAndStatus(project.getProjectName(),"Processing");
-	   for (CommitAnalysis c : ca)
+	   for (CommitAnalysis c : ca){
 		   commitAnalysisDao.delete(c);
-	   ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,
-		        commitErrorDao);
+		   cu.deleteAnalysisFiles(c.getIdProject());
+		   }
+
 	   cu.configureModelLandingPage(model, (String) req.getSession().getAttribute("email"));
 	   return "landingPage";
    } 	
