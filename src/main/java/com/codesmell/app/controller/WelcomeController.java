@@ -1,9 +1,13 @@
 package com.codesmell.app.controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -34,11 +38,13 @@ import com.codesmell.app.dao.CommitDao;
 import com.codesmell.app.dao.CommitErrorDao;
 import com.codesmell.app.dao.ProjectDao;
 import com.codesmell.app.dao.ScheduleDao;
+import com.codesmell.app.dao.SonarServerDao;
 import com.codesmell.app.dao.UserDao;
 import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.Project;
 import com.codesmell.app.model.Schedule;
+import com.codesmell.app.model.SonarServer;
 import com.codesmell.app.model.User;
 
 import code.codesmell.app.controllerUtilities.ControllerUtilities;
@@ -60,6 +66,8 @@ class WelcomeController {
 	private CommitErrorDao commitErrorDao;
 	@Autowired
 	private JavaMailSender mailSender;
+	@Autowired
+	private SonarServerDao sonarServerDao;
 
 
 	@RequestMapping("/")
@@ -91,8 +99,82 @@ class WelcomeController {
 		model.addAttribute("email", req.getSession().getAttribute("email"));
 		model.addAttribute("project", new Project());
 		model.addAttribute("schedule", new Schedule());
+		
 		return "newproject";
 	}
+	
+	@RequestMapping("/conf")
+	public String sonarConf(Model model, HttpServletRequest req, HttpServletResponse resp) {
+		if (req.getSession().getAttribute("email") == null) {
+			return "welcome";
+			}
+		model.addAttribute("email", req.getSession().getAttribute("email"));
+		List<SonarServer> list = sonarServerDao.findAllByOrderBySonarDateDesc();
+		if (list.isEmpty()){
+			SonarServer ss = new SonarServer();
+			sonarServerDao.save(ss);
+			model.addAttribute("server", ss);
+			}
+		else
+			model.addAttribute("server", list.get(0));
+		return "conf";
+	}
+	
+	@PostMapping("/updateServer")
+	public String updateServer(Model model, @ModelAttribute SonarServer server, HttpServletRequest req, HttpServletResponse resp) {
+		sonarServerDao.save(server);
+		model.addAttribute("email", req.getSession().getAttribute("email"));
+		model.addAttribute("server",server);
+		model.addAttribute("OK","OK");
+		updateServerProperties(server.getSonarServerUrl());
+		return "conf";
+	}
+	
+	private void updateServerProperties(String url){
+		File currentDirFile = new File(".");
+		List<File> toDelete = new LinkedList<File>();
+		for (File f : currentDirFile.listFiles()){
+			if (f.getName().contains(".properties")){
+				toDelete.add(f);
+				PrintWriter pw;
+				List<String> lines;
+				try {
+					pw = new PrintWriter(f.getName()+"2");
+					lines = Files.readAllLines(f.toPath());
+					for (String line : lines){
+						if (line.contains("sonar.host.url=")){
+							pw.println("sonar.host.url="+url);
+						}
+						else{
+							pw.println(line);
+						}
+					}
+					pw.close();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+		
+			}
+		}
+		for (int i = 0; i< toDelete.size();i++){
+			String name = toDelete.get(i).getName();
+			toDelete.get(i).delete();
+			File temp = new File(name+"2");
+			temp.renameTo(new File(name));
+		}
+		List<Project> projects = this.projectDao.findAll();
+		for (Project p : projects){
+			p.setSonarHost(url);
+			projectDao.save(p);
+		}
+		
+	}
+	
 
 	@RequestMapping("/landingPage")
 	public String landingPaget(Model model, HttpServletRequest req, HttpServletResponse resp,@CookieValue(value = "email", defaultValue = "") String email) {

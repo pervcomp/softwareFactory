@@ -112,6 +112,15 @@ class ProjectController {
 		cu.configureModelLandingPage(model, emailSt);
 		return "landingPage";
 	}
+
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@PostMapping("/allProjects")
 	public String allProjects(Model model ,HttpServletRequest req, HttpServletResponse resp){
