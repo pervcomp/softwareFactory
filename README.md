@@ -1,7 +1,6 @@
-# CODE SMELLS
-Project for the course Software Factory at unibz.
+# Sonar Scanner Webapp  
 
-This directory contains the client side.
-In order to run it you can clone the repository from Spring Tool Suite (STS).
-If you have any errors, Update the Project (Maven -> Update Project).      
+
+This project is onty the frontend docker image of the application. 
+The backend can be found here https://github.com/pervcomp/sonar-scanner-webservice 
 
