@@ -14,7 +14,7 @@ VOLUME /tmp
 EXPOSE 8080
 EXPOSE 8090
 EXPOSE 9002
-ADD target/spring-softwarefactory-1.5.1.war  app.jar
+ADD target/webapp-1.5.1.war  app.jar
 ENV JAVA_OPTS=""
 RUN ln -fs /usr/share/zoneinfo/Europe/Rome /etc/localtime
 
