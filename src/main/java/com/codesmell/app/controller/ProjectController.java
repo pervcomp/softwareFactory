@@ -381,9 +381,10 @@ class ProjectController {
 			writer.println("sonar.projectKey=" + project.getSonarKey());
 			writer.println("sonar.projectName=" + project.getProjectName());
 			writer.println("sonar.projectVersion=" + project.getSonarVersion());
-			writer.println("sonar.host.url=" + "https://sonar63.rd.tut.fi");
+			writer.println("sonar.host.url=" + project.getSonarHost());
 			writer.println("# Comma-separated paths to directories with sources (required)");
 			writer.println("sonar.sources="+project.getSource());
+			writer.println("sonar.java.binaries=.");
 			writer.println("# Encoding of the source files");
 			writer.println("sonar.sourceEncoding=UTF-8");
 			writer.println("gitRepo=" + project.getUrl());
