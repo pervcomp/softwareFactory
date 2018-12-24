@@ -259,7 +259,7 @@ public class ControllerUtilities {
 				(commitDao.findByProjectNameAndStatus(project.getProjectName(), "FAILURE").size()));
 		project.setCountSuccessCommits(
 				(commitDao.findByProjectNameAndStatus(project.getProjectName(), "SUCCESS").size()));
-		if (getNextFire(project.getProjectName()) != null) {
+		/*if (getNextFire(project.getProjectName()) != null) {
 			Date next = getNextFire(project.getProjectName());
 			project.setNextAnalysis(next);
 			Schedule schedule = scheduleDao.findByProjectName(project.getProjectName());
@@ -284,14 +284,14 @@ public class ControllerUtilities {
 				} catch (ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
-				CommitAnalysis ca = new CommitAnalysis();
+				}*/
+				/*CommitAnalysis ca = new CommitAnalysis();
 				ca.setIdProject(project.getProjectName());
 				ca.setConfigurationFile(project.getProjectName() + ".properties");
 				commitAnalysisDao.insert(ca);
 				ca.setIdSerial(commitAnalysisDao.findByIdProject(project.getProjectName()).size() + 1);
 
-				try {
+				/*try {
 					Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 					scheduler.getContext().put("commitAnalysisDao", commitAnalysisDao);
 					scheduler.getContext().put("commitDao", commitDao);
@@ -311,11 +311,11 @@ public class ControllerUtilities {
 				} catch (SchedulerException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}*/
 
-			}
+			//}
 
-		}
+		
 		getReportColor(project);
 		projectDao.save(project);
 	}
@@ -424,7 +424,11 @@ public class ControllerUtilities {
 	
 	
 	public int getNumberAnalysedCommits(Project p){
-		String sURL = p.getSonarHost() + "/api/project_analyses/search?project=" + p.getSonarKey();
+		//TOUNCOMMENT
+		String host = p.getSonarHost();
+		host = "http://sonar63.rd.tut.fi";
+		
+		String sURL = host + "/api/project_analyses/search?project=" + p.getSonarKey();
 		HttpURLConnection request = null;
 		URL url;
 		try {

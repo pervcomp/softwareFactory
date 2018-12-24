@@ -187,7 +187,7 @@ class WelcomeController {
 		} else if (!email.isEmpty()) {
 			req.getSession().setAttribute("email", email);
 			cu.configureModelLandingPage(model, email);
-			cu.scheduleDailyReport(userDao.findByEmail1((String)req.getSession().getAttribute("email")), mailSender);
+			//cu.scheduleDailyReport(userDao.findByEmail1((String)req.getSession().getAttribute("email")), mailSender);
 			cu.configureModelLandingPage(model, email);
 			return "landingPage";
 		}
@@ -197,7 +197,7 @@ class WelcomeController {
 				return "welcome";
 				}
 			cu.configureModelLandingPage(model, emailSession);
-			cu.scheduleDailyReport(userDao.findByEmail1((String)req.getSession().getAttribute("email")), mailSender);
+			//cu.scheduleDailyReport(userDao.findByEmail1((String)req.getSession().getAttribute("email")), mailSender);
 			cu.configureModelLandingPage(model, emailSession);
 			return "landingPage";
 		}
