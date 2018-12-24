@@ -338,6 +338,7 @@ public class ControllerUtilities {
 			writer.println("gitRepo=" + project.getUrl());
 			writer.println("sonar.github.repository=" + project.getUrl());
 			writer.println("sonar.jira.url="+project.getJiraUrl());
+			writer.println("sonar.java.binaries=/tmp/empty");
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
