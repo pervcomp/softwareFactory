@@ -220,7 +220,7 @@ public class ControllerUtilities {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-		if ((new Date().getTime() - attr.creationTime().toMillis()) > 600000){
+		if ((new Date().getTime() - attr.creationTime().toMillis()) > (2*3600*1000)){
 			try {
 				Files.delete(file);
 			} catch (IOException e) {
