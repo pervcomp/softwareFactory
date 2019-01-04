@@ -25,9 +25,9 @@ public class JSONHelper {
 	}
 	
 	public long getLatestAnalysisDate(){
-		//TO COMMENT
+		
 		String hostTemp = "http://sonar63.rd.tut.fi";
-		// hostTemp = p.getSonarHost();
+		hostTemp = p.getSonarHost();
 		
 		String sURL =  hostTemp + "/api/project_analyses/search?project=" + p.getSonarKey();
 		HttpURLConnection request = null;

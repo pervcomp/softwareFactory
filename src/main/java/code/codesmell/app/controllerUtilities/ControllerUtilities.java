@@ -425,7 +425,7 @@ public class ControllerUtilities {
 	public int getNumberAnalysedCommits(Project p){
 		//TOUNCOMMENT
 		String host = p.getSonarHost();
-		host = "http://sonar63.rd.tut.fi";
+		//host = "http://sonar63.rd.tut.fi";
 		
 		String sURL = host + "/api/project_analyses/search?project=" + p.getSonarKey();
 		HttpURLConnection request = null;
@@ -540,39 +540,6 @@ String result = builder.toString();
 				project.setLastWeekReport("YELLOW");
 			else
 				project.setLastWeekReport("GREEN");
-		}
-	}
-
-	/**
-	 * Schedules email with error to be sent at midnight
-	 * 
-	 * @param usr
-	 * @param mailSender
-	 */
-	public void scheduleDailyReport(User usr, JavaMailSender mailSender) {
-		if (getNextFire(usr.getEmail1()) != null)
-			return;
-		else {
-			try {
-				Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-				JobDetail job = JobBuilder.newJob(MailUtilities.class).withIdentity(usr.getEmail1(), usr.getEmail1())
-						.build();
-				Calendar c = Calendar.getInstance();
-				c.add(Calendar.DATE, 1);
-				c.set(Calendar.HOUR_OF_DAY, 0);
-				c.set(Calendar.MINUTE, 0);
-
-				Trigger runOnceTrigger = TriggerBuilder.newTrigger().startAt(c.getTime())
-						.withSchedule(SimpleScheduleBuilder.repeatMinutelyForever(24 * 60)).build();
-				scheduler.getContext().put("mailSender", mailSender);
-				scheduler.getContext().put("user", usr);
-				scheduler.getContext().put("commitErrorDao", commitErrorDao);
-				scheduler.scheduleJob(job, runOnceTrigger);
-				scheduler.start();
-			} catch (SchedulerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 
