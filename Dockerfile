@@ -1,21 +1,26 @@
-FROM ubuntu:18.04
+FROM maven:3-jdk-8 as build
+MAINTAINER Jukka-Pekka Venttola, https://github.com/venttola
 
-MAINTAINER Ivan Krizsan, https://github.com/krizsan
+WORKDIR /build 
+COPY . /build
 
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y  software-properties-common && \
-    apt-get install -y  openjdk-8-jdk && \
-    apt-get install -y  zip unzip
+RUN mvn install 
 
-RUN apt-get install -y git
-RUN export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
-VOLUME /tmp
+FROM openjdk:8-jre-alpine
+
+RUN apk update && apk add \
+  git 
+
+RUN addgroup -S webapp && \
+    adduser -S -h /app -G webapp webapp
+
 EXPOSE 8080
 EXPOSE 8090
 EXPOSE 9002
-ADD target/webapp-1.5.1.war  app.jar
+VOLUME /tmp
 ENV JAVA_OPTS=""
 RUN ln -fs /usr/share/zoneinfo/Europe/Rome /etc/localtime
+COPY --from=build /build/target/webapp-1.5.1.war /app/app.jar
 
-ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]
+
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app/app.jar" ]
