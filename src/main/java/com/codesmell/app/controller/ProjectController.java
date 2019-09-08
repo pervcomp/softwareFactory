@@ -99,7 +99,6 @@ class ProjectController {
 		//Project name must be unique
 		if (projectDao.findByprojectName(project.getProjectName()) == null) {
 			projectDao.save(project);
-			scheduleDao.save(schedule);
 			writeConfigFile(project);
 			//cu.restNewProject(project.getName(), project.getUrl());
 		}

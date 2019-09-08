@@ -53,22 +53,13 @@ public class SonarAnalysis extends Thread {
 	private boolean justLatest = false;
 	private boolean past = true;
 	private Commit lastCommit;
-	private Schedule scheduling;
 
-	public SonarAnalysis(CommitAnalysisDao commitAnalysisDao, CommitDao commitDao, CommitErrorDao commitErrorDao, ScheduleDao scheduleDao) {
+	public SonarAnalysis(CommitAnalysisDao commitAnalysisDao, CommitDao commitDao, CommitErrorDao commitErrorDao) {
 		this.commitAnalysisDao = commitAnalysisDao;
 		this.commitDao = commitDao;
 		this.commitErrorDao = commitErrorDao;
-		this.scheduleDao = scheduleDao;
 	}
 
-	public Schedule getScheduling() {
-		return scheduling;
-	}
-
-	public void setScheduling(Schedule scheduling) {
-		this.scheduling = scheduling;
-	}
 
 	public void setProject(Project project) {
 		this.project = project;
@@ -102,12 +93,12 @@ public class SonarAnalysis extends Thread {
 		long startDate = 0; 
         JSONHelper j = new JSONHelper(project);
         startDate = j.getLatestAnalysisDate();
-        this.scheduling = this.scheduleDao.findByProjectName(this.project.getProjectName());
-        if (startDate < Long.parseLong(scheduling.getStartingDate()))
-        		startDate = Long.parseLong(scheduling.getStartingDate());
+       // this.scheduling = this.scheduleDao.findByProjectName(this.project.getProjectName());
+        if (startDate < Long.parseLong(project.getStartingDate()))
+        		startDate = Long.parseLong(project.getStartingDate());
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
-	    String r=  new ControllerUtilities().restAnalysis(project.getProjectName(),analysis.getIdSerial() + "", url,startDate, Long.parseLong(scheduling.getEndingDate()));
+	    String r=  new ControllerUtilities().restAnalysis(project.getProjectName(),analysis.getIdSerial() + "", url,startDate, Long.parseLong(project.getEndingDate()));
 
 	}
 
