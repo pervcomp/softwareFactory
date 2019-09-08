@@ -129,7 +129,7 @@ public class ControllerUtilities {
 		ca.setConfigurationFile(projectName + ".properties");
 		ca.setIdSerial(commitAnalysisDao.findByIdProject(projectName).size() + 1);
 		commitAnalysisDao.save(ca);
-		SonarAnalysis so = new SonarAnalysis(commitAnalysisDao, commitDao, commitErrorDao);
+		SonarAnalysis so = new SonarAnalysis(commitAnalysisDao, commitDao, commitErrorDao, scheduleDao);
 		so.setAnalysis(ca);
 		so.setInterval(project.getPastInterval());
 		so.setProject(project);
@@ -148,7 +148,7 @@ public class ControllerUtilities {
 		ca.setConfigurationFile(projectName + ".properties");
 		ca.setIdSerial(commitAnalysisDao.findByIdProject(projectName).size() + 1);
 		commitAnalysisDao.save(ca);
-		SonarAnalysis so = new SonarAnalysis(commitAnalysisDao, commitDao, commitErrorDao);
+		SonarAnalysis so = new SonarAnalysis(commitAnalysisDao, commitDao, commitErrorDao, scheduleDao);
 		so.setAnalysis(ca);
 		so.setInterval(project.getInterval());
 		so.setProject(project);

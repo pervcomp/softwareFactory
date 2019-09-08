@@ -31,6 +31,7 @@ import org.springframework.stereotype.Component;
 import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
 import com.codesmell.app.dao.CommitErrorDao;
+import com.codesmell.app.dao.ScheduleDao;
 import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.CommitError;
@@ -47,16 +48,18 @@ public class SonarAnalysis extends Thread {
 	private CommitAnalysisDao commitAnalysisDao;
 	private CommitDao commitDao;
 	private CommitErrorDao commitErrorDao;
+	private ScheduleDao scheduleDao;
 	private int interval = 1;
 	private boolean justLatest = false;
 	private boolean past = true;
 	private Commit lastCommit;
 	private Schedule scheduling;
 
-	public SonarAnalysis(CommitAnalysisDao commitAnalysisDao, CommitDao commitDao, CommitErrorDao commitErrorDao) {
+	public SonarAnalysis(CommitAnalysisDao commitAnalysisDao, CommitDao commitDao, CommitErrorDao commitErrorDao, ScheduleDao scheduleDao) {
 		this.commitAnalysisDao = commitAnalysisDao;
 		this.commitDao = commitDao;
 		this.commitErrorDao = commitErrorDao;
+		this.scheduleDao = scheduleDao;
 	}
 
 	public Schedule getScheduling() {
@@ -99,6 +102,7 @@ public class SonarAnalysis extends Thread {
 		long startDate = 0; 
         JSONHelper j = new JSONHelper(project);
         startDate = j.getLatestAnalysisDate();
+        this.scheduling = this.scheduleDao.findByProjectName(this.project.getProjectName());
         if (startDate < Long.parseLong(scheduling.getStartingDate()))
         		startDate = Long.parseLong(scheduling.getStartingDate());
 		String url = project.getUrl();
