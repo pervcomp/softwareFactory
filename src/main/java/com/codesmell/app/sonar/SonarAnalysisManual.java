@@ -17,6 +17,7 @@ import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.CommitError;
 import com.codesmell.app.model.Project;
+import com.codesmell.app.model.Schedule;
 
 import code.codesmell.app.controllerUtilities.ControllerUtilities;
 import code.codesmell.app.controllerUtilities.JSONHelper;
@@ -29,12 +30,21 @@ public class SonarAnalysisManual extends Thread {
 	private CommitDao commitDao;
 	private CommitErrorDao commitErrorDao;
 	private List<String> shas;
+	private Schedule scheduling;
 
 
 	public SonarAnalysisManual(CommitAnalysisDao commitAnalysisDao, CommitDao commitDao, CommitErrorDao commitErrorDao) {
 		this.commitAnalysisDao = commitAnalysisDao;
 		this.commitDao = commitDao;
 		this.commitErrorDao = commitErrorDao;
+	}
+	
+	public Schedule getScheduling() {
+		return scheduling;
+	}
+
+	public void setScheduling(Schedule scheduling) {
+		this.scheduling = scheduling;
 	}
 
 	public void setProject(Project project) {
@@ -52,14 +62,16 @@ public class SonarAnalysisManual extends Thread {
 	@Override
 	public void run() {
 		checkAvailability();
-		long date = 0;
+		long startDate = 0;
 		this.checkAvailability();
         JSONHelper j = new JSONHelper(project);
-        date = j.getLatestAnalysisDate();
+        startDate = j.getLatestAnalysisDate();
+        if (startDate < Long.parseLong(scheduling.getStartingDate()))
+    			startDate = Long.parseLong(scheduling.getStartingDate());
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
 				new ControllerUtilities().restAnalysis(project.getProjectName(),
-						analysis.getIdSerial() + "", url, date);
+						analysis.getIdSerial() + "", url, startDate, Long.parseLong(scheduling.getEndingDate()));
 		closeAnalysis(analysis.get_id());
 
 	}

@@ -553,7 +553,7 @@ String result = builder.toString();
 	 * @param url
 	 * @return
 	 */
-	public String restAnalysis(String projectName, String analysisId, String url, long date) {
+	public String restAnalysis(String projectName, String analysisId, String url, long startDate, long endDate) {
 		String urlWs = urlWsVar + "/analyseRevision";
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
@@ -567,7 +567,7 @@ String result = builder.toString();
 			}
 		}
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(urlWs).queryParam("projectName", projectName)
-				.queryParam("analysis", analysisId).queryParam("url", url).queryParam("date", date)
+				.queryParam("analysis", analysisId).queryParam("url", url).queryParam("startDate", startDate).queryParam("endDate", endDate)
 				.queryParam("conf", st);
 
 		HttpEntity<?> entity = new HttpEntity<>(headers);
