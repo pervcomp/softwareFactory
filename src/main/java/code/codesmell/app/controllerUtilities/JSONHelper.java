@@ -26,10 +26,11 @@ public class JSONHelper {
 	
 	public long getLatestAnalysisDate(){
 		
-		String hostTemp = "http://sonar63.rd.tut.fi";
+		String hostTemp = "https://sonar.rd.tut.fi/sonar75";
 		hostTemp = p.getSonarHost();
 		
 		String sURL =  hostTemp + "/api/project_analyses/search?project=" + p.getSonarKey();
+		System.out.println(sURL);
 		HttpURLConnection request = null;
 		URL url;
 		try {

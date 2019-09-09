@@ -110,7 +110,7 @@ public class SonarAnalysis extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        System.out.println("Start Date JIRA " + sonarDateSq);
+        System.out.println("Start Date sonar " + sonarDateSq);
         System.out.println("Start Date Code Smells " + startDateEpoch);
 		
         if (sonarDateSq > startDateEpoch)
