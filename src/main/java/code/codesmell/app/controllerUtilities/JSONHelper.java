@@ -31,6 +31,8 @@ public class JSONHelper {
 		
 		String sURL =  hostTemp + "/api/project_analyses/search?project=" + p.getSonarKey();
 		System.out.println(sURL);
+		sURL = sURL.replace("//api", "/api");
+		
 		HttpURLConnection request = null;
 		URL url;
 		try {
