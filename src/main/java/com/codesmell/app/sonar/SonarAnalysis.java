@@ -110,7 +110,9 @@ public class SonarAnalysis extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
+        System.out.println("Start Date JIRA " + startDate);
+        System.out.println("Start Date Code Smells " + startDateEpoch);
+		
         if (startDate < startDateEpoch)
         		startDate = startDateEpoch;
 		String url = project.getUrl();
