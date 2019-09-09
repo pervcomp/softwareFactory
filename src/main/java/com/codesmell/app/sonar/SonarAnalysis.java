@@ -94,11 +94,28 @@ public class SonarAnalysis extends Thread {
         JSONHelper j = new JSONHelper(project);
         startDate = j.getLatestAnalysisDate();
        // this.scheduling = this.scheduleDao.findByProjectName(this.project.getProjectName());
-        if (startDate < Long.parseLong(project.getStartingDate()))
-        		startDate = Long.parseLong(project.getStartingDate());
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.ITALIAN);
+		long startDateEpoch = 0;
+		try {
+			 startDateEpoch = (df.parse(project.getStartingDate())).getTime();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		long endDateEpoch = 0;
+		try {
+			endDateEpoch = df.parse(project.getEndingDate()).getTime();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        if (startDate < startDateEpoch)
+        		startDate = startDateEpoch;
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
-	    String r=  new ControllerUtilities().restAnalysis(project.getProjectName(),analysis.getIdSerial() + "", url,startDate, Long.parseLong(project.getEndingDate()));
+	    String r=  new ControllerUtilities().restAnalysis(project.getProjectName(),analysis.getIdSerial() + "", url,startDateEpoch, endDateEpoch);
 
 	}
 
