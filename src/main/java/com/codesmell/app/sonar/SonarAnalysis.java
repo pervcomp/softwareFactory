@@ -90,9 +90,9 @@ public class SonarAnalysis extends Thread {
 		// Analysis status is updated
 		analysis.setStartDate(new Date());
 		commitAnalysisDao.save(analysis);
-		long startDate = 0; 
+		long sonarDateSq = 0; 
         JSONHelper j = new JSONHelper(project);
-        startDate = j.getLatestAnalysisDate();
+        sonarDateSq = j.getLatestAnalysisDate();
        // this.scheduling = this.scheduleDao.findByProjectName(this.project.getProjectName());
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.ITALIAN);
 		long startDateEpoch = 0;
@@ -110,11 +110,11 @@ public class SonarAnalysis extends Thread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        System.out.println("Start Date JIRA " + startDate);
+        System.out.println("Start Date JIRA " + sonarDateSq);
         System.out.println("Start Date Code Smells " + startDateEpoch);
 		
-        if (startDate < startDateEpoch)
-        		startDate = startDateEpoch;
+        if (sonarDateSq > startDateEpoch)
+        		startDateEpoch = sonarDateSq;
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
 	    String r=  new ControllerUtilities().restAnalysis(project.getProjectName(),analysis.getIdSerial() + "", url,startDateEpoch, endDateEpoch);
