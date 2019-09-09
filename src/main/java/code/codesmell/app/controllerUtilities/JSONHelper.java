@@ -47,6 +47,7 @@ public class JSONHelper {
 		   //date  = date.substring(0, date.length()-5);
 		    SimpleDateFormat parser=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
 		    Date d = parser.parse(date);
+		    System.out.println(parser.parse(date).getTime());
 		    return parser.parse(date).getTime();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
