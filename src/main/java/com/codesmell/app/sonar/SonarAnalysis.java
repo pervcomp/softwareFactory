@@ -31,12 +31,10 @@ import org.springframework.stereotype.Component;
 import com.codesmell.app.dao.CommitAnalysisDao;
 import com.codesmell.app.dao.CommitDao;
 import com.codesmell.app.dao.CommitErrorDao;
-import com.codesmell.app.dao.ScheduleDao;
 import com.codesmell.app.model.Commit;
 import com.codesmell.app.model.CommitAnalysis;
 import com.codesmell.app.model.CommitError;
 import com.codesmell.app.model.Project;
-import com.codesmell.app.model.Schedule;
 
 import code.codesmell.app.controllerUtilities.ControllerUtilities;
 import code.codesmell.app.controllerUtilities.JSONHelper;
@@ -48,7 +46,6 @@ public class SonarAnalysis extends Thread {
 	private CommitAnalysisDao commitAnalysisDao;
 	private CommitDao commitDao;
 	private CommitErrorDao commitErrorDao;
-	private ScheduleDao scheduleDao;
 	private int interval = 1;
 	private boolean justLatest = false;
 	private boolean past = true;
@@ -59,7 +56,6 @@ public class SonarAnalysis extends Thread {
 		this.commitDao = commitDao;
 		this.commitErrorDao = commitErrorDao;
 	}
-
 
 	public void setProject(Project project) {
 		this.project = project;
@@ -90,34 +86,12 @@ public class SonarAnalysis extends Thread {
 		// Analysis status is updated
 		analysis.setStartDate(new Date());
 		commitAnalysisDao.save(analysis);
-		long sonarDateSq = 0; 
+		long date = 0; 
         JSONHelper j = new JSONHelper(project);
-        sonarDateSq = j.getLatestAnalysisDate();
-       // this.scheduling = this.scheduleDao.findByProjectName(this.project.getProjectName());
-		DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.ITALIAN);
-		long startDateEpoch = 0;
-		try {
-			 startDateEpoch = (df.parse(project.getStartingDate())).getTime();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		long endDateEpoch = 0;
-		try {
-			endDateEpoch = df.parse(project.getEndingDate()).getTime();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        System.out.println("Start Date sonar " + sonarDateSq);
-        System.out.println("Start Date Code Smells " + startDateEpoch);
-		
-        if (sonarDateSq > startDateEpoch)
-        		startDateEpoch = sonarDateSq;
+        date = j.getLatestAnalysisDate();
 		String url = project.getUrl();
 		String conf = analysis.getConfigurationFile();
-	    String r=  new ControllerUtilities().restAnalysis(project.getProjectName(),analysis.getIdSerial() + "", url,startDateEpoch, endDateEpoch);
+	    String r=  new ControllerUtilities().restAnalysis(project.getProjectName(),analysis.getIdSerial() + "", url,date);
 
 	}
 

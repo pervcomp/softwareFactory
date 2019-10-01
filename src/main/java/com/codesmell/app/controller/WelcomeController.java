@@ -91,10 +91,9 @@ class WelcomeController {
 
 	@RequestMapping("/newproject")
 	public String newProject(Model model, HttpServletRequest req, HttpServletResponse resp) {
-		/*if (req.getSession().getAttribute("email") == null) {
+		if (req.getSession().getAttribute("email") == null) {
 			return "welcome";
-			} TO UNCOMMENT
-			*/ 
+			}
 		model.addAttribute("email", req.getSession().getAttribute("email"));
 		model.addAttribute("project", new Project());
 		model.addAttribute("schedule", new Schedule());
@@ -245,18 +244,18 @@ class WelcomeController {
 			else if (user.getEmail1().isEmpty() || user.getPwd().isEmpty())
 				return "welcome";
 					
-			//String emailSt = user.getEmail1();
-			//String pwd = user.getPwd();
-			//User usr = userDao.findByEmail1(emailSt);
-			//if (pwd.equals((usr.getPwd()))) {
+			String emailSt = user.getEmail1();
+			String pwd = user.getPwd();
+			User usr = userDao.findByEmail1(emailSt);
+			if (pwd.equals((usr.getPwd()))) {
 			    ControllerUtilities cu = new ControllerUtilities(projectDao, commitAnalysisDao, commitDao, userDao, scheduleDao,commitErrorDao);
-				req.getSession().setAttribute("email", "admin");
-				resp.addCookie(new Cookie("email", "admin"));
-				cu.configureModelLandingPage(model, "admin");
+				req.getSession().setAttribute("email", emailSt);
+				resp.addCookie(new Cookie("email", emailSt));
+				cu.configureModelLandingPage(model, emailSt);
 				return "landingPage";
-			/*} else {
+			} else {
 				return "welcome";
-			}*/
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "welcome";

@@ -1,158 +1,245 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
 
-    <title>Insert New Project</title>
+<title>Insert New Project</title>
+<head lang="en" th:include="fragments/header">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <head lang="en" th:include="fragments/header">
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous">
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+ 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+ 
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="js/bootstrap.min.js"></script>
+</head>
+ 
+<body>
+	<!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
+	<link rel="stylesheet"
+		href="https://formden.com/static/cdn/bootstrap-iso.css" />
 
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<!-- Bootstrap Date-Picker Plugin -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.14.30/js/bootstrap-datetimepicker.min.js"></script>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+	<link rel="stylesheet"
+		href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css">
 
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script
+		src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+	<script
+		src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/lang/en-gb.js"></script>
+	<script
+		src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/js/bootstrap-datetimepicker.min.js"></script>
 
-    </head>
+	 
+	<link type="text/css" href="css/newproject.css" rel="stylesheet" />
 
-    <body>
-        <!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
-        <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+	<div class="panel panel-primary" style="margin: 20px;">
+		<div class="panel-heading">
+			<h3 class="panel-title">Insert new project</h3>
+		</div>
+		<div class="panel-body">
+			<form th:action="@{/createNewProject}" th:object="${project}"
+				method="post">
+				<div class="col-md-12 col-sm-12 main">
+					<div class="form-group col-md-12 col-sm-12">
+						<label>Project name:</label><br>  <input type="text"
+							th:object="${projectName}"   name="projectName"
+							required="required" placeholder="Name">
+					</div>
+					<div class="form-group col-md-12 col-sm-12">
+						<label>Repository's type:</label><br> <select
+							class="custom-select" name="repType"   th:object="${versionType}"
+							required="required">
+							<option value="git">Git</option>
+							<option value="svn">Svn</option>
+						</select>
+					</div>
+					<div class="form-group col-md-12 col-sm-12">
+						<label>Repository's URL:</label><br>  
+						<input
+							required="required" type="url" th:object="${url}"   name="url"
+							placeholder="URL to your repository"><br></br> 
+						<label>Sonar ProjectKey:</label><br>  
+						<input required="required" type="text"
+							th:object="${sonarKey}" name="sonarKey"
+							placeholder="ProjectKey for SonarScanner"><br></br> 
+						<label>Sonar ProjectVersion:</label><br>  
+						<input required="required"
+							type="number" th:object="${sonarVersion}" name="sonarVersion"
+							placeholder="ProjectVersion for SonarScanner"><br></br> 
+					    <label>Sonar Sources:</label><br>  
+						<input required="required" value="."
+							type="text" th:object="${source}" name="source"><br></br> 
+							<br>
+					     <label>Sonar Host:</label><br>  
+						<input required="required" value="https://sonar.rd.tut.fi"
+							type="text" th:object="${sonarHost}" name="sonarHost"><br></br> 
+							<br>
+						<label>Jira URL:</label><br>  
+						<input required="required" value=""
+							type="text" th:object="${jiraUrl}" name="jiraUrl"><br></br> 
+						
+					<legend>Schedule analysis in the future</legend>
+					<table class="table table-bordered">
+						<tr>
+							<td><input type="Radio" Name="scheduleProject"
+								class="schedule" id="scheduleProject" value="1"
+								th:checked="*{scheduleProject}"> Scheduled <br> <input
+								type="Radio" Name="scheduleProject" class="scheduleInt"
+								value="0" th:checked="*{scheduleProject} == false">
+								Commits Interval (Do an analysis each # new commits) <br></td>
 
-        <!-- Bootstrap Date-Picker Plugin -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.14.30/js/bootstrap-datetimepicker.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
-        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css">
+						</tr>
+						<tr>
+							<td class='scheduleOp' hidden><div class='input-group date '
+									id='datetimepicker1'>
+									<input type='text' class="form-control "
+										th:value="${schedule.startingDate}" name="startingDate" /> <span
+										class="input-group-addon"> <span
+										class="glyphicon glyphicon-calendar"></span>
+									</span>
+								</div></td>
+						</tr>
+						<tr class="scheduleOp" hidden>
+							<td>Hours (0-23): <input type="number" value="5" max='23'
+								min='0' required="required"
+								th:value="${schedule.repetitionHours}" name="repetitionHours">
+								 
+							</td>
+						</tr>
+						<tr class="scheduleOp" hidden>
+							<td>Minutes (0-59): <input value="30" type="number" max='59'
+								min='0' required="required"
+								th:value="${schedule.repetitionMinutes}"
+								name="repetitionMinutes">
+							</td>
 
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/lang/en-gb.js"></script>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/js/bootstrap-datetimepicker.min.js"></script>
+						</tr>
+						 
+						<tr class="scheduleOp" hidden>
+							<td>  Days (0-20): <input value="7" type="number" max='20'
+								min='0' required="required" th:value="${schedule.repetitionDay}"
+								name="repetitionDay">
+							</td>
+						</tr>
+						<tr class="scheduleIntOp" hidden>
+							<td>  <label>Analysis every (1-100) commits:</label><br>
+								<input type="number" min="1" max="100"
+								th:object="${interval}" value='1' name="interval" id="interval" required> <br>
 
-        <link type="text/css" href="css/newproject.css" rel="stylesheet" />
-
-        <div class="panel panel-primary" style="margin: 20px;">
-            <div class="panel-heading">
-                <h3 class="panel-title">Insert new project</h3>
-            </div>
-            <div class="panel-body">
-                <form th:action="@{/createNewProject}" th:object="${project}" method="post">
-                    <div class="col-md-12 col-sm-12 main">
-                        <div class="form-group col-md-12 col-sm-12">
-                            <label>Project name:</label>
-                            <br>
-                            <input type="text" th:object="${projectName}"   name="projectName" required="required" placeholder="Name">
-                        </div>
-                        <div class="form-group col-md-12 col-sm-12">
-                            <label>Repository's type:</label>
-                            <br>
-                            <select class="custom-select" name="repType"   th:object="${versionType}" required="required">
-                                <option value="git">Git</option>
-                                <option value="svn">Svn</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-12 col-sm-12">
-                            <label>Repository's URL:</label>
-                            <br>
-                            <input required="required" type="url" th:object="${url}"   name="url" placeholder="URL to your repository">
-                            <br></br>
-                            <label>Sonar ProjectKey:
-                            </label>
-                            <br>
-                            <input required="required" type="text" th:object="${sonarKey}" name="sonarKey" placeholder="ProjectKey for SonarScanner">
-                            <br></br>
-                            <label>Sonar ProjectVersion:
-                            </label>
-                            <br>
-                            <input required="required" type="number" th:object="${sonarVersion}" name="sonarVersion" placeholder="ProjectVersion for SonarScanner">
-                            <br></br>
-                            <label>Sonar Sources:
-                            </label>
-                            <br>
-                            <input required="required" value="." type="text" th:object="${source}" name="source">
-                            <br></br>
-                            <br>
-                            <label>Sonar Host:</label>
-                            <br>
-                            <input required="required" value="https://sonar.rd.tut.fi" type="text" th:object="${sonarHost}" name="sonarHost">
-                            <br></br>
-                            <br>
-                            <label>Jira URL:</label>
-                            <br>
-                            <input required="required" value="" type="text" th:object="${jiraUrl}" name="jiraUrl">
-                            <br></br>
-                        </div>
-                        <legend>Schedule analysis in the future</legend>
-                       
-                        <h4>
-                        The tool will analyzing the first commit of each month in 
-                        the inserted time.
-                        </h4>
-                    
-                        <table class="table table-bordered" style="width:70%">
-                            <tr>
-                                <td>
-                                    <h4>From Date</h4></td>
-                                <td class='scheduleOp'>
-                                    <div class='input-group date ' id='datetimepicker1'>
-                                        <input type='text' class="form-control " th:value="${project.startingDate}" name="startingDate" /> <span class="input-group-addon"> <span
-											class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h4>To Date</h4></td>
-                                <td class='scheduleOp'>
-                                    <div class='input-group date ' id='datetimepicker2'>
-                                        <input type='text' class="form-control " th:value="${project.endingDate}" name="endingDate" /> <span class="input-group-addon"> <span
-											class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>
-
-                        </table>
-
-                    </div>
-
-                    <input type="submit" value="Save">
-                    <button type="button" onclick="window.history.go(-1); return false;">Cancel</button>
-            </div>
-
-            </fieldset>
-        </div>
-        </form>
-    </body>
-
-    <script type="text/javascript">
-        $(function() {
-            $('#datetimepicker1').datetimepicker({
-                setDate: new Date(),
-                format: 'DD-MM-YYYY',
-                defaultDate: new Date()
-            });
-        });
-        $(function() {
-            $('#datetimepicker2').datetimepicker({
-                setDate: new Date(),
-                format: 'DD-MM-YYYY',
-                defaultDate: new Date()
-            });
-        });
+							</td>
+						</tr>
+					</table>
 
 
-    </script>
+				</div>
+				
+		<input type="submit" value="Save">
+		<button type="button" onclick="window.history.go(-1); return false;">Cancel</button>
+		</div>
+
+
+		</fieldset>
+
+		
+	</div>
+	</form>
+</body>
+
+<script type="text/javascript">
+
+
+
+	$(document).ready(function() {
+
+		$(".scheduleIntOp").toggle(true);
+
+		$('input[type=radio]').change(function() {
+			var isChecked = $(this).prop('checked');
+			var isShow = $(this).hasClass('scheduleInt');
+			$(".scheduleIntOp").toggle(isChecked && isShow);
+
+		});
+	});
+
+	$(document).ready(function() {
+
+		$('input[type=radio]').change(function() {
+			var isChecked = $(this).prop('checked');
+			var isShow = $(this).hasClass('schedule');
+			$(".scheduleOp").toggle(isChecked && isShow);
+
+		});
+	});
+
+	$(document).ready(function() {
+		$("input[name$='analysisType']").click(function() {
+			var test = $(this).val();
+
+			$("div.desc").hide();
+			$("#analysisType" + test).show();
+		});
+	});
+
+	$(document).ready(function() {
+		$("input[name$='time']").click(function() {
+			var test2 = $(this).val();
+			$("div.desc2").hide();
+			$("#commitTime" + test2).show();
+		});
+	});
+
+	$(function() {
+		$('#datetimepicker1').datetimepicker({
+			setDate : new Date(),
+			format : 'DD-MM-YYYY HH:mm',
+			defaultDate : new Date()
+		});
+	});
+
+	$(document).ready(function() {
+		$("input[name$='schedule']").click(function() {
+			var test1 = $(this).val();
+			$("div.desc1").hide();
+			$("#schedule" + test1).show();
+		});
+	});
+
+
+
+	$(function() {
+		$("#pastAnalysis").click(function() {
+			if ($(this).is(":checked")) {
+				$("#analysisType2").show();
+			} else {
+				$("#analysisType2").hide();
+			}
+		});
+	});
+</script>
+
+
 
 </html>

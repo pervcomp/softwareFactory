@@ -26,13 +26,10 @@ public class JSONHelper {
 	
 	public long getLatestAnalysisDate(){
 		
-		String hostTemp = "https://sonar.rd.tut.fi/sonar75";
+		String hostTemp = "http://sonar63.rd.tut.fi";
 		hostTemp = p.getSonarHost();
 		
 		String sURL =  hostTemp + "/api/project_analyses/search?project=" + p.getSonarKey();
-		System.out.println(sURL);
-		sURL = sURL.replace("//api", "/api");
-		
 		HttpURLConnection request = null;
 		URL url;
 		try {
@@ -50,7 +47,6 @@ public class JSONHelper {
 		   //date  = date.substring(0, date.length()-5);
 		    SimpleDateFormat parser=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
 		    Date d = parser.parse(date);
-		    System.out.println(parser.parse(date).getTime());
 		    return parser.parse(date).getTime();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

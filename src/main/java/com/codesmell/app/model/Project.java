@@ -32,11 +32,6 @@ public class Project extends BaseEntity
 	private int countFailedCommits;
 	private int countSuccessCommits;
 	private int countCommitsLeft;
-	
-	private String startingDate;
-	private String endingDate;
-	
-	
 	public int getCountCommitsLeft() {
 		return countCommitsLeft;
 	}
@@ -272,22 +267,6 @@ public class Project extends BaseEntity
 		this.countSuccessCommits = countSuccessCommits;
 	}
 	
-	public String getStartingDate() {
-		return startingDate;
-	}
-
-	public void setStartingDate(String startingDate) {
-		this.startingDate = startingDate;
-	}
-
-	public String getEndingDate() {
-		return endingDate;
-	}
-
-	public void setEndingDate(String endingDate) {
-		this.endingDate = endingDate;
-	}
-
 	public int getCountSuccessCommits(){
 		return this.countSuccessCommits;
 	}

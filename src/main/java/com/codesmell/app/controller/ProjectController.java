@@ -102,18 +102,26 @@ class ProjectController {
 			writeConfigFile(project);
 			//cu.restNewProject(project.getName(), project.getUrl());
 		}
-		
-		/*if (project.getScheduleProject()){
+		if (project.getScheduleProject()){
 			projectDao.save(project);
 			schedule(project, schedule);
 			}
 		else
-			scheduleWithInterval(project, project.getInterval());*/
+			scheduleWithInterval(project, project.getInterval());
 
 		cu.configureModelLandingPage(model, emailSt);
 		return "landingPage";
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@PostMapping("/allProjects")
 	public String allProjects(Model model ,HttpServletRequest req, HttpServletResponse resp){
 		if (req.getSession().getAttribute("email") == null)
@@ -195,7 +203,7 @@ class ProjectController {
 	 * @param p
 	 * @param interval
 	 */
-/*	private void scheduleWithInterval(Project p, int interval) {
+	private void scheduleWithInterval(Project p, int interval) {
 		try {
 			Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 			JobDetail job = JobBuilder.newJob(SonarAnalysisSchedule.class)
@@ -235,9 +243,12 @@ class ProjectController {
 			scheduler.start();
 			Schedule schedule = new Schedule();
 			schedule.setProjectName(p.getProjectName());
-			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 			sdf.setTimeZone(TimeZone.getTimeZone("Europe/Rome"));
 			schedule.setStartingDate(sdf.format(startDate));
+			schedule.setRepetitionDay(0);
+			schedule.setRepetitionHours(0);
+			schedule.setRepetitionMinutes(totalMinutes);
 			scheduleDao.save(schedule);
 		} catch (SchedulerException e) {
 			// TODO Auto-generated catch block
@@ -251,12 +262,13 @@ class ProjectController {
 	 * @param p
 	 * @param s
 	 */
-	/*private void schedule(Project p, Schedule s) {
+	private void schedule(Project p, Schedule s) {
 		try {
 			Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 			JobDetail job = JobBuilder.newJob(SonarAnalysisSchedule.class)
 					.withIdentity(p.getProjectName(), p.getProjectName()).build();
 			job.getJobDataMap().put("project", p);
+			int totalMinutes = s.getRepetitionDay() * 24 * 60 + s.getRepetitionHours() * 60 + s.getRepetitionMinutes();
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 			sdf.setTimeZone(TimeZone.getTimeZone("Europe/Rome"));
 			Date startDate = new Date();
@@ -293,7 +305,7 @@ class ProjectController {
 	 * @param resp
 	 * @return
 	 */
-	/*@PostMapping("/reSchedule")
+	@PostMapping("/reSchedule")
 	public String reScheduler(Model model, @ModelAttribute Project project, @ModelAttribute Schedule schedule,
 			HttpServletRequest req, HttpServletResponse resp) {
 		if (req.getSession().getAttribute("email") == null) {
@@ -315,7 +327,7 @@ class ProjectController {
 		cu.getUpdateProject(project);
 		cu.configureModelDetailsPage(model,(String)req.getSession().getAttribute("email"),project);
 		return "projectDetails";
-	}*/             
+	}
 	
 	
 
